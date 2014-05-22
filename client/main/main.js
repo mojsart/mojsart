@@ -5,11 +5,16 @@
     $stateProvider
       .state('mojsart.main', {
         url: '/main',
-        templateUrl: 'main/main.tpl.html',
-        controller: 'MainController'
+        views:{
+          // '': {templateUrl: 'main/main.tpl.html'},
+          'sidebar': {templateUrl: 'sidebar/sidebar.tpl.html'},
+          'infopanel': {templateUrl: 'infopanel/infopanel.tpl.html'},
+          'graph':{templateUrl: '/graph/graph.tpl.html'}
+        },
+        controller: 'MainController',
       });
   })
   .controller('MainController', function ($state) {
-    $state.transitionTo('mojsart.main.note');
+    // $state.transitionTo('mojsart.main.note');
   });
 }(angular));
