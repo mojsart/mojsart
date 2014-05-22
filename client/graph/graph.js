@@ -10,5 +10,8 @@ angular.module('mojsart.main.graph', ['ui.router'])
     });
 })
 .controller('graphController', function ($scope) {
-  $scope.graph = ['Graph','Stuff','will', 'go', 'here'];
+
+
+
+
 });

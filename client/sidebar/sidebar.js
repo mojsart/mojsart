@@ -6,10 +6,11 @@ angular.module('mojsart.main.sidebar', ['ui.router'])
     .state('mojsart.main.sidebar', {
       url: '/main',
       templateUrl: 'sidebar/sidebar.tpl.html',
-      controller: 'SidePanel'
+      controller: 'SideBar'
     });
 })
-.controller('SidePanel', function ($scope) {
+.controller('SideBar', function ($scope) {
   console.log('inside  sidepanel Controller');
   $scope.questions = ['song','questions','will', 'go', 'here'];
 });
+console.log("I am running");

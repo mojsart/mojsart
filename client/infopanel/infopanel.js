@@ -6,10 +6,11 @@ angular.module('mojsart.main.infopanel', ['ui.router'])
     .state('mojsart.main.infopanel', {
       url: '/main',
       templateUrl: 'infopanel/infopanel.tpl.html',
-      controller: 'infopanelController'
+      controller: 'InfoController'
     });
 })
-.controller('infopanelController', function ($scope) {
+.controller('InfoController', function ($scope) {
+  console.log('inside info controller');
   $scope.songinfo = ['Info','About','Songs', 'goes', 'here'];
 });
 
