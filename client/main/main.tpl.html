@@ -1,6 +1,6 @@
 <!-- nav bar for entire app -->
 <header>
-  <nav class='navbar navbar-default navbar-fixed-top' role='navigation'>
+  <nav class='navbar navbar-default' role='navigation'>
     <div class='container-fluid'>
       <div class='navbar-header'>
         <a class="navbar-brand" ui-sref='mojsart.main'>mojsart</a>
@@ -18,12 +18,19 @@
 </header>
 
 <!-- template loaded here -->
-<main ui-view>
 
-</main>
+<div class='container-fluid'>
+<div class='row assets'>
+<div class= 'col-md-3' ui-view='sidebar'></div>
+<div class='col-md-9' ui-view='graph'></div>
+</div>
+<div class='row ending'>
+<div class='col-md-12' ui-view='infopanel'></div>
+</div>
 
 <!-- footer for the whole app -->
 <footer>
+
 
 </footer>
 

@@ -10,8 +10,10 @@
   .config(function ($stateProvider) {
     $stateProvider
       .state('mojsart', {
+        url: '/mojsart',
         abstract: true,
-        template: '<ui-view></ui-view>'
+        templateUrl: 'main/main.tpl.html',
+        controller: 'MainController',
       });
   })
   .run(function ($state) {
