@@ -11,4 +11,5 @@ angular.module('mojsart.main.note', ['ui.router'])
 })
 .controller('NoteController', function ($scope) {
   $scope.notes = [];
+  $scope.chartData = [21,1,5];
 });
