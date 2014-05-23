@@ -63,15 +63,31 @@
               .data(data)
               .enter()
                 .append("circle")
-                .on("click", function(d, i){return scope.onClick({item: d});})
-                .attr("r", 0) // height of each bar
+                .on("click", function(d, i) {
+                  var artist = d.echoData.artist;
+                  var title = d.echoData.title;
+                  var x = d3.select(this).attr('cx');
+                  var y = d3.select(this).attr('cy');
+                  return console.log(artist, '-', title, ': (' + x + ', ' + y + ')');
+                })
+                .on("mouseover", function() {
+                  d3.select(this)
+                    .attr("fill", "orange")
+                    .attr("stroke", "orange");
+                })
+                .on("mouseout", function() {
+                  d3.select(this)
+                    .attr("fill", "black")
+                    .attr("stroke", "black");
+                })
+                .attr("r", 0) // radius
                 .attr("cx",function() { return width*Math.random(); })
                 .attr("cy", function() { return height*Math.random(); })
                 .transition()
                   .duration(1000) // time of duration
-                .attr("r", 20)
-                .attr("cx",function(d) { return width*(d.speechiness + d.acousticness/2); })
-                .attr("cy", function(d) { return height*(d.energy + d.danceability)/2; });
+                .attr("r", function(d) { return Math.abs(5 * d.echoData.audio_summary.loudness); })
+                .attr("cx",function(d) { return width*(d.echoData.audio_summary.speechiness + d.echoData.audio_summary.acousticness/2); })
+                .attr("cy", function(d) { return height*(d.echoData.audio_summary.energy + d.echoData.audio_summary.danceability)/2; });
           };
         });
       }
