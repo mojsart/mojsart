@@ -1,24 +1,3 @@
-
-
 #messages {
   color: #d3d3d3;
-}
-.sidepanel {
-  background-color: #b2d1c8;
-  height:70vh;
-}
-
-.infopanel {
-  background-color: #81a193;
-
-}
-.graph {
-background-color: #857d87;
-height:70vh;
-}
-.assets{
-  height: 70vh;
-}
-.ending{
-  height: 30vh;
 }
