@@ -17,13 +17,43 @@ module.exports = exports = {
   },
 
   post: function (req, res, next) {
-    var song = req.body.song;
+    // TODO: need to check if req.body is the entire song db entry    
+    var song = req.body;
     var $promise = Q.nbind(Song.create, Song);
     $promise(song)
       .then(function (id) {
         res.send(id);
       })
       .fail(function (reason) {
+        next(reason);
+      });
+  },
+
+  postUserData: function(req, res, next) {
+    // validate song data 
+    // add to db if not  ??? do we need this for now... 
+    // update database for everything in object
+
+    // TODO: need to check if req.body is the entire song db entry
+    var reqSong = req.body;
+    var reqSongmd5 = req.body.echoData.md5;
+    var $promise = Q.nbind(Song.findOneAndUpdate, Song);
+
+    var query = {
+      'echoData.md5': reqSong.md5
+    };
+
+    var options = {
+      'new': true,
+      'upsert': true
+    };
+
+    // i think this theoretically will work but doesn't account for i
+    $promise(query, reqSong, options)
+      .then(function (song) {
+        res.json(song);
+      })
+      .fail(function(reason){
         next(reason);
       });
   },
