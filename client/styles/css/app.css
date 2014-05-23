@@ -5,7 +5,7 @@
 }
 .sidepanel {
   background-color: #b2d1c8;
-  height:70vh;
+  height:50vh;
 }
 
 .infopanel {
@@ -14,10 +14,10 @@
 }
 .graph {
 background-color: #857d87;
-height:70vh;
+height:50vh;
 }
 .assets{
-  height: 70vh;
+  height: 50vh;
 }
 .ending{
   height: 30vh;

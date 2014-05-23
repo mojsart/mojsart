@@ -9,7 +9,7 @@ angular.module('mojsart.main.sidebar', ['ui.router'])
       controller: 'SideBar'
     });
 })
-.controller('SideBar', function ($scope) {
+.controller('SideBar', function ($scope, $firebase) {
   console.log('inside  sidepanel Controller');
   $scope.questions = ['song','questions','will', 'go', 'here'];
 });

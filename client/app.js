@@ -1,7 +1,7 @@
 (function (angular) {
   "use strict";
   angular.module('mojsart', [
-    'fx.animations',
+    'fx.animations','firebase',
     'ngAnimate',
     // 'ngTouch',
     // 'ngCookies',

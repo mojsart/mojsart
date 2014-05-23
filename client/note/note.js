@@ -9,6 +9,6 @@ angular.module('mojsart.main.note', ['ui.router'])
       controller: 'NoteController'
     });
 })
-.controller('NoteController', function ($scope) {
+.controller('NoteController', function ($scope, $firebase) {
   $scope.notes = [];
 });

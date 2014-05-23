@@ -9,7 +9,7 @@ angular.module('mojsart.main.graph', ['ui.router'])
       controller: 'graphController'
     });
 })
-.controller('graphController', function ($scope) {
+.controller('graphController', function ($scope, $firebase) {
 
 
 
