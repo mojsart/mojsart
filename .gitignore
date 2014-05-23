@@ -4,3 +4,4 @@ client/lib
 ._.DS_Store
 DS_Store
 _.DS_Store
+server/main/api_config.js
