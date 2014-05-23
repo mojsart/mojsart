@@ -69,26 +69,12 @@ module.exports = exports = {
     //   md5: 'cfa55a902533b32e87473c2218b39da9',
     //   bucket: 'audio_summary'
     // }
-    // console.log(echo);
-    // console.log('fetch query', query);
 
     echo('track/profile').get(query, function (err, json) {
       if (err) throw(err);
       console.log(json);
       exports.saveSong(json.response.track);
     });
-
-    // var $promise = Q.nbind(echo('track/profile').get);
-    // console.log($promise);
-    // $promise(query)
-    //   .then(function (json) {
-    //     // grab the track info from the response
-    //     console.log('response from fetch', json.response);
-    //     exports.saveSong(json.response.track);
-    //   })
-    //   .fail(function (reason){
-    //     throw(reason);
-    //   });
   },
 
   saveSong: function(trackData) {
