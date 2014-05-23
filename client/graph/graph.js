@@ -9,7 +9,6 @@ angular.module('mojsart.main.graph', ['ui.router'])
       controller: 'GraphController'
     });
 })
-<<<<<<< HEAD
 .controller('GraphController', function ($scope, $http) {
   $http.get('/song')
     .success(function(json) {
