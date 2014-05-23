@@ -11,6 +11,16 @@ angular.module('mojsart.main.sidebar', ['ui.router'])
 })
 .controller('SideBar', function ($scope) {
   console.log('inside  sidepanel Controller');
-  $scope.questions = ['song','questions','will', 'go', 'here'];
+  $scope.buttonStatus =  'full';
+  $scope.songs = ['Let it be','Run Like an Antelope','Killer Queen'];
+
+
+
+
+
+
+
+
 });
-console.log("I am running");
+
+

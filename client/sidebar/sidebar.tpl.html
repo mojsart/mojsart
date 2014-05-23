@@ -1,12 +1,20 @@
 
-<div class="sidepanel">
-  <h2>Sidebar</h2>
-  <section>
-    I am the sidebar
-  </section>
-  <li ng-repeat='q in questions'>
-  {{q}}
-</li>
+<div class="sidepanel container">
+  <h2>Curate your collection</h2>
+  <h5>
+Compare songs to update the global music graph</h5>
+
+
+<div class='container'</div>
+  <div class="happy" ng-repeat="song in songs">
+  <span class="songtitle">{{song}}</p>
+    <span class="polling">
+        <label class="btn-xs btn-primary" ng-model="radioModel" btn-radio="'Left'">Happy++</label>
+        <label class="btn-xs btn-primary" ng-model="radioModel" btn-radio="'Right'">Happy--</label>
+    </span>
+    </span>
+    </div>
+    </div>
 </div>
-</div>
+
 
