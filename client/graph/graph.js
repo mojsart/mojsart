@@ -9,9 +9,15 @@ angular.module('mojsart.main.graph', ['ui.router'])
       controller: 'GraphController'
     });
 })
-.controller('GraphController', function ($scope) {
+.controller('GraphController', function ($scope, $http) {
+  $http.get('/song')
+    .success(function(json) {
+      console.log(json);
+      $scope.data = json;
+    });
+});
 
-  var song1 = {
+/*  var song1 = {
     speechiness: 0.2,
     acousticness: 0.5,
     energy: 0.8,
@@ -24,7 +30,4 @@ angular.module('mojsart.main.graph', ['ui.router'])
     acousticness: 0.3,
     energy: 0.6,
     danceability: 0.6
-  };
-  $scope.data = [song1, song2];
-
-});
+  };*/
