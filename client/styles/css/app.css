@@ -3,21 +3,18 @@
 }
 .sidepanel {
   background-color: #b2d1c8;
-  height: 60vh;
-}
-.polling{
-  width:10vh;
+  height: 70vh;
 }
 .infopanel {
   background-color: #81a193;
 }
 .graph {
   background-color: #857d87;
-  height: 60vh;
+  height: 70vh;
 }
 .assets {
-  height: 60vh;
+  height: 70vh;
 }
 .ending {
-  height: 40vh;
+  height: 30vh;
 }
