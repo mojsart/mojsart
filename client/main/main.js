@@ -1,6 +1,6 @@
 (function (angular) {
   "use strict";
-  angular.module('mojsart.main', ['ui.router', 'mojsart.main.note', 'mojsart.main.sidebar', 'mojsart.main.graph','mojsart.main.infopanel'])
+  angular.module('mojsart.main', ['ui.router', 'mojsart.main.sidebar', 'mojsart.main.graph','mojsart.main.infopanel'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('mojsart.main', {
