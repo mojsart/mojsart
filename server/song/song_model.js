@@ -19,12 +19,12 @@ var SongSchema = new mongoose.Schema({
       liveness: Number,
       tempo: Number
     }
-  }
+  },
   // TODO: Allow User Data
-  // userData: {
-  //   speechiness: Number,
-  //   acousticness: Number
-  // }
+  userData: {
+    speechiness: Number,
+    acousticness: Number
+  }
 });
 
 module.exports = exports = mongoose.model('Song', SongSchema);

@@ -69,8 +69,6 @@ module.exports = exports = {
     // create a song model
     // populate with echo nest data
 
-    // TODO: implement functionality to ignore songs already in db (based on md5)
-
     var song = new Song({
       echoData: {
         artist: trackData.artist,
@@ -88,6 +86,10 @@ module.exports = exports = {
           liveness: trackData.audio_summary.liveness,
           tempo: trackData.audio_summary.tempo
         }
+      }, 
+      userData: {
+        speechiness: null,
+        acousticness: null        
       }
     });
 
