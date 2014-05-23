@@ -3,11 +3,11 @@
 var express = require('express');
 var app = express();
 var routers = {};
-var NoteRouter = express.Router();
-routers.NoteRouter = NoteRouter;
+var SongRouter = express.Router();
+routers.SongRouter = SongRouter;
 
 require('./config.js')(app, express, routers);
 
-require('../note/note_routes.js')(NoteRouter);
+require('../song/song_routes.js')(SongRouter);
 
 module.exports = exports = app;

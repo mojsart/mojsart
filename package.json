@@ -4,7 +4,8 @@
   "dependencies": {
     "express": "*",
     "mongoose": "*",
-    "q": "*"
+    "q": "*",
+    "echojs": "^0.1.4"
   },
   "devDependencies": {
     "gulp": "*",
