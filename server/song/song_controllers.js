@@ -30,41 +30,36 @@ module.exports = exports = {
   },
 
   postUserData: function(req, res, next) {
-    // validate song data 
-    // add to db if not  ??? do we need this for now... 
-    // update database for everything in object
+    // TODO: need to implement functionality for artist/title instead of md5
+    console.log('inside postUserData with', req.body);
+    
+    var base = req.body.base;
+    var compare = req.body.compare;
+    var increment = req.body.increment;
 
-    // TODO: need to check if req.body is the entire song db entry
-    var reqSong = req.body;
-
-    // fetches md5 
-    // TODO: need to implement functionality for id if needed
-    var reqSongmd5 = req.body.echoData.md5;
-
-    // initializes promise for Song.findOneAndUpdate
-    var $promise = Q.nbind(Song.findOneAndUpdate, Song);
-
-    //search query based on md5
-    // TODO: need to implement functionality for id
-    var query = {
-      'echoData.md5': reqSong.md5
-    };
+    Q.all([
+      Q(Song.findOne({'echoData.md5': base}).exec()),
+      Q(Song.findOne({'echoData.md5': compare}).exec())
+    ]).then(function(array) {
+      console.log('calling adjust on', array[0].echoData.title, 'and', array[1].echoData.title, 'with increment', increment);
+      array[0].adjust(array[1], increment);
+    });
 
     // findOneAndUpdate Options 
     // upsert inserts if it doesnt exist in DB
-    var options = {
-      'new': true,
-      'upsert': true
-    };
+    // var options = {
+    //   'new': true,
+    //   'upsert': true
+    // };
 
     // i think this theoretically will work but doesn't account for i
     // calls findOneAndUpdate for the md5, responding with the new song data
-    $promise(query, reqSong, options)
-      .then(function (song) {
-        res.json(song);
-      })
-      .fail(function(reason){
-        next(reason);
-      });
+    // $pFindOne(query, options)
+    //   .then(function (song) {
+    //     res.json(song);
+    //   })
+    //   .fail(function(reason){
+    //     next(reason);
+    //   });
   }
 };
