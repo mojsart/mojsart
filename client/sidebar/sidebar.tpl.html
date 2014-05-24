@@ -1,20 +1,20 @@
 
 <div class="sidepanel container">
   <h2>Curate your collection</h2>
-  <h5>
-Compare songs to update the global music graph</h5>
+  <h5>Compare songs to update the global music graph</h5>
 
+  <div class='container'</div>
+    <h4>{{sharedState.title}}</h4>
+    <div class="happy" ng-repeat="song in songs">
+      <span class="songtitle">{{song}}</p>
+        <span class="polling">
+          <label class="btn-xs btn-primary" ng-model="radioModel" btn-radio="'Left'">Happy++</label>
+          <label class="btn-xs btn-primary" ng-model="radioModel" btn-radio="'Right'">Happy--</label>
+        </span>
+      </span>
+    </div>
+  </div>
 
-<div class='container'</div>
-  <div class="happy" ng-repeat="song in songs">
-  <span class="songtitle">{{song}}</p>
-    <span class="polling">
-        <label class="btn-xs btn-primary" ng-model="radioModel" btn-radio="'Left'">Happy++</label>
-        <label class="btn-xs btn-primary" ng-model="radioModel" btn-radio="'Right'">Happy--</label>
-    </span>
-    </span>
-    </div>
-    </div>
 </div>
 
 
