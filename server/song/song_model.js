@@ -31,4 +31,9 @@ var SongSchema = new mongoose.Schema({
   uri: String
 });
 
+SongSchema.methods.adjust = function(compare, increment) {
+  console.log('adjusting', this.echoData.title, 'and', compare.echoData.title, 'with increment', increment);
+  // TODO: write adjusting function
+};
+
 module.exports = exports = mongoose.model('Song', SongSchema);

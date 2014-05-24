@@ -13,8 +13,8 @@
       <td>{{song.title}}</td>
       <td>{{song.track}}</td>
       <td>
-        <label class="btn-xs btn-primary" ng-click='countUp(song)' btn-radio="'Left'">Up-vote</label>
-        <label class="btn-xs btn-primary" ng-click='countDown(song)' btn-radio="'Right'">Down-Vote</label>
+        <label class="btn-xs btn-primary" ng-click='postVote(song, "up")' btn-radio="'Left'">Up-vote</label>
+        <label class="btn-xs btn-primary" ng-click='postVote(song, "down")' btn-radio="'Right'">Down-Vote</label>
       </td>
     </tr>
   </table>

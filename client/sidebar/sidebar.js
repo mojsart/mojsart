@@ -29,22 +29,29 @@ angular.module('mojsart.main.sidebar', ['ui.router'])
     //returns an object comparing clicked-node song to another song in DB.
     //Covers case where user says song is "MORE x than clicked-node"
 
-  $scope.countUp = function(song){
+  $scope.postVote = function(song, upOrDown){
     var package = {};
     package.base = $scope.sharedState.md5;
     package.compare = song.echoId;
-    package.increment = +1;
-    return package;
+    if(upOrDown === 'up') {
+      package.increment = 1;
+    } else if(upOrDown === 'down') {
+      package.increment = -1;
+    }
+    console.log('Attemping to post vote for', package.base, 'vs', package.compare);
+    $http.post('/song', package).success(function () {
+      console.log('Successfully posted', package.base, 'vs', package.compare);
+    });
   };
       //Covers case where user says song is "LESS x than clicked-node"
 
-  $scope.countDown = function(song){
-    var package = {};
-    package.base = $scope.sharedState.md5;
-    package.compare = song.echoId;
-    package.increment = -1;
-    return package;
-  };
+  // $scope.countDown = function(song){
+  //   var package = {};
+  //   package.base = $scope.sharedState.md5;
+  //   package.compare = song.echoId;
+  //   package.increment = -1;
+  //   $http.post('/song', package);
+  // };
 
 
 });
