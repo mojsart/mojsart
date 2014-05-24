@@ -14,7 +14,15 @@
         controller: 'MainController',
       });
   })
-  .controller('MainController', function ($state, $scope) {
+  .controller('MainController', function ($state, $scope, $http) {
+  $scope.getSongs = function () {
+    $http.get('/song')
+    .success(function(json) {
+      console.log(json);
+      $scope.sharedState.data = json;
+    });
+  };
+  $scope.getSongs();
     $scope.sharedState = {};
     // $scope.sharedStare.on('change', function() {console.log('change');}); // this doesn't work
     // $state.transitionTo('mojsart.main.note');

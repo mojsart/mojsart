@@ -9,16 +9,7 @@ angular.module('mojsart.main.graph', ['ui.router'])
       controller: 'GraphController'
     });
 })
-.controller('GraphController', function ($scope, $http) {
-  $scope.getSongs = function () {
-    $http.get('/song')
-    .success(function(json) {
-      console.log(json);
-      $scope.data = json;
-    });
-  };
-  $scope.getSongs();
-
+.controller('GraphController', function ($scope) {
   // this function does not do what it says as of now. for now all it does is update
   // the parent scope's sharedState object, which the sidebar uses to update the
   // song that is playing. this function is fired when the user clicks on any given
