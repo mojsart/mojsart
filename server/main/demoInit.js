@@ -1,7 +1,7 @@
 var Song = require('../song/song_model.js'),
     Q    = require('q'),
     echo = require('./echo.js'),
-    SongControllers = require('../song/song_controllers.js');
+    SongHelpers = require('../song/song_helpers.js');
 
 // hard coded md5 ids to load into db
 var songArr = [
@@ -18,22 +18,17 @@ var songArr = [
 ];
 
 module.exports = exports = function(req, res) {
-  var $promiseDBFindOne = Q.nbind(Song.findOne, Song);
-
   for (var i=0; i<songArr.length; i++){
-    // asynchronus
+    // asynchronus closure scope
     (function(counter) {
-      $promiseDBFindOne({'echoData.md5': songArr[counter]})
-        .then(function(song) {
-          if (!song) {
-            var query = {bucket: 'audio_summary'};
-            query.md5 = songArr[counter];
-            SongControllers.fetchSong(query);
-          }
-        })
-        .fail(function(reason) {
-          console.log(reason);
-        });
+      // search for the md5
+      console.log(songArr[counter])
+      SongHelpers.checkSongMD5DB(songArr[counter], function(md5){
+        console.log('checking md5', md5)
+        var query = {bucket: 'audio_summary'};
+        query.md5 = md5;
+        SongHelpers.fetchSongMD5(query);        
+      });
     })(i);
   }    
 };

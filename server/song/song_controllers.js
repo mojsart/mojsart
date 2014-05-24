@@ -36,97 +36,35 @@ module.exports = exports = {
 
     // TODO: need to check if req.body is the entire song db entry
     var reqSong = req.body;
+
+    // fetches md5 
+    // TODO: need to implement functionality for id if needed
     var reqSongmd5 = req.body.echoData.md5;
+
+    // initializes promise for Song.findOneAndUpdate
     var $promise = Q.nbind(Song.findOneAndUpdate, Song);
 
+    //search query based on md5
+    // TODO: need to implement functionality for id
     var query = {
       'echoData.md5': reqSong.md5
     };
 
+    // findOneAndUpdate Options 
+    // upsert inserts if it doesnt exist in DB
     var options = {
       'new': true,
       'upsert': true
     };
 
     // i think this theoretically will work but doesn't account for i
+    // calls findOneAndUpdate for the md5, responding with the new song data
     $promise(query, reqSong, options)
       .then(function (song) {
         res.json(song);
       })
       .fail(function(reason){
         next(reason);
-      });
-  },
-
-  uploadSong: function (query) {
-    // TODO: implement uploading songs at some point
-
-    // fs.readFile(location, function (err, buffer) {
-    //   if (err) throw(err);
-    //   // console.log(buffer);
-    //   echo('track/upload').post({
-    //     filetype: path.extname(location).substr(1),
-    //   }, 'application/octet-stream', buffer, function (err, json) {
-    //     if (err) throw(err);
-    //     console.log(json.response.track.md5);
-    //     res.send(200, json.response);
-    //     echo('track/profile').get({
-    //       md5: json.response.track.md5,
-    //       bucket: 'audio_summary'
-    //     }, function (err, json) {
-    //       if (err) throw(err);
-    //       console.log(json.response);
-    //       res.send(200, json.response);
-    //     });      
-    //   });
-    // });
-  },
-
-  fetchSong: function(query) {
-    // query should be something like {
-    //   md5: 'cfa55a902533b32e87473c2218b39da9',
-    //   bucket: 'audio_summary'
-    // }
-
-    echo('track/profile').get(query, function (err, json) {
-      if (err) throw(err);
-      console.log(json.response.track);
-      exports.saveSong(json.response.track);
-    });
-  },
-
-  saveSong: function(trackData) {
-    // create a song model
-    // populate with echo nest data
-
-    var song = new Song({
-      echoData: {
-        artist: trackData.artist,
-        title: trackData.title,
-        md5: trackData.md5,
-        status: trackData.status,
-        audio_summary: {
-          danceability: trackData.audio_summary.danceability,
-          duration: trackData.audio_summary.duration,
-          energy: trackData.audio_summary.energy,
-          key: trackData.audio_summary.key,
-          loudness: trackData.audio_summary.loudness,
-          speechiness: trackData.audio_summary.speechiness,
-          acousticness: trackData.audio_summary.acousticness,
-          liveness: trackData.audio_summary.liveness,
-          tempo: trackData.audio_summary.tempo
-        }
-      }, 
-      userData: {
-        speechiness: null,
-        acousticness: null        
-      }
-    });
-
-    var $promise = Q.nbind(song.save, song);
-    $promise()
-      .then(function(saved) {
-        console.log('song saved: ', saved);
       });
   }
 };
