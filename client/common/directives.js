@@ -59,11 +59,25 @@
         //     // set the height based on the calculations above
             // svg.attr('height', height);
 
+            // sort data so smaller circles appear on top
+
+            data = data.sort(function (a, b) {
+              if (a.echoData.audio_summary.loudness > b.echoData.audio_summary.loudness)
+                return 1;
+              if (a.echoData.audio_summary.loudness < b.echoData.audio_summary.loudness)
+                return -1;
+              // a must be equal to b
+              return 0;
+            });
         //     //create the rectangles for the bar chart
-            svg.selectAll("circle")
+            // var color = d3.scale.category20();
+            var circles = svg.selectAll("circle")
               .data(data)
               .enter()
                 .append("circle")
+                  .attr("fill", "white")
+                  .attr("stroke", "black")
+                  .attr("stroke-width", 3)
                 .on("click", function(d, i) {
                   var artist = d.echoData.artist;
                   var title = d.echoData.title;
@@ -78,14 +92,21 @@
                 })
                 .on("mouseover", function() {
                   d3.select(this)
-                    .attr("fill", "orange")
-                    .attr("stroke", "orange");
+                    .transition()
+                    .attr("fill", "lightblue")
+                    // .attr("stroke", "lightblue")
+                    .attr("r", d3.select(this).attr("r")*1.2);
+                    
                 })
                 .on("mouseout", function() {
                   d3.select(this)
-                    .attr("fill", "black")
-                    .attr("stroke", "black");
+                    .transition()
+                    .attr("fill", "white")
+                    .attr("stroke", "black")
+                    .attr("r", d3.select(this).attr("r")/1.2);
                 })
+                     // .attr("fill",function(d,i){return color(i);})
+                     // .attr("stroke",function(d,i){return color(i);})
                 .attr("r", 0) // radius
                 .attr("cx",function() { return width*Math.random(); })
                 .attr("cy", function() { return height*Math.random(); })
