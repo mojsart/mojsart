@@ -87,8 +87,8 @@
                   scope.$apply(function() {scope.onClickThingy(d)});
                   // can't just do scope.onClickThingy because angular needs to know about it
                   // digest cycle
-
-                  return console.log(artist, '-', title, ': (' + x + ', ' + y + ')');
+                  console.log(artist, '-', title, ': (' + x + ', ' + y + ')');
+                  console.log('md5:', d.echoData.md5);
                 })
                 .on("mouseover", function() {
                   d3.select(this)
