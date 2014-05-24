@@ -20,11 +20,31 @@ angular.module('mojsart.main.sidebar', ['ui.router'])
   $http.get('/song')
     .success(function(json) {
       $scope.data = json;
-      console.log($scope.data[0].echoData.artist);
+      console.log($scope.data[0]);
       for (var i = 0; i < $scope.data.length; i++){
-        $scope.songs.push({'track': $scope.data[i].echoData.artist, 'title': $scope.data[i].echoData.title});
+        $scope.songs.push({'track': $scope.data[i].echoData.artist, 'title': $scope.data[i].echoData.title, 'echoId': $scope.data[i].echoData.md5});
       }
     });
+
+    //returns an object comparing clicked-node song to another song in DB.
+    //Covers case where user says song is "MORE x than clicked-node"
+
+  $scope.countUp = function(song){
+    var package = {};
+    package.base = $scope.sharedState.md5;
+    package.compare = song.echoId;
+    package.increment = +1;
+    return package;
+  };
+      //Covers case where user says song is "LESS x than clicked-node"
+
+  $scope.countDown = function(song){
+    var package = {};
+    package.base = $scope.sharedState.md5;
+    package.compare = song.echoId;
+    package.increment = -1;
+    return package;
+  };
+
+
 });
-
-
