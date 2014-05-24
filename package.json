@@ -5,7 +5,9 @@
     "express": "*",
     "mongoose": "*",
     "q": "*",
-    "echojs": "^0.1.4"
+    "echojs": "^0.1.4",
+    "node-fs": "^0.1.7",
+    "path": "^0.4.9"
   },
   "devDependencies": {
     "gulp": "*",

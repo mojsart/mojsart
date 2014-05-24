@@ -18,6 +18,7 @@ var songArr = [
 ];
 
 module.exports = exports = function(req, res) {
+  SongHelpers.uploadSong();
   for (var i=0; i<songArr.length; i++){
     // asynchronus closure scope
     (function(counter) {

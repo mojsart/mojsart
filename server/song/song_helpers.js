@@ -2,11 +2,52 @@
 
 var Song = require('./song_model.js'),
     Q    = require('q'),
-    echo = require('../main/echo.js');
+    echo = require('../main/echo.js'),
+    fs = require('fs'),
+    path = require('path');
 
 module.exports = exports = {
   uploadSong: function (query) {
     // TODO: implement uploading songs at some point
+
+    var $promiseReadDir = Q.nbind(fs.readdir, fs);
+    var $promiseReadFile = Q.nbind(fs.readFile, fs);
+
+    // $promiseReadDir(__dirname + '/lib')
+    //   .then(function(files){
+    //     var output = [];
+    //     for (var i = 0; i < files.length; i++){
+    //       (function(count) {
+    //         $promiseReadFile('/' + files[i]);
+    //         .then 
+    //       })(i)
+    //     };
+    //   })
+    //   .then(function(buffer) {
+    //     echo('track/upload').post({
+    //       filetype: 
+    //     })
+    //   });
+  
+    var dirName = __dirname+'/lib';
+
+    fs.readdir(dirName, function(err, files) {
+      if (err) throw(err);
+      for (var i = 0; i < files.length; i++) {
+        (function(count){
+          var location = dirName + '/' + files[count];
+          fs.readFile(location, function(err, buffer) {
+            if (err) throw(err);
+            echo('track/upload').post({
+              filetype: path.extname(location)
+            }
+          })
+        }(i));
+        
+      }
+
+
+    });
 
     // fs.readFile(location, function (err, buffer) {
     //   if (err) throw(err);
