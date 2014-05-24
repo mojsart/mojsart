@@ -8,6 +8,4 @@ module.exports = exports = function (router) {
     // post handles submits with new user inputs
     .post(controller.postUserData);
 
-  router.route('/play')
-    .post(controller.requestSong);
 };
