@@ -25,16 +25,16 @@
               .attr("width", "100%")
               .attr("height", "100%"); //TODO do not hardcode
 
-        //   // on window resize, re-render d3 canvas
-        //   window.onresize = function() {
-        //     return scope.$apply();
-        //   };
-        //   scope.$watch(function(){
-        //       return angular.element(window)[0].innerWidth;
-        //     }, function(){
-        //       return scope.render(scope.data);
-        //     }
-        //   );
+          // on window resize, re-render d3 canvas
+          window.onresize = function() {
+            return scope.$apply();
+          };
+          scope.$watch(function(){
+              return angular.element(window)[0].innerWidth;
+            }, function(){
+              return scope.render(scope.data);
+            }
+          );
 
         //   // watch for data changes and re-render
           scope.$watch('data', function(newVals, oldVals) {
@@ -108,8 +108,8 @@
                      // .attr("fill",function(d,i){return color(i);})
                      // .attr("stroke",function(d,i){return color(i);})
                 .attr("r", 0) // radius
-                .attr("cx",function() { return width*Math.random(); })
-                .attr("cy", function() { return height*Math.random(); })
+                // .attr("cx",function() { return width*Math.random(); })
+                // .attr("cy", function() { return height*Math.random(); })
                 .transition()
                   .duration(1000) // time of duration
                 .attr("r", function(d) { return Math.abs(5 * d.echoData.audio_summary.loudness); })
