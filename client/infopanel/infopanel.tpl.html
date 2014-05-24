@@ -1,8 +1,10 @@
 <div class='infopanel'>
-  <h2>Infopanel</h2>
+  <h2>Song info for {{sharedState.artist}} - {{sharedState.title}}</h2>
   <section>
-    I am the infopanel
-    <li ng-repeat='song in songinfo'>{{song}}</li>
+    <!-- <li ng-repeat='song in songinfo'>{{song}}</li> -->
+    <ul>
+      <li ng-repeat="(key, value) in sharedState.audio_summary">{{key}}: {{value}}</li>
+    </ul>
   </section>
   </div>
 

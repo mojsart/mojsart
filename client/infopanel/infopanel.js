@@ -11,7 +11,7 @@ angular.module('mojsart.main.infopanel', ['ui.router'])
 })
 .controller('InfoController', function ($scope) {
   console.log('inside info controller');
-  $scope.songinfo = ['Info','About','Songs', 'goes', 'here'];
+  // $scope.songinfo = ['Info','About','Songs', 'goes', 'here'];
 });
 
 

@@ -15,7 +15,8 @@
       scope: {
         data: "=",
         label: "@",
-        onClick: "&"
+        onClick: "&",
+        onClickThingy: "="
       },
       link: function(scope, iElement, iAttrs) {
         d3.d3().then(function(d3) {
@@ -68,6 +69,11 @@
                   var title = d.echoData.title;
                   var x = d3.select(this).attr('cx');
                   var y = d3.select(this).attr('cy');
+                  // console.log(scope.onClickThingy)
+                  scope.$apply(function() {scope.onClickThingy(d)});
+                  // can't just do scope.onClickThingy because angular needs to know about it
+                  // digest cycle
+
                   return console.log(artist, '-', title, ': (' + x + ', ' + y + ')');
                 })
                 .on("mouseover", function() {

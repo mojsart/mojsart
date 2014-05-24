@@ -10,11 +10,30 @@ angular.module('mojsart.main.graph', ['ui.router'])
     });
 })
 .controller('GraphController', function ($scope, $http) {
-  $http.get('/song')
+  $scope.getSongs = function () {
+    $http.get('/song')
     .success(function(json) {
       console.log(json);
       $scope.data = json;
     });
+  };
+  $scope.getSongs();
+
+  // this function does not do what it says as of now. for now all it does is update
+  // the parent scope's sharedState object, which the sidebar uses to update the
+  // song that is playing. this function is fired when the user clicks on any given
+  // node in the d3 visualization (see: directives.js and graph.tpl.html)
+  $scope.postFeedback = function (d) {
+    // $scope.sharedState.title = d.echoData.title;
+    // $scope.sharedState.artist = d.echoData.artist;
+    for(var property in d.echoData) {
+      $scope.sharedState[property] = d.echoData[property];
+    }
+    for(var property in d.echoData.audio_summary) {
+      $scope.sharedState.audio_summary[property] = d.echoData.audio_summary[property];
+    }
+  };
+  // $scope.postFeedback(d);
 });
 
 /*  var song1 = {
