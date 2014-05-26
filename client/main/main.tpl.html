@@ -20,14 +20,13 @@
   </nav>
 </header>
 <!-- template loaded here -->
-<ul class="side-nav medium-3 columns sidebar" ui-view='sidebar'></ul>
-<section>
-  <div class="row">
-    <div class="medium-6 columns graph" ui-view='graph'></div>
-    <div class='medium-6 columns infopanel' ui-view='infopanel'></div>
-  </div>
-</section
-
+<div class="container wrapper">
+  <div class="side-nav medium-2 columns sidebar" ui-view='sidebar'></div>
+<div class="row">
+  <div class="medium-8 columns graph" ui-view='graph'></div>
+  <div class='medium-2 columns infopanel' ui-view='infopanel'></div>
+</div>
+</div>
 
 
 <!-- footer for the whole app

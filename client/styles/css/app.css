@@ -4,20 +4,19 @@
 body {
   background-color: #b2d1c8;
 }
+.wrapper{
+	height:80vh;
+}
 .sidebar {
   background-color: #b2d1c8;
   margin-top: 0;
 }
 .infopanel {
   background-color: #b2d1c8;
-  width: 70vw;
-  height: 20vw;
+  float: right;
 }
 .graph {
   background-color: #857d87;
   margin-top: 20px;
-  margin-left: 11px;
-  width: 70vw;
-  height: 50vw;
-  right: -20px;
+  margin-left: 80px;
 }
