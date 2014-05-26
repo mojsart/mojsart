@@ -13,7 +13,7 @@ angular.module('mojsart.main.sidebar', ['ui.router'])
 .controller('SideBarController', function ($scope, $http) {
   $scope.buttonStatus =  'full';
   $scope.songs = [];
-  $scope.quantity = 5;
+  $scope.quantity = 3;
 
 
 //Fetches all songs when app starts, loads Track and Title into Songs Array

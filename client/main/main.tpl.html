@@ -1,36 +1,37 @@
 <!-- nav bar for entire app -->
 <header>
-  <nav class='navbar navbar-default' role='navigation'>
-    <div class='container-fluid'>
-      <div class='navbar-header'>
-        <a class="navbar-brand" ui-sref='mojsart.main'>mojsart</a>
-      </div>
-      <ul class="nav navbar-nav">
-        <li>
+  <nav class='top-bar' role='navigation'>
+    <ul class="title-area">
+      <li class="name">
+         <h1><a><ui-sref='mojsart.main'>Mojsart</a></h1>
+       </li>
+     </ul>
+    <section class="top-bar-section">
+        <ul class="left">
+          <li class="active">
           <a ui-sref="mojsart.main">Home</a>
-        </li>
-        <li>
-          <a ui-sref="mojsart.main.note">Notes</a>
+          </li>
+          <li>
+<!--             TODO:Add link to About Page
+ -->          <a ui-sref="mojsart.main.note">About</a>
         </li>
       </ul>
-    </div>
+    </section>
   </nav>
 </header>
-
 <!-- template loaded here -->
+<ul class="side-nav medium-3 columns sidebar" ui-view='sidebar'></ul>
+<section>
+  <div class="row">
+    <div class="medium-6 columns graph" ui-view='graph'></div>
+    <div class='medium-6 columns infopanel' ui-view='infopanel'></div>
+  </div>
+</section
 
-<div class='container-fluid'>
-<div class='row assets'>
-<div class= 'col-md-3' ui-view='sidebar'></div>
-<div class='col-md-9' ui-view='graph'></div>
-</div>
-<div class='row ending'>
-<div class='col-md-12' ui-view='infopanel'></div>
-</div>
 
-<!-- footer for the whole app -->
-<footer>
 
+<!-- footer for the whole app
+ --><footer>
 
 </footer>
 
