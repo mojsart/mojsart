@@ -2,12 +2,11 @@
   "name": "mojsart",
   "version": "",
   "dependencies": {
-    "bootstrap-css-only": "*",
-    "angular": "*" ,
+    "angular": "*",
     "angular-touch": "*",
     "angular-cookies": "*",
     "ng-Fx": "*",
-    "angular-ui-router": "*"
+    "angular-ui-router": "*",
+    "foundation": "~5.2.2"
   }
 }
-

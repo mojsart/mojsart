@@ -1,9 +1,9 @@
-
-<div ng-controller='SideBarController' class="sidepanel">
-  <h2>Curate your collection</h2>
-  <h5>Compare songs to update the global music graph</h5>
+<div class='row'>
+<div ng-controller='SideBarController' class="sidepanel sidebar">
   <h4>{{sharedState.title}}</h4>
   <table class = "happy votes">
+  <h4>Curate your collection</h2>
+  <h5>Compare songs to update the global music graph</h5>
     <tr>
       <th>Artist</th>
       <th>Track</th>
@@ -13,11 +13,16 @@
       <td>{{song.title}}</td>
       <td>{{song.track}}</td>
       <td>
-        <label class="btn-xs btn-primary" ng-click='postVote(song, "up")' btn-radio="'Left'">Up-vote</label>
-        <label class="btn-xs btn-primary" ng-click='postVote(song, "down")' btn-radio="'Right'">Down-Vote</label>
+        <div class = 'button-bar'</div>
+        <ul class="button-group radqius round]">
+          <label class="tiny button" ng-click='postVote(song, "up")'>Up-vote</label>
+          <label class="tiny button" ng-click='postVote(song, "down")'>Down-Vote</label>
+        </ul>
+        </div>
       </td>
     </tr>
   </table>
 </div>
-
+</div>
+</div>
 
