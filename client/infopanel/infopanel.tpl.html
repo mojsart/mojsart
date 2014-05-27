@@ -1,10 +1,10 @@
 <div>
-  <h2>Song info for {{sharedState.artist}} - {{sharedState.title}}</h2>
-  <section>
+	<h4>Click any node to begin comparison"</h4>
+	<audio controls auto-play></audio>
+  <h5>Song info for {{sharedState.artist}} - {{sharedState.title}}</h5>
     <!-- <li ng-repeat='song in songinfo'>{{song}}</li> -->
     <ul>
       <li ng-repeat="(key, value) in sharedState.audio_summary">{{key}}: {{value}}</li>
     </ul>
-  </section>
   </div>
 
