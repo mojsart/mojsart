@@ -11,4 +11,6 @@ module.exports = exports = function (router) {
   // serving audio file route
   router.route('/md5/*')
     .get(controller.getSong);
+  router.rout('/upload')
+    .post(controller.postSong);
 };
