@@ -16,9 +16,9 @@ body {
   background-color: #857d87;
   margin-top: 20px;
   margin-left: 80px;
-  height:87vh;
-  border-style:inset;
-  border-width:5px;
+  height: 87vh;
+  border-style: inset;
+  border-width: 5px;
 }
 .plusbtn {
   -moz-box-shadow: inset 0px 1px 0px 0px #c1ed9c;
