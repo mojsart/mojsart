@@ -10,7 +10,7 @@ module.exports = exports = {
 
   // need to accept posts from client
   // TODO: promisify, refactor -- callback hell... 
-  uploadSongs: function () {
+  uploadSongs: function() {
 
     var dirName = __dirname+'/lib';
     var responseArr = [];
@@ -18,7 +18,6 @@ module.exports = exports = {
     // read song directory on server
     fs.readdir(dirName, function(err, files) {
       if (err) throw(err);
-
       // for each song on the server
       for (var i = 0; i < files.length; i++) {
         (function(count) {
@@ -30,7 +29,6 @@ module.exports = exports = {
             // read the file
             fs.readFile(location, function(err, buffer) {
               if (err) throw(err);
-
               // upload to echo nest
               echo('track/upload').post({
                 filetype: path.extname(location).substr(1)
@@ -38,7 +36,6 @@ module.exports = exports = {
                 console.log('sending to echo');
                 if (err) throw(err);
                 console.log(json.response.track.md5);
-
                 // once song has be acknowledged, start checking to see if the song's md5 exists in our DB -- probably can be
                 // removed
                 exports.checkSongMD5DB(json.response.track.md5, function(md5) {
@@ -48,12 +45,10 @@ module.exports = exports = {
                     console.log('executing scope');
                     // set to check echonest every 2 seconds to see if the song has been processed by echonest
                     var waittime = 2000;
-
                     var interval = setInterval(function(md5){
                       console.log('checking md5', md5)
                       var query = {bucket: 'audio_summary'};
                       query.md5 = md5;
-                      
                       // arguments : query with the desired md5, boolean to state whether there is a boolean
                       // filename to save, and the interval object which is needed to clearInterval
                       exports.fetchSongMD5(query, false, filename, interval);                    
@@ -62,13 +57,13 @@ module.exports = exports = {
                   scope(md5)
                 });
               });
-
             });         
           })
         // scope for the for loop
         })(i);
       }
     });
+
   },
 
   fetchSongMD5: function(query, bool, filename, interval) {
@@ -166,4 +161,5 @@ module.exports = exports = {
         console.log(reason);
       });    
   }
+
 };
