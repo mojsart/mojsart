@@ -8,4 +8,7 @@ module.exports = exports = function (router) {
     // post handles submits with new user inputs
     .post(controller.postUserData);
 
+  // serving audio file route
+  router.route('/md5/*')
+    .get(controller.getSong);
 };

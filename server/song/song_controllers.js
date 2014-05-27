@@ -6,8 +6,7 @@ var Song = require('./song_model.js'),
 
 module.exports = exports = {
   get: function (req, res, next) {
-    var $promise = Q.nbind(Song.find, Song);
-    $promise()
+    Q(Song.find().exec())
       .then(function (songs) {
         res.json(songs);
       })
@@ -19,8 +18,7 @@ module.exports = exports = {
   post: function (req, res, next) {
     // TODO: need to check if req.body is the entire song db entry    
     var song = req.body;
-    var $promise = Q.nbind(Song.create, Song);
-    $promise(song)
+    Q(Song.create(song).exec())
       .then(function (id) {
         res.send(id);
       })
@@ -60,6 +58,29 @@ module.exports = exports = {
     //   })
     //   .fail(function(reason){
     //     next(reason);
-    //   });
+    //   });,
+  },
+
+
+  // consider breaking the below function into two requests to get an actual url with a file name
+  getSong: function(req, res, next) {
+    // grab md5 from request URL
+    var md5 = req.params[0];
+
+    Q(Song.findOne({'echoData.md5': md5}).exec())
+      .then(function(song) {
+        // build path to song
+        var filename = song.filename;
+
+        // build path based on server folder structure
+        var dirName = __dirname+'/lib';
+        var path = dirName + '/' + filename;
+
+        // serve static audio file
+        res.sendfile(path);
+      })
+      .fail(function(err) {
+        throw(err);
+      });
   }
 };

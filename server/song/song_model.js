@@ -28,7 +28,7 @@ var SongSchema = new mongoose.Schema({
     speechiness: Number,
     acousticness: Number
   },
-  uri: String
+  filename: String
 });
 
 SongSchema.methods.adjust = function(compare, increment) {
