@@ -9,7 +9,7 @@ var Song = require('./song_model.js'),
 module.exports = exports = {
 
   // in progress - echonest api currently broken
-  uploadSongs: function (query) {
+  uploadSongs: function () {
     // TODO: change to promises
 
     var dirName = __dirname+'/lib';
