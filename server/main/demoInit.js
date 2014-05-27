@@ -4,6 +4,7 @@ var Song = require('../song/song_model.js'),
     SongHelpers = require('../song/song_helpers.js');
 
 // hard coded md5 ids to load into db
+// only last one is currently found in the db
 var songArr = [
   'cfa55a902533b32e87473c2218b39da9',
   'abe657f8ae463c3bcffad1edeffd39dd',
@@ -18,7 +19,7 @@ var songArr = [
 ];
 
 module.exports = exports = function(req, res) {
-  SongHelpers.uploadSong();
+  // SongHelpers.uploadSongs();
   for (var i=0; i<songArr.length; i++){
     // asynchronus closure scope
     (function(counter) {
@@ -28,7 +29,12 @@ module.exports = exports = function(req, res) {
         console.log('checking md5', md5)
         var query = {bucket: 'audio_summary'};
         query.md5 = md5;
-        SongHelpers.fetchSongMD5(query);        
+        if (counter === songArr.length-1) {
+          // hard code one song to the stored mp3
+          SongHelpers.fetchSongMD5(query, false, 'Kick Us Out Feat. Clinton Sparks & The Cataracs (Get Familiar Remix).mp3');        
+        } else {
+          SongHelpers.fetchSongMD5(query);
+        }
       });
     })(i);
   }    

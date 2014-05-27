@@ -7,67 +7,44 @@ var Song = require('./song_model.js'),
     path = require('path');
 
 module.exports = exports = {
-  uploadSong: function (query) {
-    // TODO: implement uploading songs at some point
 
-    var $promiseReadDir = Q.nbind(fs.readdir, fs);
-    var $promiseReadFile = Q.nbind(fs.readFile, fs);
+  // in progress - echonest api currently broken
+  uploadSongs: function (query) {
+    // TODO: change to promises
 
-    // $promiseReadDir(__dirname + '/lib')
-    //   .then(function(files){
-    //     var output = [];
-    //     for (var i = 0; i < files.length; i++){
-    //       (function(count) {
-    //         $promiseReadFile('/' + files[i]);
-    //         .then 
-    //       })(i)
-    //     };
-    //   })
-    //   .then(function(buffer) {
-    //     echo('track/upload').post({
-    //       filetype: 
-    //     })
-    //   });
-  
     var dirName = __dirname+'/lib';
+    var responseArr = [];
 
+    // TODO: promisify
     fs.readdir(dirName, function(err, files) {
       if (err) throw(err);
       for (var i = 0; i < files.length; i++) {
-        (function(count){
+        (function(count) {
           var location = dirName + '/' + files[count];
+          console.log('location', location);
+          console.log('filename', files[count]);
           fs.readFile(location, function(err, buffer) {
             if (err) throw(err);
+            console.log('read file', buffer);
+
             echo('track/upload').post({
-              filetype: path.extname(location)
-            }
-          })
-        }(i));
-        
+              filetype: path.extname(location).substr(1)
+            }, 'application/octet-stream', buffer, function (err, json) {
+              console.log('sending to echo');
+              if (err) throw(err);
+              console.log(json.response.track.md5);
+
+              // need to find a better way of doing this
+              // does this even work how i think it does
+              // TODO: should we save entire location?
+              setInterval(function(md5){
+                fetchSongMD5(md5, false, files[count]);
+              }, 2000, json.response.track.md5);
+            });
+          });
+        })(i);
       }
-
-
     });
-
-    // fs.readFile(location, function (err, buffer) {
-    //   if (err) throw(err);
-    //   // console.log(buffer);
-    //   echo('track/upload').post({
-    //     filetype: path.extname(location).substr(1),
-    //   }, 'application/octet-stream', buffer, function (err, json) {
-    //     if (err) throw(err);
-    //     console.log(json.response.track.md5);
-    //     res.send(200, json.response);
-    //     echo('track/profile').get({
-    //       md5: json.response.track.md5,
-    //       bucket: 'audio_summary'
-    //     }, function (err, json) {
-    //       if (err) throw(err);
-    //       console.log(json.response);
-    //       res.send(200, json.response);
-    //     });      
-    //   });
-    // });
   },
 
   // in progress - need to make updates for id
@@ -120,7 +97,7 @@ module.exports = exports = {
       });
   },
 
-  fetchSongMD5: function(query) {
+  fetchSongMD5: function(query, bool, filename) {
     // query should be something like {
     //   md5: 'cfa55a902533b32e87473c2218b39da9',
     //   bucket: 'audio_summary'
@@ -131,16 +108,26 @@ module.exports = exports = {
       if (err) throw(err);
       // returns a response referenced here: http://developer.echonest.com/docs/v4/track.html#profile
       console.log(json.response.track);
-      // calls SaveSongMD5
-      exports.saveSongMD5(json.response.track);
+      // calls SaveSongMD5 if processing is complete
+      if (json.response.track.status === "complete") {
+        // TODO: test filename
+        exports.saveSongMD5(json.response.track, filename);
+        if (bool === false) {
+          bool = true;
+        }
+      }
+      if (bool) {
+        clearInterval();
+      }
     });
   },
 
-  saveSongMD5: function(trackData) {
+  saveSongMD5: function(trackData, filename) {
     // create a song model
     // populate with echo nest data
 
     // initializes a new instance of song with the received trackData
+    // TODO: test filename
     var song = new Song({
       echoData: {
         artist: trackData.artist,
@@ -162,11 +149,12 @@ module.exports = exports = {
       userData: {
         speechiness: null,
         acousticness: null        
-      }
+      },
+      filename: filename
     });
 
     // saves to our mongoose database if it doesn't exist
-    var $promise = Q.nbind(song.save, song);
+    var $promise = Q.nbind(song.save, song); // JH: apparently you can't do Q(song.save().exec())...
     $promise()
       .then(function(saved) {
         console.log('song saved: ', saved);
@@ -174,8 +162,7 @@ module.exports = exports = {
   }, 
 
   checkSongMD5DB: function(md5, cb) {
-    var $promiseDBFindOne = Q.nbind(Song.findOne, Song);
-      $promiseDBFindOne({'echoData.md5': md5})
+      Q(Song.findOne({'echoData.md5': md5}).exec())
         .then(function(song) {
           if (!song) {
             cb(md5);
