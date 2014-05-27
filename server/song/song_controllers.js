@@ -39,9 +39,30 @@ module.exports = exports = {
       Q(Song.findOne({'echoData.md5': base}).exec()),
       Q(Song.findOne({'echoData.md5': compare}).exec())
     ]).then(function(array) {
-      console.log('calling adjust on', array[0].echoData.title, 'and', array[1].echoData.title, 'with increment', increment);
-      array[0].adjust(array[1], increment);
+      console.log(array);
+      // console.log('calling adjust on', array[0].echoData.title, 'and', array[1].echoData.title, 'with increment', increment);
+
+      // JON UGLY CODE STARTS HERE
+      var md5 = array[0].echoData.md5;
+      console.log(array[0].userData.speechiness);
+      var adjust1 = (array[0].userData.speechiness) ? array[0].userData.speechiness+increment : increment;
+
+      return Q(Song.findOneAndUpdate({'echoData.md5':md5}, {'userData.speechiness' : adjust1}).exec())
+    }).then(function(song){
+      console.log('updated', song);
+      // return Q(Song.update(song, {'userData.speechiness' : adjust1}).exec())
+    }).fail(function(err) {
+      console.log(err);
     });
+
+    // Q(Song.findOneAndUpdate({'echoData.md5': base}, {'userData.speechiness': 25}).exec())
+    //   .then(function(song) {
+    //     // build path to song
+    //     console.log(song);
+    //   })
+    //   .fail(function(err) {
+    //     throw(err);
+    //   });
 
     // findOneAndUpdate Options 
     // upsert inserts if it doesnt exist in DB
@@ -61,10 +82,10 @@ module.exports = exports = {
     //   });,
   },
 
-
   // consider breaking the below function into two requests to get an actual url with a file name
   getSong: function(req, res, next) {
     // grab md5 from request URL
+    console.log('getting song');
     var md5 = req.params[0];
 
     Q(Song.findOne({'echoData.md5': md5}).exec())
@@ -82,5 +103,10 @@ module.exports = exports = {
       .fail(function(err) {
         throw(err);
       });
+  },
+
+  postSong: function(req, res, next) {
+    // assume a buffer from the client 
+    // fs.writefile?
   }
 };
