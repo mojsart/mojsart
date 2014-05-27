@@ -7,7 +7,8 @@
     "q": "*",
     "echojs": "^0.1.4",
     "node-fs": "^0.1.7",
-    "path": "^0.4.9"
+    "path": "^0.4.9",
+    "cron": "^1.0.4"
   },
   "devDependencies": {
     "gulp": "*",
