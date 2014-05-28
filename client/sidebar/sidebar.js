@@ -1,4 +1,5 @@
-angular.module('mojsart.main.sidebar', ['ui.router'])
+angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
+    'ngAnimate'])
 
 .config(function ($stateProvider) {
 
@@ -13,7 +14,7 @@ angular.module('mojsart.main.sidebar', ['ui.router'])
 .controller('SideBarController', function ($scope, $http) {
   $scope.buttonStatus =  'full';
   $scope.songs = [];
-  $scope.quantity = 3;
+  $scope.quantity = 5;
 
 
 //Fetches all songs when app starts, loads Track and Title into Songs Array
@@ -43,15 +44,12 @@ angular.module('mojsart.main.sidebar', ['ui.router'])
       console.log('Successfully posted', package.base, 'vs', package.compare);
     });
   };
-      //Covers case where user says song is "LESS x than clicked-node"
-
-  // $scope.countDown = function(song){
-  //   var package = {};
-  //   package.base = $scope.sharedState.md5;
-  //   package.compare = song.echoId;
-  //   package.increment = -1;
-  //   $http.post('/song', package);
-  // };
+//Removes clicked song from songs array, automatically refreshing list of songs in sidepanel view
+  $scope.cycleVote = function(song){
+    $scope.songs.shift();
+    console.log('moving song out of list');
+    // $scope.addClass('fx-fade-up');
+  };
 
 
 });
