@@ -1,36 +1,32 @@
 <!-- nav bar for entire app -->
 <header>
-  <nav class='top-bar' role='navigation'>
+  <nav class="top-bar" role="navigation">
     <ul class="title-area">
       <li class="name">
-         <h1><a><ui-sref='mojsart.main'>Mojsart</a></h1>
-       </li>
-     </ul>
+        <h1><a><ui-sref="mojsart.main">{{title}}</a></h1>
+      </li>
+    </ul>
     <section class="top-bar-section">
-        <ul class="left">
-          <li class="active">
+      <ul class="left">
+        <li class="active">
           <a ui-sref="mojsart.main">Home</a>
-          </li>
-          <li>
-<!--             TODO:Add link to About Page
- -->          <a ui-sref="mojsart.main.note">About</a>
+        </li>
+        <li>
+          <!-- TODO: Add link to About Page -->
+          <a ui-sref="mojsart.main.note">About</a>
         </li>
       </ul>
     </section>
   </nav>
 </header>
+
 <!-- template loaded here -->
+<div class="small-3 columns" ui-view="sidebar"></div>
+<div class="small-6 columns" ui-view="graph"></div>
+<div class="small-3 columns" ui-view="infopanel"></div>
 
-  <div class="side-nav small-3 columns sidebar" ui-view='sidebar'></div>
-  <div class="row">
-    <section class = "small-6 columns" ui-view='graph'></section>
-    <div class='side-nav right small-3 columns infopanel' ui-view='infopanel'></div>
-  </div>
-
-
-
-<!-- footer for the whole app
- --><footer>
+<!-- footer for the whole app -->
+<footer>
 
 </footer>
 
