@@ -44,7 +44,7 @@ angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
       console.log('Successfully posted', package.base, 'vs', package.compare);
     });
   };
-
+//Removes clicked song from songs array, automatically refreshing list of songs in sidepanel view
   $scope.cycleVote = function(song){
     $scope.songs.shift();
     console.log('moving song out of list');
