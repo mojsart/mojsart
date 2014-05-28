@@ -2,7 +2,8 @@
 
 var Song = require('./song_model.js'),
     Q    = require('q'),
-    echo = require('../main/echo.js');
+    echo = require('../main/echo.js'),
+    fs   = require('fs');
 
 module.exports = exports = {
   get: function (req, res, next) {
@@ -123,7 +124,26 @@ module.exports = exports = {
   },
 
   postSong: function(req, res, next) {
-    // assume a buffer from the client 
-    // fs.writefile?
+    console.log('posting');
+    var serverPath = __dirname + '/lib/' + req.files.userSong.originalFilename; 
+    fs.rename(
+      req.files.userSong.path,
+      serverPath,
+      function(error) {
+        if(error) {
+          res.send({
+            error: 'Ah crap! Something bad happened'
+          });
+          return;
+        }
+        res.send({
+          path: serverPath
+        });
+      }
+    );
+  },
+
+  sendTestPage: function(req,res,next) {
+    res.sendfile(__dirname+'/testUploadPage.html');
   }
 };

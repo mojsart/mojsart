@@ -22,44 +22,46 @@ module.exports = exports = {
       for (var i = 0; i < files.length; i++) {
         (function(count) {
           // check the database to see if the file exists
-          exports.checkSongFilenameDB(files[count], function(filename) {
-            var location = dirName + '/' + filename;
-            console.log('location', location);
-            console.log('filename', filename);
-            // read the file
-            fs.readFile(location, function(err, buffer) {
-              if (err) throw(err);
-              // upload to echo nest
-              echo('track/upload').post({
-                filetype: path.extname(location).substr(1)
-              }, 'application/octet-stream', buffer, function (err, json) {
-                console.log('sending to echo');
+          // TODO: need to ignore things besides DS_Stroe
+          if(files[count] !== '.DS_Store') {
+            exports.checkSongFilenameDB(files[count], function(filename) {
+              var location = dirName + '/' + filename;
+              console.log('location', location);
+              console.log('filename', filename);
+              // read the file
+              fs.readFile(location, function(err, buffer) {
                 if (err) throw(err);
-                console.log(json.response.track.md5);
-                // once song has be acknowledged, start checking to see if the song's md5 exists in our DB -- probably can be
-                // removed
-                exports.checkSongMD5DB(json.response.track.md5, function(md5) {
-                  console.log('md5 not found', md5);
-                  // if the song is not found 
-                  var scope = function(md5) {
-                    console.log('executing scope');
-                    // set to check echonest every 2 seconds to see if the song has been processed by echonest
-                    var waittime = 4000;
-                    var interval = setInterval(function(md5){
-                      // console.log('checking md5', md5)
-                      var query = {bucket: 'audio_summary'};
-                      query.md5 = md5;
-                      // arguments : query with the desired md5, boolean to state whether there is a boolean
-                      // filename to save, and the interval object which is needed to clearInterval
-                      exports.fetchSongMD5(query, false, filename, interval);                    
-                    }, waittime, md5);
-                  };
-                  scope(md5);
+                // upload to echo nest
+                echo('track/upload').post({
+                  filetype: path.extname(location).substr(1)
+                }, 'application/octet-stream', buffer, function (err, json) {
+                  console.log('sending to echo');
+                  if (err) throw(err);
+                  console.log(json.response.track.md5);
+                  // once song has be acknowledged, start checking to see if the song's md5 exists in our DB -- probably can be
+                  // removed
+                  exports.checkSongMD5DB(json.response.track.md5, function(md5) {
+                    console.log('md5 not found', md5);
+                    // if the song is not found 
+                    var scope = function(md5) {
+                      console.log('executing scope');
+                      // set to check echonest every 2 seconds to see if the song has been processed by echonest
+                      var waittime = 4000;
+                      var interval = setInterval(function(md5){
+                        // console.log('checking md5', md5)
+                        var query = {bucket: 'audio_summary'};
+                        query.md5 = md5;
+                        // arguments : query with the desired md5, boolean to state whether there is a boolean
+                        // filename to save, and the interval object which is needed to clearInterval
+                        exports.fetchSongMD5(query, false, filename, interval);                    
+                      }, waittime, md5);
+                    };
+                    scope(md5);
+                  });
                 });
-              });
-            });         
-          })
-        // scope for the for loop
+              });         
+            })
+          }
         })(i);
       }
     });

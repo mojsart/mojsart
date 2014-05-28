@@ -1,6 +1,9 @@
 "use strict";
 
 var controller = require('./song_controllers.js');
+var multiparty = require('connect-multiparty');
+var multipartMiddleware = multiparty();
+
 
 module.exports = exports = function (router) {
   router.route('/')
@@ -12,5 +15,8 @@ module.exports = exports = function (router) {
   router.route('/get/md5/*')
     .get(controller.getSong);
   router.route('/send')
-    .post(controller.postSong);
+    .get(controller.sendTestPage)
+
+  // only use multipart on /send route  
+  router.post('/send', multipartMiddleware, controller.postSong);
 };

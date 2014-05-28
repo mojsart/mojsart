@@ -9,7 +9,9 @@
     "node-fs": "^0.1.7",
     "path": "^0.4.9",
     "cron": "^1.0.4",
-    "async": "^0.9.0"
+    "async": "^0.9.0",
+    "method-override": "^1.0.2",
+    "connect-multiparty": "^1.0.4"
   },
   "devDependencies": {
     "gulp": "*",
