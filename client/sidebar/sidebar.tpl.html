@@ -1,40 +1,22 @@
-<div class='row'>
-<div ng-controller='SideBarController' class="sidepanel sidebar">
-<!--   <h4>{{sharedState.title}}</h4>
- -->  <div class="container">
+<div ng-controller='SideBarController' class="sidebar">
   <h4>Curate your collection</h4>
   <h5>Compare songs to update the global music graph</h5>
-  <table class = " responsive happy votes">
+  <table>
     <tr>
       <th>Artist</th>
       <th>Track</th>
       <th>Sentiment</th>
     </tr>
-    <tr class="happy" ng-repeat="song in songs | limitTo: quantity">
+    <tr ng-repeat="song in songs | limitTo: quantity">
       <td>{{song.title}}</td>
       <td>{{song.track}}</td>
-      <td>
-        <ul class = 'btn-group'>
-           <li class="plusbtn" ng-click='postVote(song, "up")'>+</li>
-          <li class="minusbtn" ng-click='postVote(song, "down")'>-</li>
-      </td>
-    </tr>
-  </table>
-  <table class = "rhythm votes">
-    <tr>
-      <th>Artist</th>
-      <th>Track</th>
-      <th class="happy">Sentiment</th>
-    </tr>
-    <tr class="happy" ng-repeat="song in songs | limitTo: quantity">
-      <td>{{song.title}}</td>
-      <td>{{song.track}}</td>
-      <td>
-        <ul class = 'btn-group'>
-           <li class="plusbtn" ng-click='postVote(song, "up")'>+</li>
-          <li class="minusbtn" ng-click='postVote(song, "down")'>-</li>
+        <td class = 'btn-group'>
+            <span class="plusbtn" ng-click='postVote(song, "up")'>+</span>
+            <span class="minusbtn" ng-click='postVote(song, "down")'>-</span>
+        </td>
+      </tr>
+    </table>
 </div>
-</div>
-</div>
+
 
 
