@@ -7,8 +7,9 @@ body {
 .sidebar {
   background-color: #b2d1c8;
   margin-top: 0;
-  width:23vw;
-  margin-right:0;
+  width: 23vw;
+  margin-right: 0;
+  z-index: 10000;
 }
 .infopanel {
   background-color: #b2d1c8;
@@ -18,7 +19,8 @@ body {
   background-color: #857d87;
   margin-top: 20px;
   margin-left: 80px;
-  width: 45vw;
+  left: 20px;
+  width: 41vw;
   height: 87vh;
   border-style: inset;
   border-width: 5px;

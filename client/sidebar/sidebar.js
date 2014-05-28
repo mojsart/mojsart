@@ -43,6 +43,10 @@ angular.module('mojsart.main.sidebar', ['ui.router'])
       console.log('Successfully posted', package.base, 'vs', package.compare);
     });
   };
+  $scope.playSong = function(){
+
+    
+  }
       //Covers case where user says song is "LESS x than clicked-node"
 
   // $scope.countDown = function(song){
