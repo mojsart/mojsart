@@ -12,7 +12,7 @@ require('./config.js')(app, express, routers);
 require('../song/song_routes.js')(SongRouter);
 
 //initialize the demo with hard-coded song -- see demoInit.js
-require('./demoInit.js')();
-// require('./cronjob.js')();
+// require('./demoInit.js')();
+require('./cronjob.js')();
 
 module.exports = exports = app;

@@ -9,7 +9,7 @@ var Song = require('./song_model.js'),
 module.exports = exports = {
 
   // need to accept posts from client
-  // TODO: promisify, refactor -- callback hell... 
+  // TODO: promisify, async, refactor -- callback hell... 
   uploadSongs: function() {
 
     var dirName = __dirname+'/lib';
@@ -44,9 +44,9 @@ module.exports = exports = {
                   var scope = function(md5) {
                     console.log('executing scope');
                     // set to check echonest every 2 seconds to see if the song has been processed by echonest
-                    var waittime = 2000;
+                    var waittime = 4000;
                     var interval = setInterval(function(md5){
-                      console.log('checking md5', md5)
+                      // console.log('checking md5', md5)
                       var query = {bucket: 'audio_summary'};
                       query.md5 = md5;
                       // arguments : query with the desired md5, boolean to state whether there is a boolean
@@ -54,7 +54,7 @@ module.exports = exports = {
                       exports.fetchSongMD5(query, false, filename, interval);                    
                     }, waittime, md5);
                   };
-                  scope(md5)
+                  scope(md5);
                 });
               });
             });         
@@ -73,7 +73,7 @@ module.exports = exports = {
     // }
 
     // queries echoapi for the md5 we are looking for
-    console.log('query', query);
+    // console.log('query', query);
     echo('track/profile').get(query, function (err, json) {
       if (err) throw(err);
       // returns a response referenced here: http://developer.echonest.com/docs/v4/track.html#profile
