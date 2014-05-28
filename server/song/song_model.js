@@ -31,9 +31,12 @@ var SongSchema = new mongoose.Schema({
   filename: String
 });
 
-SongSchema.methods.adjust = function(compare, increment) {
-  console.log('adjusting', this.echoData.title, 'and', compare.echoData.title, 'with increment', increment);
-  // TODO: write adjusting function
+SongSchema.methods.adjust = function(increment) {
+  console.log('Adjusting', this.echoData.title, 'with increment', increment);
+  var tmp = this.userData.speechiness;
+  this.userData.speechiness += increment;
+  console.log('Adjusted speechiness from', tmp, 'to', this.userData.speechiness);
+  return this.save();
 };
 
 module.exports = exports = mongoose.model('Song', SongSchema);

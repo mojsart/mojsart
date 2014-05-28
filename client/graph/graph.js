@@ -20,7 +20,7 @@ angular.module('mojsart.main.graph', ['ui.router'])
     for(var property in d.echoData) {
       $scope.sharedState[property] = d.echoData[property];
     }
-    for(var property in d.echoData.audio_summary) {
+    for(property in d.echoData.audio_summary) {
       $scope.sharedState.audio_summary[property] = d.echoData.audio_summary[property];
     }
   };
