@@ -1,4 +1,5 @@
-angular.module('mojsart.main.sidebar', ['ui.router'])
+angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
+    'ngAnimate'])
 
 .config(function ($stateProvider) {
 
@@ -43,19 +44,12 @@ angular.module('mojsart.main.sidebar', ['ui.router'])
       console.log('Successfully posted', package.base, 'vs', package.compare);
     });
   };
-  $scope.playSong = function(){
 
-    
-  }
-      //Covers case where user says song is "LESS x than clicked-node"
-
-  // $scope.countDown = function(song){
-  //   var package = {};
-  //   package.base = $scope.sharedState.md5;
-  //   package.compare = song.echoId;
-  //   package.increment = -1;
-  //   $http.post('/song', package);
-  // };
+  $scope.cycleVote = function(song){
+    $scope.songs.shift();
+    console.log('moving song out of list');
+    // $scope.addClass('fx-fade-up');
+  };
 
 
 });
