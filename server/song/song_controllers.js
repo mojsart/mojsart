@@ -28,6 +28,23 @@ module.exports = exports = {
   },
 
   postUserData: function(req, res, next) {
+    /* Find a song using the client provided md5
+     * .exec() promisifies the result
+     * Q() transforms the promise into a Q-style promise */
+    Q(Song.findOne({'echoData.md5': req.body.base}).exec())
+    .then(function(song) {  // call SongSchema.methods.adjust on the found song after the promise returns
+      song.adjust(req.body.increment);
+    });
+
+    // do similar for the song that is being compared against. note the negation
+    Q(Song.findOne({'echoData.md5': req.body.compare}).exec())
+    .then(function(song) {
+      song.adjust(-req.body.increment);
+    });
+  },
+
+  postUserData_legacy: function(req, res, next) {
+    // == this is legacy code
     // TODO: need to implement functionality for artist/title instead of md5
     console.log('inside postUserData with', req.body);
     
@@ -36,8 +53,8 @@ module.exports = exports = {
     var increment = req.body.increment;
 
     Q.all([
-      Q(Song.findOne({'echoData.md5': base}).exec()),
-      Q(Song.findOne({'echoData.md5': compare}).exec())
+      Song.findOne({'echoData.md5': base}).exec(),
+      Song.findOne({'echoData.md5': compare}).exec()
     ]).then(function(array) {
       console.log(array);
       // console.log('calling adjust on', array[0].echoData.title, 'and', array[1].echoData.title, 'with increment', increment);
