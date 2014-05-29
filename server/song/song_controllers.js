@@ -9,7 +9,7 @@ var Song = require('./song_model.js'),
 
 module.exports = exports = {
   get: function (req, res, next) {
-    Q(Song.find().exec())
+    Q(Song.find({'echoData.status' : 'complete'}).exec())
       .then(function (songs) {
         res.json(songs);
       })
@@ -44,62 +44,6 @@ module.exports = exports = {
     .then(function(song) {
       song.adjust(-req.body.increment);
     });
-  },
-
-  postUserData_legacy: function(req, res, next) {
-    // == this is legacy code
-    // TODO: need to implement functionality for artist/title instead of md5
-    console.log('inside postUserData with', req.body);
-    
-    var base = req.body.base;
-    var compare = req.body.compare;
-    var increment = req.body.increment;
-
-    Q.all([
-      Song.findOne({'echoData.md5': base}).exec(),
-      Song.findOne({'echoData.md5': compare}).exec()
-    ]).then(function(array) {
-      console.log(array);
-      // console.log('calling adjust on', array[0].echoData.title, 'and', array[1].echoData.title, 'with increment', increment);
-
-      // JON UGLY CODE STARTS HERE
-      var md5 = array[0].echoData.md5;
-      console.log(array[0].userData.speechiness);
-      var adjust1 = (array[0].userData.speechiness) ? array[0].userData.speechiness+increment : increment;
-
-      return Q(Song.findOneAndUpdate({'echoData.md5':md5}, {'userData.speechiness' : adjust1}).exec())
-    }).then(function(song){
-      console.log('updated', song);
-      // return Q(Song.update(song, {'userData.speechiness' : adjust1}).exec())
-    }).fail(function(err) {
-      console.log(err);
-    });
-
-    // Q(Song.findOneAndUpdate({'echoData.md5': base}, {'userData.speechiness': 25}).exec())
-    //   .then(function(song) {
-    //     // build path to song
-    //     console.log(song);
-    //   })
-    //   .fail(function(err) {
-    //     throw(err);
-    //   });
-
-    // findOneAndUpdate Options 
-    // upsert inserts if it doesnt exist in DB
-    // var options = {
-    //   'new': true,
-    //   'upsert': true
-    // };
-
-    // i think this theoretically will work but doesn't account for i
-    // calls findOneAndUpdate for the md5, responding with the new song data
-    // $pFindOne(query, options)
-    //   .then(function (song) {
-    //     res.json(song);
-    //   })
-    //   .fail(function(reason){
-    //     next(reason);
-    //   });,
   },
 
   // consider breaking the below function into two requests to get an actual url with a file name

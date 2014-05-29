@@ -19,6 +19,7 @@ var Song = require('../song/song_model.js'),
 // ];
 
 module.exports = exports = function(req, res) {
+  console.log('start demo');
   SongHelpers.uploadSongs();
   // for (var i=0; i<songArr.length; i++){
   //   // asynchronus closure scope

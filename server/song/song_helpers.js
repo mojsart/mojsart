@@ -8,64 +8,65 @@ var Song = require('./song_model.js'),
 
 module.exports = exports = {
 
-  // need to accept posts from client
   // TODO: promisify, async, refactor -- callback hell... 
   uploadSongs: function() {
-
+    console.log('uploading songs');
     var dirName = __dirname+'/lib';
     var responseArr = [];
 
     // read song directory on server
     fs.readdir(dirName, function(err, files) {
-      if (err) throw(err);
       // for each song on the server
       for (var i = 0; i < files.length; i++) {
         (function(count) {
           // check the database to see if the file exists
+          // only proceed for files who pass the regex filter filenameRegEx
           // TODO: need to ignore things besides DS_Store
           if(exports.filenameRegEx(files[count])) {
             exports.checkSongFilenameDB(files[count], function(filename) {
+              if (err) throw(err);
               var location = dirName + '/' + filename;
-              console.log('location', location);
-              console.log('filename', filename);
-              // read the file
-              fs.readFile(location, function(err, buffer) {
-                if (err) throw(err);
-                // upload to echo nest
-                echo('track/upload').post({
-                  filetype: path.extname(location).substr(1)
-                }, 'application/octet-stream', buffer, function (err, json) {
-                  console.log('sending to echo');
-                  if (err) throw(err);
-                  console.log(json.response.track.md5);
-                  // once song has be acknowledged, start checking to see if the song's md5 exists in our DB -- probably can be
-                  // removed
-                  exports.checkSongMD5DB(json.response.track.md5, function(md5) {
-                    console.log('md5 not found', md5);
-                    // if the song is not found 
-                    var scope = function(md5) {
-                      console.log('executing scope');
-                      // set to check echonest every 2 seconds to see if the song has been processed by echonest
-                      var waittime = 4000;
-                      var interval = setInterval(function(md5){
-                        // console.log('checking md5', md5)
-                        var query = {bucket: 'audio_summary'};
-                        query.md5 = md5;
-                        // arguments : query with the desired md5, boolean to state whether there is a boolean
-                        // filename to save, and the interval object which is needed to clearInterval
-                        exports.fetchSongMD5(query, false, filename, interval);                    
-                      }, waittime, md5);
-                    };
-                    scope(md5);
+              // console.log(location);
+
+              //check if filename in db before initializing a send
+              exports.checkSongFilenameDB(filename, function(filename) { 
+                fs.readFile(location, function(err, buffer) {
+                  console.log(buffer);
+                  if (err) throw (err);
+                  // upload to echo nest
+                  echo('track/upload').post({
+                    filetype: path.extname(location).substr(1)
+                  }, 'application/octet-stream', buffer, function(err, json) {
+                    if (err) throw(err);
+                    console.log(json.response.track);
+                    // as soon as a response is received - check to see if it's already in db
+                    exports.checkSongFilenameDB(filename, function(filename) { 
+                      // save the pending processing song WITHOUT md5
+                      exports.saveSong(json.response.track, filename);
+                      // begin checking if md5 is there
+                      exports.checkSongMD5DB(json.response.track.md5, function(md5) {
+                        // if the song is not found 
+                        (function(md5) {
+                          // set to check echonest every 2 seconds to see if the song has been processed by echonest
+                          var waittime = 4000;
+                          var interval = setInterval(function(md5){
+                            // console.log('checking md5', md5)
+                            var query = {bucket: 'audio_summary', md5: md5};
+                            // arguments : query with the desired md5, boolean to state whether there is a boolean
+                            // filename to save, and the interval object which is needed to clearInterval
+                            exports.fetchSongMD5(query, false, filename, interval);                    
+                          }, waittime, md5);
+                        })(md5);
+                      });
+                    });
                   });
-                });
-              });         
+                });   
+              });
             })
           }
         })(i);
       }
     });
-
   },
 
   fetchSongMD5: function(query, bool, filename, interval) {
@@ -76,15 +77,15 @@ module.exports = exports = {
 
     // queries echoapi for the md5 we are looking for
     // console.log('query', query);
+
     echo('track/profile').get(query, function (err, json) {
       if (err) throw(err);
       // returns a response referenced here: http://developer.echonest.com/docs/v4/track.html#profile
       // console.log(json.response.track);
       // calls SaveSongMD5 if processing is complete
       if (json.response.track.status === "complete") {
-        // TODO: test filename
         console.log('analysis complete');
-        exports.saveSongMD5(json.response.track, filename);
+        exports.updateSong(json.response.track, filename);
         if (bool === false) {
           console.log('setting bool to true');
           bool = true;
@@ -97,13 +98,28 @@ module.exports = exports = {
     });
   },
 
-  saveSongMD5: function(trackData, filename) {
+  saveSong: function(trackData, filename) {
     // create a song model
     // populate with echo nest data
 
     // initializes a new instance of song with the received trackData
-    // TODO: test filename
     var song = new Song({
+      echoData: {
+        status: trackData.status
+      },
+      filename: filename
+    });       
+
+    // saves to our mongoose database if it doesn't exist
+    var $promise = Q.nbind(song.save, song);
+    $promise()
+      .then(function(saved) {
+        console.log('song saved: ', saved);
+      });
+  }, 
+
+  updateSong: function(trackData, filename) {
+    var update = {
       echoData: {
         artist: trackData.artist,
         title: trackData.title,
@@ -126,15 +142,13 @@ module.exports = exports = {
         acousticness: null        
       },
       filename: filename
-    });
+    };
 
-    // saves to our mongoose database if it doesn't exist
-    var $promise = Q.nbind(song.save, song); // JH: apparently you can't do Q(song.save().exec())...
-    $promise()
+    Q(Song.update({'filename' : filename}, update).exec())
       .then(function(saved) {
-        console.log('song saved: ', saved);
+        console.log('song saved');
       });
-  }, 
+  },
 
   checkSongMD5DB: function(md5, cb) {
     Q(Song.findOne({'echoData.md5': md5}).exec())
