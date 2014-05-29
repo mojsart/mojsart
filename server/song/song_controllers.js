@@ -3,7 +3,9 @@
 var Song = require('./song_model.js'),
     Q    = require('q'),
     echo = require('../main/echo.js'),
-    fs   = require('fs');
+    fs   = require('fs'),
+    helpers = require('./song_helpers.js'),
+    path = require('path');
 
 module.exports = exports = {
   get: function (req, res, next) {
@@ -101,6 +103,7 @@ module.exports = exports = {
   },
 
   // consider breaking the below function into two requests to get an actual url with a file name
+  // TODO: refactor 
   getSong: function(req, res, next) {
     // grab md5 from request URL
     console.log('getting song');
@@ -125,22 +128,29 @@ module.exports = exports = {
 
   postSong: function(req, res, next) {
     console.log('posting');
-    var serverPath = __dirname + '/lib/' + req.files.userSong.originalFilename; 
-    fs.rename(
-      req.files.userSong.path,
-      serverPath,
-      function(error) {
-        if(error) {
-          res.send({
-            error: 'Ah crap! Something bad happened'
-          });
-          return;
-        }
-        res.send({
-          path: serverPath
+    var song = req.files.userSong;
+    var type = song.type;
+    var filename = song.originalFilename;
+
+    // note: dumb upload. overwrites same file names
+    // songs must have different filenames
+    // TODO: increment filenames if they're found
+    var regex = /^(audio\/[a-z0-9]+)$/i;
+    var bool = helpers.filenameRegEx(filename) && regex.test(type);
+
+    if (bool) {
+      var serverPath = __dirname + '/lib/' + filename; 
+      var $fsRename = Q.nbind(fs.rename, fs);
+      $fsRename(song.path, serverPath)
+        .then(function() {
+          res.send(serverPath);
+        })
+        .fail(function(err) {
+          throw(err)
         });
-      }
-    );
+    } else {
+      res.send(404, 'Sorry, please upload an audio file!')
+    }
   },
 
   sendTestPage: function(req,res,next) {

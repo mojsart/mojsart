@@ -22,8 +22,8 @@ module.exports = exports = {
       for (var i = 0; i < files.length; i++) {
         (function(count) {
           // check the database to see if the file exists
-          // TODO: need to ignore things besides DS_Stroe
-          if(files[count] !== '.DS_Store') {
+          // TODO: need to ignore things besides DS_Store
+          if(exports.filenameRegEx(files[count])) {
             exports.checkSongFilenameDB(files[count], function(filename) {
               var location = dirName + '/' + filename;
               console.log('location', location);
@@ -162,6 +162,11 @@ module.exports = exports = {
       .fail(function(reason) {
         console.log(reason);
       });    
-  }
+  },
 
+  filenameRegEx: function(filename) {
+    // var match = /^(.*\.(?!(mp3|mp4|wav|au|ogg|m4a|mp4)$))?[^.]*$/i;
+    var match = /^(.*\.(?!(mp3)$))?[^.]*$/i;
+    return(!match.test(filename));
+  }
 };
