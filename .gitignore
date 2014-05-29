@@ -5,3 +5,4 @@ client/lib
 DS_Store
 _.DS_Store
 server/main/api_config.js
+client/styles/css/app.css

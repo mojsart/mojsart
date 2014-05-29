@@ -7,14 +7,9 @@ body {
 .sidebar {
   background-color: #b2d1c8;
   margin-top: 0;
-<<<<<<< HEAD
   width: 23vw;
   margin-right: 0;
   z-index: 10000;
-=======
-  width:23vw;
-  margin-right:0;
->>>>>>> fa05ed81286e1c1975da91184bde0f5f3009fa5e
 }
 .infopanel {
   background-color: #b2d1c8;
@@ -23,16 +18,7 @@ body {
 .graph {
   background-color: #857d87;
   margin-top: 20px;
-  margin-left: 80px;
-<<<<<<< HEAD
-  left: 20px;
-  width: 41vw;
-=======
-  width: 45vw;
->>>>>>> fa05ed81286e1c1975da91184bde0f5f3009fa5e
-  height: 87vh;
-  border-style: inset;
-  border-width: 5px;
+  margin-bottom: 20px;
 }
 .plusbtn {
   -moz-box-shadow: inset 0px 1px 0px 0px #c1ed9c;

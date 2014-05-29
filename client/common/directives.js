@@ -9,7 +9,7 @@
   })
 
   // use this directive as a template for other directives
-  .directive('d3Visualizer', ['d3Service', function(d3) {
+  .directive('d3Visualizer', ['d3Service', function(d3Service) {
     return {
       restrict: 'EA',
       scope: {
@@ -18,17 +18,18 @@
         onClick: "&",
         onClickThingy: "="
       },
+      
       link: function(scope, iElement, iAttrs) {
-        d3.d3().then(function(d3) {
+        d3Service.d3().then(function(d3) {
           var svg = d3.select(iElement[0])
-              .append("svg")
-              .attr("width", "100%")
-              .attr("height", "100%"); //TODO do not hardcode
+          .append("svg")
+          // .attr("height", "100%"); //TODO do not hardcode
 
           // on window resize, re-render d3 canvas
           window.onresize = function() {
             return scope.$apply();
           };
+
           scope.$watch(function(){
               return angular.element(window)[0].innerWidth;
             }, function(){
@@ -36,31 +37,22 @@
             }
           );
 
-        //   // watch for data changes and re-render
+          // watch for data changes and re-render
           scope.$watch('data', function(newVals, oldVals) {
             return scope.render(newVals);
           }, true);
 
-        //   // define render function
+          // define render function
           scope.render = function(data){
             // remove all previous items before render
             svg.selectAll("*").remove();
 
-        //     // setup variables
+            // setup variables
             var width, height, max;
-            width = d3.select(iElement[0])[0][0].offsetWidth - 20;
-        //       // 20 is for margins and can be changed
-            height = d3.select(iElement[0])[0][0].offsetHeight - 20;
-        //       // 35 = 30(bar height) + 5(margin between bars)
-        //     // max = 98;
-        //       // this can also be found dynamically when the data is not static
-        //       // max = Math.max.apply(Math, _.map(data, ((val)-> val.count)))
-
-        //     // set the height based on the calculations above
-            // svg.attr('height', height);
+            width = d3.select(iElement[0])[0][0].offsetWidth;
+            height = d3.select(iElement[0])[0][0].offsetHeight;
 
             // sort data so smaller circles appear on top
-
             data = data.sort(function (a, b) {
               if (a.echoData.audio_summary.loudness > b.echoData.audio_summary.loudness)
                 return 1;
@@ -69,8 +61,7 @@
               // a must be equal to b
               return 0;
             });
-        //     //create the rectangles for the bar chart
-            // var color = d3.scale.category20();
+
             var circles = svg.selectAll("circle")
               .data(data)
               .enter()

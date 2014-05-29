@@ -1,22 +1,17 @@
-<div ng-controller='SideBarController' class="sidebar">
-  <h4>Curate your collection</h4>
-  <h5>Compare songs to update the global music graph</h5>
-  <table>
-    <tr>
-      <th>Artist</th>
-      <th>Track</th>
-      <th>Sentiment</th>
-    </tr>
-    <tr ng-repeat="song in songs | limitTo: quantity">
-      <td>{{song.title}}</td>
-      <td>{{song.track}}</td>
-        <td class = 'btn-group'>
-            <span class="plusbtn" ng-click='postVote(song, "up")' ng-mouseup='cycleVote(song)'>+</span>
-            <span class="minusbtn" ng-click='postVote(song, "down")' ng-mouseup='cycleVote(song)'>-</span>
-        </td>
-      </tr>
-    </table>
-</div>
-
-
-
+<h4>Curate your collection</h4>
+<h5>Compare songs to update the global music graph</h5>
+<table>
+  <tr>
+    <th>Artist</th>
+    <th>Track</th>
+    <th>Sentiment</th>
+  </tr>
+  <tr ng-repeat="song in songs | limitTo: quantity">
+    <td>{{song.title}}</td>
+    <td>{{song.track}}</td>
+      <td class="btn-group">
+        <span class="plusbtn" ng-click="postVote(song, 'up')" ng-mouseup="cycleVote(song)">+</span>
+        <span class="minusbtn" ng-click="postVote(song, 'down')" ng-mouseup="cycleVote(song)">-</span>
+    </td>
+  </tr>
+</table>
