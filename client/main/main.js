@@ -16,12 +16,15 @@
       url: '/main',
       views:{
         // '': {templateUrl: 'main/main.tpl.html'},
-        'sidebar': {templateUrl: 'sidebar/sidebar.tpl.html', controller:'SideBarController'},
-        'infopanel': {templateUrl: 'infopanel/infopanel.tpl.html', controller:'InfoController'},
+        'sidebar': {templateUrl: '/sidebar/sidebar.tpl.html', controller:'SideBarController'},
+        'infopanel': {templateUrl: '/infopanel/infopanel.tpl.html', controller:'InfoController'},
         'graph':{templateUrl: '/graph/graph.tpl.html', controller:'GraphController'}
       },
-      controller: 'MainController',
-    });
+      controller: 'MainController'
+    }).state('mojsart.upload', {
+    url: '/upload',
+    templateUrl: '/upload/upload.tpl.html',
+  });
   })
 
   .controller('MainController', function ($state, $scope, $http) {
@@ -33,6 +36,12 @@
         // console.log(json);
         $scope.sharedState.data = json;
       });
+
+
+
+    $scope.toggleModal = function(){
+      console.log('inside main control')
+    }
     };
 
     // TODO: make it so that we don't need to "initialize" like this
