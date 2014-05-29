@@ -28,9 +28,15 @@
       }
     })
     .state('mojsart.about', {
-          url: '/about',
+          url: '/',
           views:{
         'upload': {templateUrl: '/about/about.tpl.html', controller: "MainController"}
+      }
+    })
+    .state('mojsart.blog', {
+          url: '/blog',
+          views:{
+        'upload': {templateUrl: '/blog/blog.tpl.html', controller: "MainController"}
       }
     });
   })
