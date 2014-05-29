@@ -1,12 +1,12 @@
 
-<div style =class="jumbotron text-center">
+<div>
     <h1>Upload Songs</h1>
-    <form ng-submit="submit()" ng-controller="UploadController" id="uploadForm"
+    <form ng-controller="UploadController" id="uploadForm"
           enctype="multipart/form-data"
           action="/song/send"
           method="post">
       <input type="file" id="userSongInput" name="userSong" />
-  	<input type="submit" id="submit" value="Submit" />
+  	<input ng-submit = 'submit()' type="submit" id="submit" value="Submit" />
     </form>
 </div>
 
