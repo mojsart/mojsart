@@ -7,7 +7,7 @@
     'mojsart.main.graph',
     'mojsart.main.infopanel',
     'fx.animations',
-    'ngAnimate'
+    'ngAnimate',
   ])
 
   .config(function ($stateProvider) {
@@ -16,12 +16,17 @@
       url: '/main',
       views:{
         // '': {templateUrl: 'main/main.tpl.html'},
-        'sidebar': {templateUrl: 'sidebar/sidebar.tpl.html', controller:'SideBarController'},
-        'infopanel': {templateUrl: 'infopanel/infopanel.tpl.html', controller:'InfoController'},
+        'sidebar': {templateUrl: '/sidebar/sidebar.tpl.html', controller:'SideBarController'},
+        'infopanel': {templateUrl: '/infopanel/infopanel.tpl.html', controller:'InfoController'},
         'graph':{templateUrl: '/graph/graph.tpl.html', controller:'GraphController'}
-      },
-      controller: 'MainController',
-    });
+      }
+    })
+    .state('mojsart.upload', {
+          url: '/upload',
+          views:{
+        'upload': {templateUrl: '/upload/upload.tpl.html', controller: "MainController"}
+      }
+      });
   })
 
   .controller('MainController', function ($state, $scope, $http) {
@@ -38,6 +43,10 @@
     // TODO: make it so that we don't need to "initialize" like this
     $scope.sharedState = {};
     $scope.getSongs();
+    $scope.formData = {};
 
+    $scope.sendSong = function(){
+      console.log($scope.formData);
+    };
   });
 })(angular);

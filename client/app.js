@@ -7,7 +7,8 @@
     // 'ngCookies',
     'ui.router',
     'd3',
-    'mojsart.main'])
+    'mojsart.main'
+    ])
   .config(function ($stateProvider) {
     $stateProvider
       .state('mojsart', {
