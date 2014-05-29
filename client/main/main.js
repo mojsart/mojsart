@@ -39,12 +39,6 @@
         // console.log(json);
         $scope.sharedState.data = json;
       });
-
-
-
-    $scope.toggleModal = function(){
-      console.log('inside main control')
-    }
     };
 
     // TODO: make it so that we don't need to "initialize" like this
