@@ -20,10 +20,10 @@
         'infopanel': {templateUrl: '/infopanel/infopanel.tpl.html', controller:'InfoController'},
         'graph':{templateUrl: '/graph/graph.tpl.html', controller:'GraphController'}
       }
-    }).state('mojsart.upload', {
+    })
+    .state('mojsart.upload', {
           url: '/upload',
           views:{
-        // '': {templateUrl: 'main/main.tpl.html'},
         'upload': {templateUrl: '/upload/upload.tpl.html', controller:'UploadController'}
       }
       });

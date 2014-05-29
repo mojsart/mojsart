@@ -11,12 +11,10 @@ angular.module('mojsart.upload', ['ui.router', 'fx.animations',
     });
 })
 
-.controller('UploadController', function ($scope) {
-
-  $scope.refreshMain = function() {
-    $state.transitionTo('mojsart.main');
+.controller('UploadController', function ($scope, $http) {
+  $scope.sayHello = function(){
+    console.log('inside upload controller');
   };
-
 
 
 });

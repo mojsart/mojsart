@@ -1,12 +1,9 @@
 
-<div>
-    <h1>Upload Songs</h1>
-    <form ng-controller="UploadController" id="uploadForm"
-          enctype="multipart/form-data"
-          action="/song/send"
-          method="post">
-      <input type="file" id="userSongInput" name="userSong" />
-  	<input ng-submit = 'submit()' type="submit" id="submit" value="Submit" />
+<div ng-controller="UploadController">
+   <h1>Upload  Songs</h1>
+    <form id="uploadForm"
+      	<input type="file" id="userSongInput" name="userSong" />
+    	<a href="#" class="button">Upload Songs</a>
     </form>
 </div>
 
