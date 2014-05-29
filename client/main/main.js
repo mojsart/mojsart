@@ -26,7 +26,13 @@
           views:{
         'upload': {templateUrl: '/upload/upload.tpl.html', controller: "MainController"}
       }
-      });
+    })
+    .state('mojsart.about', {
+          url: '/about',
+          views:{
+        'upload': {templateUrl: '/about/about.tpl.html', controller: "MainController"}
+      }
+    });
   })
 
   .controller('MainController', function ($state, $scope, $http) {

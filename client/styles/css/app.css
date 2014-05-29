@@ -1,3 +1,27 @@
+#color {
+  font-color: #008CBA;
+  color: #008CBA;
+  font-style: italic;
+}
+#splash-header {
+  padding: 120px;
+}
+.splash {
+  padding: 30px;
+  border-top: 3px solid grey;
+}
+.splash-alt {
+  padding: 30px;
+  background-color: white;
+  border-top: 3px solid grey;
+}
+.circular {
+  width: 80%;
+  height: 80%;
+  border-radius: 150px;
+  -webkit-border-radius: 150px;
+  -moz-border-radius: 150px;
+}
 #messages {
   color: #d3d3d3;
 }
