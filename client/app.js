@@ -19,7 +19,7 @@
       });
   })
   .run(function ($state) {
-    $state.transitionTo('mojsart.main');
+    $state.transitionTo('mojsart.about');
   });
 }(angular));
 
