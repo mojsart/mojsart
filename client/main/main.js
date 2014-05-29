@@ -19,13 +19,16 @@
         'sidebar': {templateUrl: '/sidebar/sidebar.tpl.html', controller:'SideBarController'},
         'infopanel': {templateUrl: '/infopanel/infopanel.tpl.html', controller:'InfoController'},
         'graph':{templateUrl: '/graph/graph.tpl.html', controller:'GraphController'}
-      },
-      controller: 'MainController'
+      }
     }).state('mojsart.upload', {
-    url: '/upload',
-    templateUrl: '/upload/upload.tpl.html',
-  });
+          url: '/upload',
+          views:{
+        // '': {templateUrl: 'main/main.tpl.html'},
+        'sidebar': {templateUrl: '/upload/upload.tpl.html', controller:'UploadController'}
+      }
+      });
   })
+  
 
   .controller('MainController', function ($state, $scope, $http) {
     $scope.title = 'Mojsart';
