@@ -1,9 +1,4 @@
-
-<div ng-controller="UploadController">
-   <h1>Upload  Songs</h1>
-    <form id="uploadForm"
-      	<input type="file" id="userSongInput" name="userSong" />
-    	<a href="#" class="button">Upload Songs</a>
-    </form>
-</div>
-
+<div>
+  <input type="file" onchange="angular.element(this).scope().uploadFile(this.files)">
+  <a href="#" class="button" ng-click = "sendSong()">Submit</a>
+</div> 

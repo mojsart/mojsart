@@ -1,20 +1,17 @@
-angular.module('mojsart.upload', ['ui.router', 'fx.animations',
-    'ngAnimate'])
+// angular.module('mojsart.upload', ['ui.router', 'fx.animations',
+//     'ngAnimate'])
 
-.config(function ($stateProvider) {
+// .config(function ($stateProvider) {
 
-  $stateProvider
-    .state('mojsart.upload', {
-      url: '/upload',
-      templateUrl: 'upload/upload.tpl.html',
-      controller: 'UploadController'
-    });
-})
+//   $stateProvider
+//     .state('mojsart.upload', {
+//       url: '/upload',
+//       templateUrl: 'upload/upload.tpl.html',
+//       controller: 'UploadController'
+//     });
+// })
 
-.controller('UploadController', function ($scope, $http) {
-  $scope.sayHello = function(){
-    console.log('inside upload controller');
-  };
+// .controller('UploadController', function ($scope, $http) {
 
 
-});
+// });

@@ -7,7 +7,7 @@
     'mojsart.main.graph',
     'mojsart.main.infopanel',
     'fx.animations',
-    'ngAnimate'
+    'ngAnimate',
   ])
 
   .config(function ($stateProvider) {
@@ -24,11 +24,10 @@
     .state('mojsart.upload', {
           url: '/upload',
           views:{
-        'upload': {templateUrl: '/upload/upload.tpl.html', controller:'UploadController'}
+        'upload': {templateUrl: '/upload/upload.tpl.html', controller: "MainController"}
       }
       });
   })
-  
 
   .controller('MainController', function ($state, $scope, $http) {
     $scope.title = 'Mojsart';
@@ -44,6 +43,10 @@
     // TODO: make it so that we don't need to "initialize" like this
     $scope.sharedState = {};
     $scope.getSongs();
+    $scope.formData = {};
 
+    $scope.sendSong = function(){
+      console.log($scope.formData);
+    };
   });
 })(angular);
