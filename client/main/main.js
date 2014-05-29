@@ -24,7 +24,7 @@
           url: '/upload',
           views:{
         // '': {templateUrl: 'main/main.tpl.html'},
-        'sidebar': {templateUrl: '/upload/upload.tpl.html', controller:'UploadController'}
+        'upload': {templateUrl: '/upload/upload.tpl.html', controller:'UploadController'}
       }
       });
   })

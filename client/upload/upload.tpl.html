@@ -1,9 +1,12 @@
 
 <div style =class="jumbotron text-center">
-    <h1>The About Page</h1>
-    <p>This page demonstrates <span class="text-danger">multiple</span> and <span class="text-danger">named</span> views.</p>
+    <h1>The Upload Page</h1>
+    <form ng-submit="submit()" ng-controller="UploadController" id="uploadForm"
+          enctype="multipart/form-data"
+          action="/song/send"
+          method="post">
+      <input type="file" id="userSongInput" name="userSong" />
+  	<input type="submit" id="submit" value="Submit" />
+    </form>
 </div>
-<script>
-console.log('inside upload template');
-</script>
 
