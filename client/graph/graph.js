@@ -17,7 +17,7 @@ angular.module('mojsart.main.graph', ['ui.router'])
   // node in the d3 visualization (see: directives.js and graph.tpl.html)
   $scope.postFeedback = function (d) {
     // TODO: find some nice way to deepcopy the song in question
-    $scope.sharedState.songPath = '/song/md5/' + d.echoData.md5;
+    $scope.sharedState.songPath = '/song/get/md5/' + d.echoData.md5;
     for(var property in d.echoData) {
       $scope.sharedState[property] = d.echoData[property];
     }
