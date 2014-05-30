@@ -23,7 +23,7 @@
         d3Service.d3().then(function(d3) {
           var svg = d3.select(iElement[0])
           .append("svg")
-          // .attr("height", "100%"); //TODO do not hardcode
+          .attr("height", "85%"); //TODO do not hardcode
 
           // on window resize, re-render d3 canvas
           window.onresize = function() {
