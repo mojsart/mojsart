@@ -1,4 +1,5 @@
-<div>
-  <input type="file" onchange="angular.element(this).scope().uploadFile(this.files)">
-  <a href="#" class="button" ng-click = "sendSong()">Submit</a>
-</div> 
+<h1>Upload Songs</h1>
+<form>
+    <input type="file" onchange="angular.element(this).scope().filesChanged(this)" multiple/>
+    <button ng-click="upload()">Upload</button>
+</form
