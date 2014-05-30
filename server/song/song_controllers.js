@@ -21,6 +21,7 @@ module.exports = exports = {
   post: function (req, res, next) {
     // TODO: need to check if req.body is the entire song db entry    
     var song = req.body;
+    console.log(req);
     Q(Song.create(song).exec())
       .then(function (id) {
         res.send(id);
@@ -71,8 +72,7 @@ module.exports = exports = {
   },
 
   postSong: function(req, res, next) {
-    console.log('posting');
-    var song = req.files.userSong;
+    var song = req.files.file;
     var type = song.type;
     var filename = song.originalFilename;
 

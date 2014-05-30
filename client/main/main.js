@@ -81,6 +81,7 @@
       })
           .success(function (data, status, headers, config) {
           console.log("Sent:", data);
+          $scope.getSongs();
       });
   };
 });
