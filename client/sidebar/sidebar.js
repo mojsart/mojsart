@@ -42,6 +42,7 @@ angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
     console.log('Attemping to post vote for', package.base, 'vs', package.compare);
     $http.post('/song', package).success(function () {
       console.log('Successfully posted', package.base, 'vs', package.compare);
+      $scope.cycleVote(song);
     });
   };
 //Removes clicked song from songs array, automatically refreshing list of songs in sidepanel view
