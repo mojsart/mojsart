@@ -141,7 +141,18 @@ describe('', function() {
     }); 
 
     describe('Allows Users to post feedback: ', function() {
+      // TODO: Add non-nonsense test for posting feedback
 
+      it('Should 404 for nonsense posts allow', function(done){
+        console.log('yolo');
+        request(app)
+          .post('/song')
+          .send({
+            'nonsense' : 'nonsense'
+          })
+          .expect(404)
+          .end(done);
+      });
     }); 
 
     describe('Plays songs when requested: ', function() {

@@ -35,16 +35,22 @@ module.exports = exports = {
     /* Find a song using the client provided md5
      * .exec() promisifies the result
      * Q() transforms the promise into a Q-style promise */
-    Q(Song.findOne({'echoData.md5': req.body.base}).exec())
-    .then(function(song) {  // call SongSchema.methods.adjust on the found song after the promise returns
-      song.adjust(req.body.increment);
-    });
+     console.log('hi');
+    if (req.body.base) {
+      Q(Song.findOne({'echoData.md5': req.body.base}).exec())
+      .then(function(song) {  // call SongSchema.methods.adjust on the found song after the promise returns
+        song.adjust(req.body.increment);
+      });
 
-    // do similar for the song that is being compared against. note the negation
-    Q(Song.findOne({'echoData.md5': req.body.compare}).exec())
-    .then(function(song) {
-      song.adjust(-req.body.increment);
-    });
+      // do similar for the song that is being compared against. note the negation
+      Q(Song.findOne({'echoData.md5': req.body.compare}).exec())
+      .then(function(song) {
+        song.adjust(-req.body.increment);
+      });
+      res.send(200);  
+    } else {
+      res.send(404);
+    }
   },
 
   // consider breaking the below function into two requests to get an actual url with a file name

@@ -9,11 +9,10 @@ var bodyParser  = require('body-parser');
 
 module.exports = exports = function (router) {
   router.route('/')
-    .get(controller.get);
+    .get(controller.get)
+    .post(controller.postUserData);
     // post handles submits with new user inputs
   
-  router.post('/', bodyParser, controller.postUserData);
-
   // serving audio file route
   router.route('/get/md5/*')
     .get(controller.getSong);
