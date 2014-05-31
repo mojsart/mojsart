@@ -11,7 +11,9 @@
     "cron": "^1.0.4",
     "async": "^0.9.0",
     "method-override": "^1.0.2",
-    "connect-multiparty": "^1.0.4"
+    "connect-multiparty": "^1.0.4",
+    "supertest": "^0.13.0",
+    "chai": "^1.9.1"
   },
   "devDependencies": {
     "gulp": "*",
