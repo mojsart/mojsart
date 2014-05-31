@@ -56,15 +56,19 @@ module.exports = exports = {
 
     Q(Song.findOne({'echoData.md5': md5}).exec())
       .then(function(song) {
-        // build path to song
-        var filename = song.filename;
+        if (song) {
+          // build path to song
+          var filename = song.filename;
 
-        // build path based on server folder structure
-        var dirName = __dirname+'/lib';
-        var path = dirName + '/' + filename;
+          // build path based on server folder structure
+          var dirName = __dirname+'/lib';
+          var path = dirName + '/' + filename;
 
-        // serve static audio file
-        res.sendfile(path);
+          // serve static audio file
+          res.sendfile(path);   
+        } else {
+          res.send(404);
+        }
       })
       .fail(function(err) {
         throw(err);
@@ -97,7 +101,7 @@ module.exports = exports = {
     }
   },
 
-  sendTestPage: function(req,res,next) {
-    res.sendfile(__dirname+'/testUploadPage.html');
-  }
+  // sendTestPage: function(req,res,next) {
+  //   res.sendfile(__dirname+'/testUploadPage.html');
+  // }
 };

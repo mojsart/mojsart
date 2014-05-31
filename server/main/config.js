@@ -2,7 +2,7 @@
 
 var mongoose    = require('mongoose'),
     morgan      = require('morgan'),
-    bodyParser  = require('body-parser'),
+    // bodyParser  = require('body-parser'),
     methodOverride = require('method-override'),
     middle      = require('./middleware');
 

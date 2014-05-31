@@ -10,7 +10,7 @@ module.exports = exports = {
 
   // TODO: promisify, async, refactor -- callback hell... 
   uploadSongs: function() {
-    console.log('uploading songs');
+    // console.log('uploading songs');
     var dirName = __dirname+'/lib';
     var responseArr = [];
 
@@ -78,11 +78,13 @@ module.exports = exports = {
     // queries echoapi for the md5 we are looking for
     // console.log('query', query);
 
+    console.log('fetching');
     echo('track/profile').get(query, function (err, json) {
       if (err) throw(err);
       // returns a response referenced here: http://developer.echonest.com/docs/v4/track.html#profile
       // console.log(json.response.track);
       // calls SaveSongMD5 if processing is complete
+      console.log(json);
       if (json.response.track.status === "complete") {
         console.log('analysis complete');
         exports.updateSong(json.response.track, filename);
@@ -155,8 +157,6 @@ module.exports = exports = {
       .then(function(song) {
         if (!song) {
           cb(md5);
-        } else {
-          console.log('song found');
         }
       })
       .fail(function(reason) {
@@ -169,8 +169,6 @@ module.exports = exports = {
       .then(function(song) {
         if (!song) {
           cb(filename);
-        } else {
-          console.log('song found');
         }
       })
       .fail(function(reason) {
