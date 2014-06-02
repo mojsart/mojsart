@@ -55,6 +55,16 @@
     };
     // TODO: make it so that we don't need to "initialize" like this
     $scope.sharedState = {};
+    $scope.sharedState.songs = [];
+    $scope.sharedState.fillSongsList = function(){
+      $scope.getSongs(function(data){
+      for (var i = 0; i < data.length; i++){
+        console.log($scope.sharedState);
+        $scope.sharedState.songs.push({'track': data[i].echoData.artist, 'title': data[i].echoData.title, 'echoId': data[i].echoData.md5});
+      }
+  });
+};
+    
     $scope.getSongs();
     $scope.files = {};
     $scope.sent = false;

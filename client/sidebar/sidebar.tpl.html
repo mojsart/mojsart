@@ -6,7 +6,7 @@
     <th>Track</th>
     <th>Sentiment</th>
   </tr>
-  <tr ng-repeat="song in songs | limitTo: quantity">
+  <tr ng-repeat="song in sharedState.songs | limitTo: quantity">
     <td>{{song.title}}</td>
     <td>{{song.track}}</td>
       <td class="btn-group">
