@@ -16,16 +16,31 @@ angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
   $scope.songs = [];
   $scope.quantity = 5;
 
-
 //Fetches all songs when app starts, loads Track and Title into Songs Array
-  $http.get('/song')
+// TODO: delegate to parent's scope getSongs with a cb
+  $scope.getSongs = function(callback) {
+    $http.get('/song')
     .success(function(json) {
       $scope.data = json;
+      $scope.sharedState.data = json;
       console.log($scope.data[0]);
       for (var i = 0; i < $scope.data.length; i++){
         $scope.songs.push({'track': $scope.data[i].echoData.artist, 'title': $scope.data[i].echoData.title, 'echoId': $scope.data[i].echoData.md5});
       }
+      callback();
+
     });
+  };
+
+  $scope.getSongs();
+
+  // set up listener for re-get, and fires get songs. TODO: don't put this in the controller
+  socket.on('reget', function() {
+    console.log('regetting');
+    $scope.getSongs(function() {
+
+    });
+  });
 
     //returns an object comparing clicked-node song to another song in DB.
     //Covers both positive and negative comparisons."
@@ -42,6 +57,8 @@ angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
     console.log('Attemping to post vote for', package.base, 'vs', package.compare);
     $http.post('/song', package).success(function () {
       console.log('Successfully posted', package.base, 'vs', package.compare);
+      socket.emit('postUserData');
+      $scope.cycleVote(song);
     });
   };
 //Removes clicked song from songs array, automatically refreshing list of songs in sidepanel view

@@ -34,7 +34,7 @@ var SongSchema = new mongoose.Schema({
 SongSchema.methods.adjust = function(increment) {
   console.log('Adjusting', this.echoData.title, 'with increment', increment);
   var tmp = this.userData.speechiness;
-  this.userData.speechiness += increment;
+  this.userData.speechiness +=  0.1 * increment;
   console.log('Adjusted speechiness from', tmp, 'to', this.userData.speechiness);
   return this.save();
 };

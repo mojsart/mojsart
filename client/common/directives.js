@@ -23,7 +23,7 @@
         d3Service.d3().then(function(d3) {
           var svg = d3.select(iElement[0])
           .append("svg")
-          // .attr("height", "100%"); //TODO do not hardcode
+          .attr("height", "85%"); //TODO do not hardcode
 
           // on window resize, re-render d3 canvas
           window.onresize = function() {
@@ -75,7 +75,7 @@
                   var x = d3.select(this).attr('cx');
                   var y = d3.select(this).attr('cy');
                   // console.log(scope.onClickThingy)
-                  scope.$apply(function() {scope.onClickThingy(d)});
+                  scope.$apply(function() {scope.onClickThingy(d);});
                   // can't just do scope.onClickThingy because angular needs to know about it
                   // digest cycle
                   console.log(artist, '-', title, ': (' + x + ', ' + y + ')');
@@ -104,7 +104,7 @@
                 .transition()
                   .duration(1000) // time of duration
                 .attr("r", function(d) { return Math.abs(5 * d.echoData.audio_summary.loudness); })
-                .attr("cx",function(d) { return width*(d.echoData.audio_summary.speechiness + d.echoData.audio_summary.acousticness/2); })
+                .attr("cx",function(d) { return width*(d.echoData.audio_summary.speechiness + d.userData.speechiness + d.echoData.audio_summary.acousticness/3); })
                 .attr("cy", function(d) { return height*(d.echoData.audio_summary.energy + d.echoData.audio_summary.danceability)/2; });
           };
         });
