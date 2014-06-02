@@ -15,7 +15,6 @@
     .state('mojsart.main', {
       url: '/main',
       views:{
-        // '': {templateUrl: 'main/main.tpl.html'},
         'sidebar': {templateUrl: '/sidebar/sidebar.tpl.html', controller:'SideBarController'},
         'infopanel': {templateUrl: '/infopanel/infopanel.tpl.html', controller:'InfoController'},
         'graph':{templateUrl: '/graph/graph.tpl.html', controller:'GraphController'}
@@ -44,6 +43,7 @@
   .controller('MainController', function ($state, $scope, $http) {
     $scope.title = 'Mojsart';
 
+    //Fetches all song names, adds them to SharedState.
     $scope.getSongs = function () {
       $http.get('/song')
       .success(function(json) {
@@ -55,6 +55,8 @@
     $scope.sharedState = {};
     $scope.getSongs();
     $scope.files = {};
+    $scope.sent = false;
+
     //recognizes when one or more files are selected, loads them to array
     $scope.filesChanged = function(elm){
       $scope.files = elm.files;
@@ -69,7 +71,7 @@
           fd.append('file', file);
       });
 
-      //This is the Post request to add a new song
+      //This is the Post request to add a new song, which sends FormData
       $http({
           method: 'POST',
           url: '/song/send',
@@ -81,6 +83,9 @@
       })
           .success(function (data, status, headers, config) {
           console.log("Sent:", data);
+          //toggles in order to show hidden button, using ng-show in upload.tpl.html
+          $scope.sent = true;
+
           $scope.getSongs();
       });
   };
