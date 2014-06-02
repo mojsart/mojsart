@@ -18,21 +18,14 @@ angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
 
 //Fetches all songs when app starts, loads Track and Title into Songs Array
 // TODO: delegate to parent's scope getSongs with a cb
-  $scope.getSongs = function(callback) {
-    $http.get('/song')
-    .success(function(json) {
-      $scope.data = json;
-      $scope.sharedState.data = json;
-      console.log($scope.data[0]);
-      for (var i = 0; i < $scope.data.length; i++){
-        $scope.songs.push({'track': $scope.data[i].echoData.artist, 'title': $scope.data[i].echoData.title, 'echoId': $scope.data[i].echoData.md5});
+ $scope.fillSidebar = function(){
+    $scope.getSongs(function(data){
+    for (var i = 0; i < data.length; i++){
+        $scope.songs.push({'track': data[i].echoData.artist, 'title': data[i].echoData.title, 'echoId': data[i].echoData.md5});
       }
-      callback();
-
-    });
-  };
-
-  $scope.getSongs();
+  });
+};
+  $scope.fillSidebar();
 
   // set up listener for re-get, and fires get songs. TODO: don't put this in the controller
   socket.on('reget', function() {

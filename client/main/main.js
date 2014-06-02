@@ -44,11 +44,13 @@
     $scope.title = 'Mojsart';
 
     //Fetches all song names, adds them to SharedState.
-    $scope.getSongs = function () {
+     $scope.getSongs = function (func) {
       $http.get('/song')
       .success(function(json) {
-        // console.log(json);
         $scope.sharedState.data = json;
+        if (func){
+        func(json);
+        }
       });
     };
     // TODO: make it so that we don't need to "initialize" like this
