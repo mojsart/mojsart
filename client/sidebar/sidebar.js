@@ -28,7 +28,7 @@ angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
     });
 
     //returns an object comparing clicked-node song to another song in DB.
-    //Covers case where user says song is "MORE x than clicked-node"
+    //Covers both positive and negative comparisons."
 
   $scope.postVote = function(song, upOrDown){
     var package = {};

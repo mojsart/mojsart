@@ -2,4 +2,5 @@
 <form>
     <input type="file" onchange="angular.element(this).scope().filesChanged(this)" multiple/>
     <button ng-click="upload()">Upload</button>
+    <a class="button success" ng-show="sent" href="/#/mojsart/main">See updates</a>
 </form
