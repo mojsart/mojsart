@@ -20,7 +20,6 @@ module.exports = exports = {
   // validate songtype using regex filter and check if filename is found in db
   validateFileType: function(file, callback) {
     if(exports.filenameRegEx(file)) {
-      console.log('hello');
       exports.checkSongNotInDB('filename', file, exports.echoUpload)
     }
   },
