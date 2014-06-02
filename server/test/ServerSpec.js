@@ -1,6 +1,7 @@
 var request = require('supertest');
 var express = require('express');
 var fs = require('fs');
+var Q = require('q');
 var expect = require('chai').expect;
 
 var app = require('../main/app.js');
@@ -80,7 +81,7 @@ describe('', function() {
               samplerate: 44100,
               md5: '23f455935fafa3107ae7f4a9298f893b' 
             };
-            helpers.updateSong(echoNestResp, 'testmp3.mp3')
+            helpers.updateSong(echoNestResp, 'testmp3.mp3');
             done();
           });
 
@@ -98,7 +99,6 @@ describe('', function() {
         });
       });
     });
-
   });
 
   describe('Server Actions: ', function() {
@@ -142,6 +142,72 @@ describe('', function() {
 
     describe('Allows Users to post feedback: ', function() {
       // TODO: Add non-nonsense test for posting feedback
+      before(function(done) {
+        var song = new Song({
+          echoData:  { 
+            status: 'complete',
+            artist: 'feedbackartist',
+            title: 'feedbacktitle',
+            id: 'feedbackid',
+            audio_summary: { 
+              time_signature: 1,
+              tempo: 1,
+              energy: 1, 
+              liveness: 1,
+              speechiness: 1,
+              acousticness: 1,
+              danceability: 1,
+              key: 1,
+              duration: 1,
+              loudness: -1,
+              valence: 1,
+              mode: 0 
+            },
+            bitrate: 1,
+            samplerate: 1,
+            md5: 'abcde12356testingfeedback' 
+          },
+          userData: {
+            speechiness: null,
+            acousticness: null        
+          },
+          filename: 'feedback.mp3'
+        });  
+        console.log('saving new song', song);
+        var $promise = Q.nbind(song.save, song);
+        $promise()
+          .then(function(saved) {
+            console.log('song saved', saved);
+            done();
+          });
+      });
+
+      after(function(done) {
+        Song.remove({'filename' : 'feedback.mp3'}).exec();
+        done();
+      });
+
+      it('Should allow user input to be saved', function(done){
+        request(app)
+          .post('/song')
+          .send({
+            base: '23f455935fafa3107ae7f4a9298f893b', // md5 1
+            compare: 'abcde12356testingfeedback', // md5 2
+            increment: 1
+          })
+          .expect(200)
+          .end(done);
+      });
+
+      it('Should reflect user input in db', function(done) {
+        Song.findOne({'echoData.md5': 'abcde12356testingfeedback'}, function(err, song) {
+          expect(song.userData.speechiness).to.equal(-0.1);
+          Song.findOne({'echoData.md5':'23f455935fafa3107ae7f4a9298f893b'}, function(err, song) {
+            expect(song.userData.speechiness).to.equal(0.1);
+            done();
+          })
+        });
+      });
 
       it('Should 404 for nonsense posts allow', function(done){
         request(app)
@@ -190,7 +256,6 @@ describe('', function() {
           .expect(404)
           .end(done);
       });
-
     });
   });
 });

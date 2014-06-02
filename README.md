@@ -7,15 +7,16 @@ See the current demo version of mojsart [here](https://github.com/mojsart/mojsar
 
 #### Screenshots:
 
-#### Technologies Used:
+#### Technologies Used
+Our application's tech stack is the following:
 - Front-end: AngularJS
 - Back-end: Express
 - Database: MongoDB
 - Song data: Echo Nest
 - Visualization: D3.js
 
-#### Challenges Faced:
-As a whole, the team faced three primary challenges challenges.
+#### Challenges Faced
+As a whole, the team faced three primary challenges challenges:
 - File Uploads with Angular
 - D3 and Angular Integration
 - Asynchronus batch file processing with a 3rd party API dependency
