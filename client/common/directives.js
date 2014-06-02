@@ -8,6 +8,25 @@
     };
   })
 
+  .directive('twitter',['$timeout',function($timeout) {
+    return {
+      link: function(scope, element, attr) {
+        $timeout(function() {
+          twttr.widgets.createShareButton(
+            attr.url,
+            element[0],
+            function() {}, {
+              count: attr.count,
+              text: attr.text,
+              via: attr.via,
+              size: attr.size
+            }
+          );
+        });
+      }
+    };
+  }])
+
   // use this directive as a template for other directives
   .directive('d3Visualizer', ['d3Service', function(d3Service) {
     return {
