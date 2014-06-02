@@ -21,7 +21,6 @@ module.exports = exports = {
   post: function (req, res, next) {
     // TODO: need to check if req.body is the entire song db entry    
     var song = req.body;
-    console.log(req);
     Q(Song.create(song).exec())
       .then(function (id) {
         res.send(id);
@@ -35,7 +34,6 @@ module.exports = exports = {
     /* Find a song using the client provided md5
      * .exec() promisifies the result
      * Q() transforms the promise into a Q-style promise */
-     console.log('hi');
     if (req.body.base) {
       Q(Song.findOne({'echoData.md5': req.body.base}).exec())
       .then(function(song) {  // call SongSchema.methods.adjust on the found song after the promise returns
@@ -57,7 +55,6 @@ module.exports = exports = {
   // TODO: refactor 
   getSong: function(req, res, next) {
     // grab md5 from request URL
-    console.log('getting song');
     var md5 = req.params[0];
 
     Q(Song.findOne({'echoData.md5': md5}).exec())
@@ -65,11 +62,9 @@ module.exports = exports = {
         if (song) {
           // build path to song
           var filename = song.filename;
-
           // build path based on server folder structure
           var dirName = __dirname+'/lib';
           var path = dirName + '/' + filename;
-
           // serve static audio file
           res.sendfile(path);   
         } else {
@@ -86,8 +81,6 @@ module.exports = exports = {
     var type = song.type;
     var filename = song.originalFilename;
 
-    // note: dumb upload. overwrites same file names
-    // songs must have different filenames
     // TODO: increment filenames if they're found
     var regex = /^(audio\/[a-z0-9]+)$/i;
     var bool = helpers.filenameRegEx(filename) && regex.test(type);
@@ -103,11 +96,7 @@ module.exports = exports = {
           throw(err)
         });
     } else {
-      res.send(404, 'Sorry, please upload an audio file!')
+      res.send(404, 'Sorry, please upload a .mp3')
     }
-  },
-
-  // sendTestPage: function(req,res,next) {
-  //   res.sendfile(__dirname+'/testUploadPage.html');
-  // }
+  }
 };
