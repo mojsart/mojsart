@@ -20,6 +20,7 @@ module.exports = exports = {
   // validate songtype using regex filter and check if filename is found in db
   validateFileType: function(file, callback) {
     if(exports.filenameRegEx(file)) {
+      console.log('hello');
       exports.checkSongNotInDB('filename', file, exports.echoUpload)
     }
   },
@@ -27,7 +28,7 @@ module.exports = exports = {
   // send song to echo nest
   echoUpload: function(filename) {
     var location = exports.dirName + '/' + filename;
-    var filetype = path.extname(location).substr(1);
+    var filetype = path.extname(location).substr(1).toLowerCase();
     fs.readFile(location, function(err, buffer) {
       exports.callbackError(err);
       echo('track/upload').post({
@@ -55,7 +56,7 @@ module.exports = exports = {
 
   // ping echo nest for status update
   setEchoInterval: function(md5, filename) {
-    var waittime = 2000;
+    var waittime = 5000;
     var interval = setInterval(function(md5){
       var query = {bucket: 'audio_summary', md5: md5};
       // arguments : query with the desired md5, boolean to state whether there is a boolean
@@ -65,8 +66,10 @@ module.exports = exports = {
   },
 
   callbackError: function(err) {
-    if (err) throw(err);
+    if (err) console.log(err);
   },
+
+  // handle pending in db
 
   echoFetchMD5: function(query, bool, filename, interval) {
     // query should be something like {
