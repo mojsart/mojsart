@@ -16,7 +16,7 @@ Our application's tech stack is the following:
 - Visualization: D3.js
 
 #### Challenges Faced
-As a whole, the team faced three primary challenges challenges:
+As a whole, the team faced three primary technical challenges:
 - File Uploads with Angular
 - D3 and Angular Integration
 - Asynchronus batch file processing with a 3rd party API dependency
