@@ -68,7 +68,7 @@ module.exports = exports = {
     if (err) console.log(err);
   },
 
-  // handle pending in db
+  // TODO: handle pending in db
 
   echoFetchMD5: function(query, bool, filename, interval) {
     // query should be something like {
