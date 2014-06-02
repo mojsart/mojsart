@@ -4,97 +4,87 @@ var Song = require('./song_model.js'),
     Q    = require('q'),
     echo = require('../main/echo.js'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    async = require('async');
 
 module.exports = exports = {
+  dirName: __dirname + '/lib', 
 
-  // TODO: promisify, async, refactor -- callback hell... 
+  // starting point for upload songs, read all songs in library
   uploadSongs: function() {
-    // console.log('uploading songs');
-    var dirName = __dirname+'/lib';
-    var responseArr = [];
-
-    // read song directory on server
-    fs.readdir(dirName, function(err, files) {
-      // for each song on the server
-      for (var i = 0; i < files.length; i++) {
-        (function(count) {
-          // check the database to see if the file exists
-          // only proceed for files who pass the regex filter filenameRegEx
-          // TODO: need to ignore things besides DS_Store
-          if(exports.filenameRegEx(files[count])) {
-            exports.checkSongFilenameDB(files[count], function(filename) {
-              if (err) throw(err);
-              var location = dirName + '/' + filename;
-              // console.log(location);
-
-              //check if filename in db before initializing a send
-              exports.checkSongFilenameDB(filename, function(filename) { 
-                fs.readFile(location, function(err, buffer) {
-                  console.log(buffer);
-                  if (err) throw (err);
-                  // upload to echo nest
-                  echo('track/upload').post({
-                    filetype: path.extname(location).substr(1)
-                  }, 'application/octet-stream', buffer, function(err, json) {
-                    if (err) throw(err);
-                    console.log(json.response.track);
-                    // as soon as a response is received - check to see if it's already in db
-                    exports.checkSongFilenameDB(filename, function(filename) { 
-                      // save the pending processing song WITHOUT md5
-                      exports.saveSong(json.response.track, filename);
-                      // begin checking if md5 is there
-                      exports.checkSongMD5DB(json.response.track.md5, function(md5) {
-                        // if the song is not found 
-                        (function(md5) {
-                          // set to check echonest every 2 seconds to see if the song has been processed by echonest
-                          var waittime = 4000;
-                          var interval = setInterval(function(md5){
-                            // console.log('checking md5', md5)
-                            var query = {bucket: 'audio_summary', md5: md5};
-                            // arguments : query with the desired md5, boolean to state whether there is a boolean
-                            // filename to save, and the interval object which is needed to clearInterval
-                            exports.fetchSongMD5(query, false, filename, interval);                    
-                          }, waittime, md5);
-                        })(md5);
-                      });
-                    });
-                  });
-                });   
-              });
-            })
-          }
-        })(i);
-      }
+    fs.readdir(exports.dirName, function(err, files) {
+      async.each(files, exports.validateFileType, exports.callbackError);
     });
   },
 
-  fetchSongMD5: function(query, bool, filename, interval) {
+  // validate songtype using regex filter and check if filename is found in db
+  validateFileType: function(file, callback) {
+    if(exports.filenameRegEx(file)) {
+      exports.checkSongNotInDB('filename', file, exports.echoUpload)
+    }
+  },
+
+  // send song to echo nest
+  echoUpload: function(filename) {
+    var location = exports.dirName + '/' + filename;
+    var filetype = path.extname(location).substr(1);
+    fs.readFile(location, function(err, buffer) {
+      exports.callbackError(err);
+      echo('track/upload').post({
+        filetype: filetype             
+      }, 'application/octet-stream', buffer, function(err, json) {
+        exports.handleEchoResponse(err, json, filename);
+      });
+    });   
+  },
+
+  // handle echo nest response
+  // 1. check if song filename in db
+  // 2. save pending processing song in db
+  // 3. check to make sure the song hasn't already been processed in the async
+  // 4. start echo nest interval 
+  handleEchoResponse: function(err, json, filename) {
+    exports.callbackError(err);
+    exports.checkSongNotInDB('filename', filename, function(filename) { 
+      exports.saveSong(json.response.track, filename);
+      exports.checkSongNotInDB('echoData.md5', json.response.track.md5, function(md5) {
+        exports.setEchoInterval(md5, filename);
+      });
+    });
+  },
+
+  // ping echo nest for status update
+  setEchoInterval: function(md5, filename) {
+    var waittime = 2000;
+    var interval = setInterval(function(md5){
+      var query = {bucket: 'audio_summary', md5: md5};
+      // arguments : query with the desired md5, boolean to state whether there is a boolean
+      // filename to save, and the interval object which is needed to clearInterval
+      exports.echoFetchMD5(query, false, filename, interval);                    
+    }, waittime, md5);
+  },
+
+  callbackError: function(err) {
+    if (err) throw(err);
+  },
+
+  echoFetchMD5: function(query, bool, filename, interval) {
     // query should be something like {
     //   md5: 'cfa55a902533b32e87473c2218b39da9',
     //   bucket: 'audio_summary'
     // }
-
     // queries echoapi for the md5 we are looking for
-    // console.log('query', query);
-
-    console.log('fetching');
     echo('track/profile').get(query, function (err, json) {
-      if (err) throw(err);
+      exports.callbackError(err);
       // returns a response referenced here: http://developer.echonest.com/docs/v4/track.html#profile
-      // console.log(json.response.track);
       // calls SaveSongMD5 if processing is complete
-      console.log(json);
       if (json.response.track.status === "complete") {
-        console.log('analysis complete');
         exports.updateSong(json.response.track, filename);
         if (bool === false) {
-          console.log('setting bool to true');
           bool = true;
         }
       }
       if (bool) {
-        console.log('clearing interval');
         clearInterval(interval);
       }
     });
@@ -103,7 +93,6 @@ module.exports = exports = {
   saveSong: function(trackData, filename) {
     // create a song model
     // populate with echo nest data
-
     // initializes a new instance of song with the received trackData
     var song = new Song({
       echoData: {
@@ -111,12 +100,11 @@ module.exports = exports = {
       },
       filename: filename
     });       
-
     // saves to our mongoose database if it doesn't exist
     var $promise = Q.nbind(song.save, song);
     $promise()
       .then(function(saved) {
-        console.log('song saved: ', saved);
+        console.log('song saved');
       });
   }, 
 
@@ -148,32 +136,24 @@ module.exports = exports = {
 
     Q(Song.update({'filename' : filename}, update).exec())
       .then(function(saved) {
-        console.log('song saved');
+        console.log('song updated');
       });
   },
 
-  checkSongMD5DB: function(md5, cb) {
-    Q(Song.findOne({'echoData.md5': md5}).exec())
+  checkSongNotInDB: function(searchField, input, cb) {
+    // for MD5: searchField = 'echoData.md5'
+    // for filename: searchField = 'filename'
+    var query = {};
+    query[searchField] = input
+    Q(Song.findOne(query).exec())
       .then(function(song) {
         if (!song) {
-          cb(md5);
+          cb(input);
         }
       })
       .fail(function(reason) {
         console.log(reason);
       });
-  },
-
-  checkSongFilenameDB: function(filename, cb) {
-    Q(Song.findOne({'filename': filename}).exec())
-      .then(function(song) {
-        if (!song) {
-          cb(filename);
-        }
-      })
-      .fail(function(reason) {
-        console.log(reason);
-      });    
   },
 
   filenameRegEx: function(filename) {
