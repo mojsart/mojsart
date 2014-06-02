@@ -19,4 +19,8 @@ console.log(log);
 
 io.on('connection', function(socket){
   console.log('a user connected');
+  socket.on('postUserData', function() {
+    console.log('postUserData')
+    io.emit('reget');
+  });
 });
