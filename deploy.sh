@@ -127,22 +127,12 @@ if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
   cd - > /dev/null
 fi
 
-# 5. Run grunt
-# if [ -e "$DEPLOYMENT_TARGET/Gruntfile.js" ]; then
-#   cd "$DEPLOYMENT_TARGET"
-#   eval $NPM_CMD install grunt-cli
-#   exitWithMessageOnError "installing grunt failed"
-#   ./node_modules/.bin/grunt --no-color build
-#   exitWithMessageOnError "grunt failed"
-#   cd - > /dev/null
-# fi
-
-#5 Run gulp
+# 5. Run gulp
 if [ -e "$DEPLOYMENT_TARGET/Gulpfile.js" ]; then
   cd "$DEPLOYMENT_TARGET"
-  eval $NPM_CMD install gulp
+  eval $NPM_CMD install gulp-shell
   exitWithMessageOnError "installing gulp failed"
-  ./node_modules/.bin/gulp --no-color build
+  ./node_modules/.bin/gulp build
   exitWithMessageOnError "gulp failed"
   cd - > /dev/null
 fi

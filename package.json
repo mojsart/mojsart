@@ -14,9 +14,7 @@
     "connect-multiparty": "^1.0.4",
     "supertest": "^0.13.0",
     "chai": "^1.9.1",
-    "socket.io": "~1.0.2"
-  },
-  "devDependencies": {
+    "socket.io": "~1.0.2",
     "gulp": "*",
     "gulp-bower": "*",
     "morgan": "*",
@@ -32,5 +30,8 @@
     "gulp-concat": "*",
     "gulp-uglify": "*",
     "gulp-less": "*"
+  },
+  "devDependencies": {
+
   }
 }
