@@ -5,6 +5,9 @@ var multiparty = require('connect-multiparty');
 var multipartMiddleware = multiparty();
 var bodyParser  = require('body-parser');
 
+// TODO: we don't need this (for test only - to manually fire uploadSongs)
+var upload = require('./song_upload.js');
+
 module.exports = exports = function (router) {
   router.route('/')
     .get(controller.get)
@@ -17,4 +20,7 @@ module.exports = exports = function (router) {
 
   // only use multipart on /send route  
   router.post('/send', multipartMiddleware, controller.postSong);
+
+  router.route('/test')
+    .get()
 };
