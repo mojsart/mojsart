@@ -87,11 +87,14 @@ module.exports = exports = {
     var regex = /^(audio\/[a-z0-9]+)$/i;
     var bool = helpers.filesizeCheck(size) && helpers.filenameRegEx(filename) && regex.test(type);
 
+    console.log(bool);
+    
     if (bool) {
       var serverPath = __dirname + '/lib/' + filename; 
       var $fsRename = Q.nbind(fs.rename, fs);
       $fsRename(song.path, serverPath)
         .then(function() {
+          console.log(serverPath)
           res.send(serverPath);
         })
         .fail(function(err) {
