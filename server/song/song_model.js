@@ -28,7 +28,8 @@ var SongSchema = new mongoose.Schema({
     speechiness: Number,
     acousticness: Number
   },
-  filename: String
+  filename: String,
+  cached: Boolean
 });
 
 SongSchema.methods.adjust = function(increment) {
