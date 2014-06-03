@@ -20,38 +20,19 @@ module.exports = exports = {
     console.log('validating filetype');
     if(helpers.filenameRegEx(file)) {
       console.log('processing file ', file);
-      helpers.checkSongNotInDB('filename', file, function(filename) {
-        var options = {
-          hostname: 'developer.echonest.com',
-          path: '/api/v4/track/profile?api_key=OTEBZ6M2CJSZTKH6Q&format=json&md5=23f455935fafa3107ae7f4a9298f893b&bucket=audio_summary',
-        };
-
-        var callback = function(response) {
-          var str = '';
-          response.on('data', function(chunk){
-            str+=chunk;
-          });
-
-          response.on('end', function() {
-            console.log(str);
-          });
-        }
-
-        http.request(options, callback).end()
-      });
+      helpers.checkSongNotInDB('filename', file, exports.echoUpload);
     }
   },
 
   // send song to echo nest
   echoUpload: function(filename) {
-    var location = helpers.dirName + '/' + filename;
+    var location = path.join(helpers.dirName , filename);
     var filetype = path.extname(location).substr(1).toLowerCase();
     console.log('sending to echo', location);
     fs.readFile(location, function(err, buffer) {
+      helpers.callbackError(err);
       console.log(buffer);
       console.log(filetype);
-      helpers.callbackError(err);
-      console.log(echo('track/upload'));
       echo('track/upload').post({
         filetype: filetype             
       }, 'application/octet-stream', buffer, function(err, json) {

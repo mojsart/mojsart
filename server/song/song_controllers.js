@@ -63,8 +63,8 @@ module.exports = exports = {
           // build path to song
           var filename = song.filename;
           // build path based on server folder structure
-          var dirName = __dirname+'/lib';
-          var path = dirName + '/' + filename;
+          var dirName = path.join(__dirname, 'lib');
+          var path = path.join(dirName, filename);
           // serve static audio file
           res.sendfile(path);   
         } else {
@@ -87,21 +87,35 @@ module.exports = exports = {
     var regex = /^(audio\/[a-z0-9]+)$/i;
     var bool = helpers.filesizeCheck(size) && helpers.filenameRegEx(filename) && regex.test(type);
 
+    // https://www.npmjs.org/package/formidable
+
     console.log(bool);
 
     if (bool) {
-      var serverPath = __dirname + '/lib/' + filename; 
-      var $fsRename = Q.nbind(fs.rename, fs);
-      var $fsWrite = Q.nbind(fs.writeFile, fs);
+      var serverPath = path.join(__dirname, 'lib', filename); 
+      var $fsWriteFile = Q.nbind(fs.writeFile, fs);
+      var $fsReadFile = Q.nbind(fs.readFile, fs);
       console.log(serverPath);
-      $fsWrite(serverPath, song)
-        .then(function() {
-          res.send(serverPath);
+      console.log(song);
+
+      $fsReadFile(song.path)
+        .then(function(buffer) {
+          console.log(buffer);
+          $fsWriteFile(serverPath, buffer)
+            .then(function() {
+              console.log('writing');
+              fs.unlink(song.path, function(err) {
+                helpers.callbackError(err);
+                console.log('temp file deleted');
+                res.send(serverPath);
+              });
+            });
         })
         .fail(function(err) {
           console.log('error stuff');
-          throw(err)
-        });      
+          throw(err);
+        });
+      // var $fsRename = Q.nbind(fs.rename, fs);
       // $fsRename(song.path, serverPath)
       //   .then(function() {
       //     console.log(serverPath)
