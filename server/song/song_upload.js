@@ -20,26 +20,7 @@ module.exports = exports = {
     console.log('validating filetype');
     if(helpers.filenameRegEx(file)) {
       console.log('processing file ', file);
-      helpers.checkSongNotInDB('filename', file, function(filename) {
-        var options = {
-          hostname: 'developer.echonest.com',
-          path: '/api/v4/track/profile?api_key=OTEBZ6M2CJSZTKH6Q&format=json&md5=23f455935fafa3107ae7f4a9298f893b&bucket=audio_summary',
-        };
-
-        var callback = function(response) {
-          var str = '';
-          response.on('data', function(chunk){
-            str+=chunk;
-          });
-
-          response.on('end', function() {
-            str = JSON.parse(str);
-            console.log(str.response);
-          });
-        };
-
-        http.request(options, callback).end();
-      });
+      helpers.checkSongNotInDB('filename', file, exports.echoUpload);
     }
   },
 
