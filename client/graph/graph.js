@@ -29,6 +29,5 @@ angular.module('mojsart.main.graph', ['ui.router'])
     if ($scope.sharedState.songs.length <=1){
       $scope.sharedState.fillSongsList();
     }
-    $scope.sharedState.filterSongsList(d.echoData.md5);
   };
 });

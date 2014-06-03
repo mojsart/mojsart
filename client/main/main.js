@@ -64,14 +64,6 @@
       }
   });
 };
-    $scope.sharedState.filterSongsList = function (songMd5) {
-      $scope.sharedState.songs.forEach(function (song) {
-          if (song.echoId === songMd5) {
-              $scope.sharedState.songs.splice($scope.sharedState.songs.indexOf(song), 1);
-          }
-      });
-    };
-    
     $scope.getSongs();
     $scope.files = {};
     $scope.sent = false;

@@ -4,7 +4,7 @@
     <th>VS</th>
     <th>Song 2</th>
   </tr>
-  <tr ng-repeat="song in sharedState.songs | limitTo: quantity">
+  <tr ng-repeat="song in sharedState.songs | limitTo: quantity| filter: filterSongsList">
     <td>{{song.title}}, by {{song.track}} </td>
       <td>
         <ul class='btn-group [radius round]'></ul>

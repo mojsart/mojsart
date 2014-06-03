@@ -19,12 +19,18 @@ angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
 
 //Fetches all songs when app starts, loads Track and Title into Songs Array
   // set up listener for re-get, and fires get songs. TODO: don't put this in the controller
+  $scope.filterSongsList = function (song) {
+      if (song.title === $scope.sharedState.title){
+        return false;
+      } else {
+        return true;
+      }
+    };
+
   socket.on('reget', function() {
     console.log('regetting');
     $scope.getSongs();
   });
-
-  // $scope.sharedState.fillSongsList();
   
 
 
