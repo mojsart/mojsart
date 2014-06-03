@@ -31,10 +31,12 @@ module.exports = exports = {
     var filetype = path.extname(location).substr(1).toLowerCase();
     console.log('sending to echo', location);
     fs.readFile(location, function(err, buffer) {
+      console.log(buffer);
       helpers.callbackError(err);
       echo('track/upload').post({
         filetype: filetype             
       }, 'application/octet-stream', buffer, function(err, json) {
+        if (err) console(err);
         console.log('echo response', json);
         exports.handleEchoResponse(err, json, filename);
       });
@@ -47,6 +49,7 @@ module.exports = exports = {
   // 3. check to make sure the song hasn't already been processed in the async
   // 4. start echo nest interval 
   handleEchoResponse: function(err, json, filename) {
+    console.log('echo response handling', json);
     helpers.callbackError(err);
     helpers.checkSongNotInDB('filename', filename, function(filename) { 
       helpers.saveSong(json.response.track, filename);
