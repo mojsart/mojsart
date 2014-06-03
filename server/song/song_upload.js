@@ -4,7 +4,8 @@ var Song = require('./song_model.js'),
     echo = require('../main/echo.js'),
     fs = require('fs'),
     path = require('path'),
-    helpers = require('./song_helpers.js');
+    helpers = require('./song_helpers.js'),
+    http = require('http');
 
 module.exports = exports = {
 
@@ -20,14 +21,23 @@ module.exports = exports = {
     if(helpers.filenameRegEx(file)) {
       console.log('processing file ', file);
       helpers.checkSongNotInDB('filename', file, function(filename) {
-          echo('track/profile').get({
-            md5: '23f455935fafa3107ae7f4a9298f893b',
-            bucket: 'audio_summary'
-            // format: 'json'
-          }, function (err, json) {
-            if (err) throw(err);
-            console.log(json.response.track.audio_summary);
+        var options = {
+          hostname: 'developer.echonest.com',
+          path: '/api/v4/track/profile?api_key=OTEBZ6M2CJSZTKH6Q&format=json&md5=23f455935fafa3107ae7f4a9298f893b&bucket=audio_summary',
+        };
+
+        var callback = function(response) {
+          var str = '';
+          response.on('data', function(chunk){
+            str+=chunk;
           });
+
+          response.on('end', function() {
+            console.log(str);
+          });
+        }
+
+        http.request(options, callback).end()
       });
     }
   },
