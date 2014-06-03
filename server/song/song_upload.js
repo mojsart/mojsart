@@ -36,7 +36,7 @@ module.exports = exports = {
       echo('track/upload').post({
         filetype: filetype             
       }, 'application/octet-stream', buffer, function(err, json) {
-        if (err) console(err);
+        if (err) console.log(err);
         console.log('echo response', json);
         exports.handleEchoResponse(err, json, filename);
       });
