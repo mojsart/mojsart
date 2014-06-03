@@ -87,7 +87,7 @@
                 .append("circle")
                   .attr("fill", "white")
                   .attr("stroke", "black")
-                  .attr("stroke-width", 3)
+                  .attr("stroke-width", 2)
                 .on("click", function(d, i) {
                   var artist = d.echoData.artist;
                   var title = d.echoData.title;
@@ -111,7 +111,7 @@
                 .on("mouseout", function() {
                   d3.select(this)
                     .transition()
-                    .attr("fill", "white")
+                    .attr("fill", function(d) { return (d.cached) ? "lightyellow" : "white"; })
                     .attr("stroke", "black")
                     .attr("r", d3.select(this).attr("r")/1.2);
                 })
@@ -122,9 +122,10 @@
                 // .attr("cy", function() { return height*Math.random(); })
                 .transition()
                   .duration(1000) // time of duration
-                .attr("r", function(d) { return Math.abs(5 * d.echoData.audio_summary.loudness); })
+                .attr("r", function(d) { return 20*Math.pow(10, (d.echoData.audio_summary.loudness/20)); })
                 .attr("cx",function(d) { return width*(d.echoData.audio_summary.speechiness + d.userData.speechiness + d.echoData.audio_summary.acousticness/3); })
-                .attr("cy", function(d) { return height*(d.echoData.audio_summary.energy + d.echoData.audio_summary.danceability)/2; });
+                .attr("cy", function(d) { return height*(d.echoData.audio_summary.energy + d.echoData.audio_summary.danceability)/2; })
+                .attr("fill", function(d) { return (d.cached) ? "lightyellow" : "white"; });
           };
         });
       }
