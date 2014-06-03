@@ -90,18 +90,27 @@ module.exports = exports = {
     console.log(bool);
 
     if (bool) {
-      var serverPath = __dirname + '\\lib\\' + filename; 
+      var serverPath = __dirname + '/lib/' + filename; 
       var $fsRename = Q.nbind(fs.rename, fs);
+      var $fsWrite = Q.nbind(fs.writeFile, fs);
       console.log(serverPath);
-      $fsRename(song.path, serverPath)
+      $fsWrite(serverPath, song)
         .then(function() {
-          console.log(serverPath)
           res.send(serverPath);
         })
         .fail(function(err) {
           console.log('error stuff');
           throw(err)
-        });
+        });      
+      // $fsRename(song.path, serverPath)
+      //   .then(function() {
+      //     console.log(serverPath)
+      //     res.send(serverPath);
+      //   })
+      //   .fail(function(err) {
+      //     console.log('error stuff');
+      //     throw(err)
+      //   });
     } else {
       res.send(404, 'Sorry, please upload a .mp3 under 10 MB')
     }
