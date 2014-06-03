@@ -24,7 +24,7 @@ angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
     $scope.getSongs();
   });
 
-  $scope.sharedState.fillSongsList();
+  // $scope.sharedState.fillSongsList();
   
 
 
