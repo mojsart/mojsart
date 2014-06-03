@@ -6,9 +6,7 @@ var SongSchema = new mongoose.Schema({
   echoData: {
     artist: String,
     title: String,
-    // md5 for uploaded songs
     md5: String,
-    // id for the rest
     id: String,
     status: String,
     audio_summary: {
@@ -23,7 +21,6 @@ var SongSchema = new mongoose.Schema({
       tempo: Number
     }
   },
-  // TODO: Allow User Data
   userData: {
     speechiness: Number,
     acousticness: Number
