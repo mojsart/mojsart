@@ -55,6 +55,15 @@
     };
     // TODO: make it so that we don't need to "initialize" like this
     $scope.sharedState = {};
+    $scope.sharedState.comparing = false;
+    $scope.sharedState.songs = [];
+    $scope.sharedState.fillSongsList = function(){
+      $scope.getSongs(function(data){
+      for (var i = 0; i < data.length; i++){
+        $scope.sharedState.songs.push({'track': data[i].echoData.artist, 'title': data[i].echoData.title, 'echoId': data[i].echoData.md5});
+      }
+  });
+};
     $scope.getSongs();
     $scope.files = {};
     $scope.sent = false;
@@ -87,7 +96,6 @@
           console.log("Sent:", data);
           //toggles in order to show hidden button, using ng-show in upload.tpl.html
           $scope.sent = true;
-
           $scope.getSongs();
       });
   };

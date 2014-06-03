@@ -1,17 +1,20 @@
-<h4>Curate your collection</h4>
-<h5>Compare songs to update the global music graph</h5>
 <table>
   <tr>
-    <th>Artist</th>
-    <th>Track</th>
-    <th>Sentiment</th>
+    <th>Song 1</th>
+    <th>VS</th>
+    <th>Song 2</th>
   </tr>
-  <tr ng-repeat="song in songs | limitTo: quantity">
-    <td>{{song.title}}</td>
-    <td>{{song.track}}</td>
-      <td class="btn-group">
-        <span class="plusbtn" ng-click="postVote(song, 'up')">+</span>
-        <span class="minusbtn" ng-click="postVote(song, 'down')">-</span>
+  <tr ng-repeat="song in sharedState.songs | limitTo: quantity| filter: filterSongsList">
+    <td>{{song.title}}, by {{song.track}} </td>
+      <td>
+        <ul class='btn-group [radius round]'></ul>
+          <li class="tiny button" ng-click="postVote(song, 'up')">Left</li>
+          <li class="tiny button" ng-click="postVote(song, 'down')">Right</li>
+        </ul>
     </td>
+    <td 
+     <span ng-show="sharedState.comparing">{{sharedState.title}}, by {{sharedState.artist}}</span>
+    </td>
+
   </tr>
 </table>

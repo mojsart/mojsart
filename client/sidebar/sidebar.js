@@ -14,26 +14,25 @@ angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
 .controller('SideBarController', function ($scope, $http) {
   $scope.buttonStatus =  'full';
   $scope.songs = [];
-  $scope.quantity = 5;
+  $scope.quantity = 3;
+  $scope.comparing = false;
 
 //Fetches all songs when app starts, loads Track and Title into Songs Array
-// TODO: delegate to parent's scope getSongs with a cb
- $scope.fillSidebar = function(){
-    $scope.getSongs(function(data){
-    for (var i = 0; i < data.length; i++){
-        $scope.songs.push({'track': data[i].echoData.artist, 'title': data[i].echoData.title, 'echoId': data[i].echoData.md5});
-      }
-  });
-};
-  $scope.fillSidebar();
-
   // set up listener for re-get, and fires get songs. TODO: don't put this in the controller
+  $scope.filterSongsList = function (song) {
+      if (song.title === $scope.sharedState.title){
+        return false;
+      } else {
+        return true;
+      }
+    };
+
   socket.on('reget', function() {
     console.log('regetting');
-    $scope.getSongs(function() {
-
-    });
+    $scope.getSongs();
   });
+  
+
 
     //returns an object comparing clicked-node song to another song in DB.
     //Covers both positive and negative comparisons."
@@ -54,11 +53,9 @@ angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
       $scope.cycleVote(song);
     });
   };
-//Removes clicked song from songs array, automatically refreshing list of songs in sidepanel view
+//Removes clicked song from songs array. This automatically refreshes sidebar.
   $scope.cycleVote = function(song){
-    $scope.songs.shift();
-    console.log('moving song out of list');
-    // $scope.addClass('fx-fade-up');
+    $scope.sharedState.songs.shift();
   };
 
 
