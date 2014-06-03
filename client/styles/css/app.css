@@ -44,7 +44,6 @@ body {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-
 table {
   table-layout: fixed;
   width: 250px;
@@ -54,6 +53,6 @@ td {
   overflow: hidden;
   width: 100px;
 }
-.transparent{
-  background:rgba(255,255,255,0.5);
+.transparent {
+  background: rgba(255, 255, 255, 0.5);
 }

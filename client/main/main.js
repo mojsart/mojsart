@@ -43,7 +43,9 @@
   .controller('MainController', function ($state, $scope, $http) {
     $scope.title = 'Mojsart';
 
-    //Fetches all song names, adds them to SharedState.
+    //Fetches all songs from server, adds them to SharedState.
+    //Note that this function is called without a callback when app bootstraps.
+    //It takes a callback (fill Songs List)
      $scope.getSongs = function (func) {
       $http.get('/song')
       .success(function(json) {
@@ -53,18 +55,20 @@
         }
       });
     };
+
+    //Gets all songs, Populates sharedScope songs array with all songs in shared state.
+    //Note that this function
+      $scope.fillSongsList = function(data){
+        angular.forEach(data, function(song){
+          $scope.sharedState.songs.push({'track': song.echoData.artist, 'title': song.echoData.title, 'echoId': song.echoData.md5});
+        });
+    };
+
     // TODO: make it so that we don't need to "initialize" like this
     $scope.sharedState = {};
     $scope.sharedState.comparing = false;
     $scope.sharedState.songs = [];
-    $scope.sharedState.fillSongsList = function(){
-      $scope.getSongs(function(data){
-      for (var i = 0; i < data.length; i++){
-        $scope.sharedState.songs.push({'track': data[i].echoData.artist, 'title': data[i].echoData.title, 'echoId': data[i].echoData.md5});
-      }
-  });
-};
-    $scope.getSongs();
+    $scope.getSongs($scope.fillSongsList);
     $scope.files = {};
     $scope.sent = false;
 
@@ -74,6 +78,7 @@
       $scope.$apply();
       console.log($scope.files);
     };
+
     //Loops over $scope.files object, formats each file as FormData
     $scope.upload = function () {
       console.log($scope.files);
@@ -81,8 +86,7 @@
       angular.forEach($scope.files, function (file) {
           fd.append('file', file);
       });
-
-      //This is the Post request to add a new song, which sends FormData
+    //This is the Post request to add a new song. Note that it sends FormData (fd)
       $http({
           method: 'POST',
           url: '/song/send',
