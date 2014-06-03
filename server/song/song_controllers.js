@@ -77,13 +77,15 @@ module.exports = exports = {
   },
 
   postSong: function(req, res, next) {
+    console.log(req.files);
     var song = req.files.file;
+    var size = req.files.file.ws.bytesWritten;
     var type = song.type;
     var filename = song.originalFilename;
 
     // TODO: increment filenames if they're found
     var regex = /^(audio\/[a-z0-9]+)$/i;
-    var bool = helpers.filenameRegEx(filename) && regex.test(type);
+    var bool = helpers.filesizeCheck(size) && helpers.filenameRegEx(filename) && regex.test(type);
 
     if (bool) {
       var serverPath = __dirname + '/lib/' + filename; 
@@ -96,7 +98,7 @@ module.exports = exports = {
           throw(err)
         });
     } else {
-      res.send(404, 'Sorry, please upload a .mp3')
+      res.send(404, 'Sorry, please upload a .mp3 under 10 MB')
     }
   }
 };
