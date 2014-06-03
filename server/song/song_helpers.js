@@ -94,10 +94,12 @@ module.exports = exports = {
   checkSongNotInDB: function(searchField, input, cb) {
     // for MD5: searchField = 'echoData.md5'
     // for filename: searchField = 'filename'
+    console.log('checking song')
     var query = {};
     query[searchField] = input
     Q(Song.findOne(query).exec())
       .then(function(song) {
+        console.log('check db', song)
         if (!song) {
           cb(input);
         }
