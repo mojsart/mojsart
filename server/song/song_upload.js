@@ -19,7 +19,16 @@ module.exports = exports = {
     console.log('validating filetype');
     if(helpers.filenameRegEx(file)) {
       console.log('processing file ', file);
-      helpers.checkSongNotInDB('filename', file, exports.echoUpload);
+      helpers.checkSongNotInDB('filename', file, function(filename) {
+          echo('track/profile').get({
+            md5: '23f455935fafa3107ae7f4a9298f893b',
+            bucket: 'audio_summary'
+            // format: 'json'
+          }, function (err, json) {
+            if (err) throw(err);
+            console.log(json.response.track.audio_summary);
+          });
+      });
     }
   },
 
@@ -32,6 +41,7 @@ module.exports = exports = {
       console.log(buffer);
       console.log(filetype);
       helpers.callbackError(err);
+      console.log(echo('track/upload'));
       echo('track/upload').post({
         filetype: filetype             
       }, 'application/octet-stream', buffer, function(err, json) {
