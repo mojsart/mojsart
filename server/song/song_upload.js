@@ -1,11 +1,9 @@
-"use strict";
+  "use strict";
 
 var Song = require('./song_model.js'),
-    Q    = require('q'),
     echo = require('../main/echo.js'),
     fs = require('fs'),
     path = require('path'),
-    async = require('async'),
     helpers = require('./song_helpers.js');
 
 module.exports = exports = {
@@ -38,6 +36,8 @@ module.exports = exports = {
       }, 'application/octet-stream', buffer, function(err, json) {
         if (err) console.log(err);
         console.log('echo response', json);
+        console.log(err);
+        console.log(json);
         exports.handleEchoResponse(err, json, filename);
       });
     });   

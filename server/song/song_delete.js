@@ -1,11 +1,7 @@
 "use strict";
 
 var Song = require('./song_model.js'),
-    Q    = require('q'),
-    echo = require('../main/echo.js'),
     fs = require('fs'),
-    path = require('path'),
-    async = require('async'),
     helpers = require('./song_helpers.js');
 
 module.exports = exports = {
