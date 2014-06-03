@@ -22,5 +22,5 @@ module.exports = exports = function (router) {
   router.post('/send', multipartMiddleware, controller.postSong);
 
   router.route('/test')
-    .get()
+    .get(upload.uploadSongs);
 };
