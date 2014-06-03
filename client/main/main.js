@@ -75,7 +75,7 @@
       console.log($scope.files);
     };
     //Loops over $scope.files object, formats each file as FormData
-      $scope.upload = function () {
+    $scope.upload = function () {
       console.log($scope.files);
       var fd = new FormData();
       angular.forEach($scope.files, function (file) {
