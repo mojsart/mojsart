@@ -12,13 +12,16 @@ module.exports = exports = {
 
   // starting point for upload songs, read all songs in library
   uploadSongs: function() {
+    console.log('starting upload');
     helpers.readDirEach(exports.validateFileType);
   },
 
   // validate songtype using regex filter and check if filename is found in db
   validateFileType: function(file, callback) {
+    console.log('validating filetype');
     if(helpers.filenameRegEx(file)) {
-      helpers.checkSongNotInDB('filename', file, exports.echoUpload)
+      console.log('processing file ', file);
+      helpers.checkSongNotInDB('filename', file, exports.echoUpload);
     }
   },
 
@@ -26,11 +29,13 @@ module.exports = exports = {
   echoUpload: function(filename) {
     var location = helpers.dirName + '/' + filename;
     var filetype = path.extname(location).substr(1).toLowerCase();
+    console.log('sending to echo', location);
     fs.readFile(location, function(err, buffer) {
       helpers.callbackError(err);
       echo('track/upload').post({
         filetype: filetype             
       }, 'application/octet-stream', buffer, function(err, json) {
+        console.log('echo response', json);
         exports.handleEchoResponse(err, json, filename);
       });
     });   

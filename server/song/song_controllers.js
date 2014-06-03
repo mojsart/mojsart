@@ -77,7 +77,7 @@ module.exports = exports = {
   },
 
   postSong: function(req, res, next) {
-    console.log(req.files);
+    console.log('receiving song', req.files);
     var song = req.files.file;
     var size = req.files.file.ws.bytesWritten;
     var type = song.type;
