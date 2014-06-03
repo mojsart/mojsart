@@ -88,16 +88,18 @@ module.exports = exports = {
     var bool = helpers.filesizeCheck(size) && helpers.filenameRegEx(filename) && regex.test(type);
 
     console.log(bool);
-    
+
     if (bool) {
       var serverPath = __dirname + '/lib/' + filename; 
       var $fsRename = Q.nbind(fs.rename, fs);
+      console.log(serverPath);
       $fsRename(song.path, serverPath)
         .then(function() {
           console.log(serverPath)
           res.send(serverPath);
         })
         .fail(function(err) {
+          console.log('error stuff');
           throw(err)
         });
     } else {
