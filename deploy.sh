@@ -110,9 +110,7 @@ if [ -e "package.json" ]; then
   eval $NPM_CMD install --production
   exitWithMessageOnError "npm failed"
   echo "Execute gulp tasks"
-  if[ -e "Gulpfile.js" ]; then
-    eval /node_modules/.bin/gulp build
-  fi
+  eval /node_modules/.bin/gulp build
   cd - > /dev/null
 fi
 
