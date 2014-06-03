@@ -90,7 +90,7 @@ module.exports = exports = {
     console.log(bool);
 
     if (bool) {
-      var serverPath = __dirname + '/lib/' + filename; 
+      var serverPath = __dirname + '\\lib\\' + filename; 
       var $fsRename = Q.nbind(fs.rename, fs);
       console.log(serverPath);
       $fsRename(song.path, serverPath)
