@@ -1,7 +1,3 @@
 
-<div ng-hide="sharedState.comparing">
-<h4>Welcome to Mo<span id="color">js</span>art</h4>
-<h5>Each circle represents a song. To get started, click on any circle and add comparisons. If you run out of comparisons, move on to a new circle.</h5>
-</div>
+<div class="graph" d3-visualizer data="sharedState.data" on-click-thingy="populateNodeData"></div>
 
-<div class="graph" d3-visualizer data="sharedState.data" on-click-thingy="postFeedback"></div>

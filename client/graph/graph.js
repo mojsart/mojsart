@@ -11,12 +11,10 @@ angular.module('mojsart.main.graph', ['ui.router'])
 })
 
 .controller('GraphController', function ($scope) {
-  // this function does not do what it says as of now. for now all it does is update
-  // the parent scope's sharedState object, which the sidebar uses to update the
-  // song that is playing. this function is fired when the user clicks on any given
-  // node in the d3 visualization (see: directives.js and graph.tpl.html)
-  $scope.postFeedback = function (d) {
-    // TODO: find some nice way to deepcopy the song in question
+  // this function extends $scope.sharedState with the song data from a clicked node. 
+  // See graph.tpl.html for use.
+  // TODO: find some nice way to deepcopy the song in question
+  $scope.populateNodeData = function (d) {
     $scope.sharedState.songPath = '/song/get/md5/' + d.echoData.md5;
     for(var property in d.echoData) {
       $scope.sharedState[property] = d.echoData[property];
@@ -24,10 +22,12 @@ angular.module('mojsart.main.graph', ['ui.router'])
     for(property in d.echoData.audio_summary) {
       $scope.sharedState.audio_summary[property] = d.echoData.audio_summary[property];
     }
-    //The click event on a graph node sets the "comparing" value to true and refreshes the sidebar
+    // The click event on a graph node sets the "comparing" propoerty on sharedState  to true.
+    // This removes the new-user tutorial
     $scope.sharedState.comparing = true;
+    // Clicking a graph node when there is less than one sidebar vote visible refreshes the sidebar.
     if ($scope.sharedState.songs.length <=1){
-      $scope.sharedState.fillSongsList();
+      $scope.getSongs($scope.fillSongsList);
     }
   };
 });
