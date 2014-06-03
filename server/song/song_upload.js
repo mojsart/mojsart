@@ -30,6 +30,7 @@ module.exports = exports = {
     console.log('sending to echo', location);
     fs.readFile(location, function(err, buffer) {
       console.log(buffer);
+      console.log(filetype);
       helpers.callbackError(err);
       echo('track/upload').post({
         filetype: filetype             
