@@ -24,5 +24,10 @@ angular.module('mojsart.main.graph', ['ui.router'])
     for(property in d.echoData.audio_summary) {
       $scope.sharedState.audio_summary[property] = d.echoData.audio_summary[property];
     }
+    //The click event on a graph node sets the "comparing" value to true and refreshes the sidebar
+    $scope.sharedState.comparing = true;
+    $scope.sharedState.filterSongsList(d.echoData.md5);
+    console.log($scope.sharedState.songs);
+
   };
 });

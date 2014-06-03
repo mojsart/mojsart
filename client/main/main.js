@@ -55,15 +55,22 @@
     };
     // TODO: make it so that we don't need to "initialize" like this
     $scope.sharedState = {};
+    $scope.sharedState.comparing = false;
     $scope.sharedState.songs = [];
     $scope.sharedState.fillSongsList = function(){
       $scope.getSongs(function(data){
       for (var i = 0; i < data.length; i++){
-        console.log($scope.sharedState);
         $scope.sharedState.songs.push({'track': data[i].echoData.artist, 'title': data[i].echoData.title, 'echoId': data[i].echoData.md5});
       }
   });
 };
+    $scope.sharedState.filterSongsList = function (songMd5) {
+      $scope.sharedState.songs.forEach(function (song) {
+          if (song.echoId === songMd5) {
+              $scope.sharedState.songs.splice($scope.sharedState.songs.indexOf(song), 1);
+          }
+      });
+    };
     
     $scope.getSongs();
     $scope.files = {};
@@ -97,7 +104,6 @@
           console.log("Sent:", data);
           //toggles in order to show hidden button, using ng-show in upload.tpl.html
           $scope.sent = true;
-
           $scope.getSongs();
       });
   };
