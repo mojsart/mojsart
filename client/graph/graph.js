@@ -26,8 +26,9 @@ angular.module('mojsart.main.graph', ['ui.router'])
     }
     //The click event on a graph node sets the "comparing" value to true and refreshes the sidebar
     $scope.sharedState.comparing = true;
+    if ($scope.sharedState.songs.length <=1){
+      $scope.sharedState.fillSongsList();
+    }
     $scope.sharedState.filterSongsList(d.echoData.md5);
-    console.log($scope.sharedState.songs);
-
   };
 });
