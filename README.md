@@ -5,7 +5,7 @@ This repository contains mojsart, a crowd-sourced music visualization engine. Th
 
 See the current demo version of mojsart [here](https://github.com/mojsart/mojsart). 
 
-#### Screenshots:
+#### Screenshots
 
 #### Technologies Used
 Our application's tech stack is the following:
