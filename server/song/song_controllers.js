@@ -88,7 +88,6 @@ module.exports = exports = {
     var bool = helpers.filesizeCheck(size) && helpers.filenameRegEx(filename) && regex.test(type);
 
     // https://www.npmjs.org/package/formidable
-
     console.log(bool);
 
     if (bool) {
@@ -115,16 +114,6 @@ module.exports = exports = {
           console.log('error stuff');
           throw(err);
         });
-      // var $fsRename = Q.nbind(fs.rename, fs);
-      // $fsRename(song.path, serverPath)
-      //   .then(function() {
-      //     console.log(serverPath)
-      //     res.send(serverPath);
-      //   })
-      //   .fail(function(err) {
-      //     console.log('error stuff');
-      //     throw(err)
-      //   });
     } else {
       res.send(404, 'Sorry, please upload a .mp3 under 10 MB')
     }
