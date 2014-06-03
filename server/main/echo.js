@@ -5,6 +5,10 @@ var echojs      = require('echojs'),
 
 module.exports = exports = echojs({
   // NEED API KEY in api_config.js
-  key: process.env.ECHO_API || api_keys.echo_api_key
+  key: process.env.ECHO_API || api_keys.echo_api_key,
+
+  // get: ,
+
+  // post: ,
 
 });
