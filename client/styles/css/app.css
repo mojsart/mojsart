@@ -1,19 +1,50 @@
-#color {
-  font-color: #008CBA;
-  color: #008CBA;
-  font-style: italic;
-}
 #splash-header {
+  background-color: #007148;
+  color: white;
   padding: 120px;
+}
+#splash-header h1,
+#splash-header h3 {
+  color: white;
 }
 .splash {
   padding: 60px;
-  border-top: 3px solid grey;
+  color: white;
+  background-color: #007148;
+}
+.splash h2,
+.splash h3 {
+  color: white;
 }
 .splash-alt {
   padding: 60px;
-  background-color: white;
-  border-top: 3px solid grey;
+}
+#color {
+  color: #60a859;
+  font-style: italic;
+}
+a {
+  color: #60a859;
+}
+a:hover,
+a:focus {
+  color: #9bda6a;
+}
+button,
+.button {
+  background-color: #60a859;
+}
+button:hover,
+.button:hover,
+button:focus,
+.button:focus {
+  background-color: #9bda6a;
+}
+.top-bar-section li.active:not(.has-form) a:not(.button) {
+  background: #60a859;
+}
+.top-bar-section li.active:not(.has-form) a:not(.button):hover {
+  background: #4d8747;
 }
 .circular {
   width: 80%;
@@ -24,9 +55,6 @@
 }
 #messages {
   color: #d3d3d3;
-}
-body {
-  background-color: #b2d1c8;
 }
 .sidebar {
   background-color: #b2d1c8;
@@ -52,7 +80,4 @@ th,
 td {
   overflow: hidden;
   width: 100px;
-}
-.transparent {
-  background: rgba(255, 255, 255, 0.5);
 }
