@@ -10,6 +10,3 @@ module.exports = exports = function (router) {
   router.route('/delete')
     .get(del.deleteSongs);
 };
-
-
-

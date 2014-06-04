@@ -51,25 +51,20 @@ module.exports = exports = {
     }
   },
 
-  // consider breaking the below function into two requests to get an actual url with a file name
-  // TODO: refactor 
   getSong: function(req, res, next) {
     // grab md5 from request URL
     var md5 = req.params[0];
-    console.log('trying to play', md5)
     Q(Song.findOne({'echoData.md5': md5, 'cached': true}).exec())
       .then(function(song) {
-        console.log(song);
         if (song) {
           // build path to song
           var filename = song.filename;
           // build path based on server folder structure
           var path = nodePath.join(__dirname, 'lib', filename);
-          console.log(path);
           // serve static audio file
           res.sendfile(path);   
         } else {
-          res.send(404);
+          res.send(404, 'Song is not available to be played');
         }
       })
       .fail(function(err) {
@@ -84,37 +79,12 @@ module.exports = exports = {
     var type = song.type;
     var filename = song.originalFilename;
 
-    // TODO: increment filenames if they're found
     var regex = /^(audio\/[a-z0-9]+)$/i;
     var bool = helpers.filesizeCheck(size) && helpers.filenameRegEx(filename) && regex.test(type);
 
-    // https://www.npmjs.org/package/formidable
-    console.log(bool);
-
     if (bool) {
       var serverPath = nodePath.join(__dirname, 'lib', filename); 
-      var $fsWriteFile = Q.nbind(fs.writeFile, fs);
-      var $fsReadFile = Q.nbind(fs.readFile, fs);
-      console.log(serverPath);
-      console.log(song);
-
-      $fsReadFile(song.path)
-        .then(function(buffer) {
-          console.log(buffer);
-          $fsWriteFile(serverPath, buffer)
-            .then(function() {
-              console.log('writing');
-              fs.unlink(song.path, function(err) {
-                helpers.callbackError(err);
-                console.log('temp file deleted');
-                res.send(serverPath);
-              });
-            });
-        })
-        .fail(function(err) {
-          console.log('error stuff');
-          throw(err);
-        });
+      helpers.postSongSave(song.path, serverPath, function(path){ res.send(path); });
     } else {
       res.send(404, 'Sorry, please upload a .mp3 under 10 MB')
     }
