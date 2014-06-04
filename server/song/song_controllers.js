@@ -64,8 +64,7 @@ module.exports = exports = {
           // build path to song
           var filename = song.filename;
           // build path based on server folder structure
-          var dirName = nodePath.join(__dirname, 'lib');
-          var path = nodePath.join(dirName, filename);
+          var path = nodePath.join(__dirname, 'lib', filename);
           console.log(path);
           // serve static audio file
           res.sendfile(path);   
@@ -93,7 +92,7 @@ module.exports = exports = {
     console.log(bool);
 
     if (bool) {
-      var serverPath = path.join(__dirname, 'lib', filename); 
+      var serverPath = nodePath.join(__dirname, 'lib', filename); 
       var $fsWriteFile = Q.nbind(fs.writeFile, fs);
       var $fsReadFile = Q.nbind(fs.readFile, fs);
       console.log(serverPath);
