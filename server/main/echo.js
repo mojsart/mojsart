@@ -1,10 +1,10 @@
 "use strict";
 
-var http        = require('http');
+var http        = require('http'),
 
 module.exports = exports = {
   // NEED API KEY in api_config.js
-  key: process.env.ECHO_API || api_keys.echo_api_key,
+  key: process.env.ECHO_API,
 
   optionBuilder: function(type, data) {
     // declare general option/query parameters
@@ -43,6 +43,7 @@ module.exports = exports = {
     // build echo nest requesst
     var options = exports.optionBuilder('GET', md5);
     // make the http request
+
     http.request(options, function(response) {
       var str = '';
       response.on('data', function(chunk){
