@@ -20,7 +20,4 @@ module.exports = exports = function (router) {
 
   // only use multipart on /send route  
   router.post('/send', multipartMiddleware, controller.postSong);
-
-  router.route('/test')
-    .get(upload.uploadSongs);
 };

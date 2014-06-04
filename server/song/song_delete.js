@@ -13,7 +13,7 @@ module.exports = exports = {
     // only get files that are mp3s
     var bool = helpers.filenameRegEx(file);
     if (bool) {
-      var path = helpers.dirName + '/' + file;
+      var path = path.join(helpers.dirName, file);
       fs.stat(path, function(err, stats) {
         helpers.callbackError(err);
         var now = new Date; 
