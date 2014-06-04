@@ -5,7 +5,7 @@ console = console;
 var Song = require('./song_model.js'),
     echo = require('../main/echo.js'),
     fs = require('fs'),
-    path = require('path'),
+    nodePath = require('path'),
     helpers = require('./song_helpers.js'),
     http = require('http'),
     Q = require('q');
@@ -29,8 +29,8 @@ module.exports = exports = {
 
   // send song to echo nest
   echoUpload: function(filename, callback) {
-    var location = path.join(helpers.dirName , filename);
-    var filetype = path.extname(location).substr(1).toLowerCase();
+    var location = nodePath.join(helpers.dirName , filename);
+    var filetype = nodePath.extname(location).substr(1).toLowerCase();
 
     console.log('sending the following file to The Echo Nest:', location);
 

@@ -106,14 +106,13 @@
                     .attr("fill", "lightblue")
                     // .attr("stroke", "lightblue")
                     .attr("r", d3.select(this).attr("r")*1.2);
-                    
                 })
                 .on("mouseout", function() {
                   d3.select(this)
                     .transition()
-                    .attr("fill", function(d) { return (d.cached) ? "lightyellow" : "white"; })
+                    .attr("fill", function(d) { return (d.cached) ? "yellow" : "white"; })
                     .attr("stroke", "black")
-                    .attr("r", d3.select(this).attr("r")/1.2);
+                    .attr("r", function(d) { return 20*Math.pow(10, (d.echoData.audio_summary.loudness/20)); });
                 })
                      // .attr("fill",function(d,i){return color(i);})
                      // .attr("stroke",function(d,i){return color(i);})
@@ -125,7 +124,7 @@
                 .attr("r", function(d) { return 20*Math.pow(10, (d.echoData.audio_summary.loudness/20)); })
                 .attr("cx",function(d) { return width*(d.echoData.audio_summary.speechiness + d.userData.speechiness + d.echoData.audio_summary.acousticness/3); })
                 .attr("cy", function(d) { return height*(d.echoData.audio_summary.energy + d.echoData.audio_summary.danceability)/2; })
-                .attr("fill", function(d) { return (d.cached) ? "lightyellow" : "white"; });
+                .attr("fill", function(d) { return (d.cached) ? "yellow" : "white"; });
           };
         });
       }
