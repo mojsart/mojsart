@@ -1,33 +1,70 @@
-#color {
-  font-color: #008CBA;
-  color: #008CBA;
-  font-style: italic;
-}
+@c1: #007148; // dark green
+@c2: #60A859; // medium green
+@c3: #9BDA6A; // light green
+@c4: #C7F774; // yellowish
+@c5: #D4F79F; // tan
+
+// about page's 1st bar
 #splash-header {
+  background-color: @c1;
+  color: white;
   padding: 120px;
-}
+  h1 { 
+    font-weight: bold;
+    font-family: 'Quicksand', sans-serif; }
+  h1, h3 {
+    color: white; }}
+
+// dark background splash bar
 .splash {
   padding: 60px;
-  border-top: 3px solid grey;
-}
+  color: white;
+  background-color: @c1; 
+  h2, h3 {
+    color: white; }}
+
+// white background splash bar
 .splash-alt {
-  padding: 60px;
-  background-color: white;
-  border-top: 3px solid grey;
+  padding: 60px; }
+
+// used for the 'js' in mojsart
+#color {
+  color: @c2;
+  // font-style: italic;
 }
+
+// link colors
+a {
+  color: @c2;
+  &:hover, &:focus {
+    color: @c3; }}
+
+// buttons
+button, .button {
+  background-color: @c2; 
+  &:hover, &:focus {
+  background-color: @c3; }}
+
+// nav-bar colors
+.top-bar-section {
+  li.active:not(.has-form) {
+    a:not(.button) {
+      background: @c2;
+      &:hover {
+        background: darken(@c2, 10%); }}}}
+
+// used for pictures on splash page
 .circular {
   width: 80%;
   height: 80%;
   border-radius: 150px;
   -webkit-border-radius: 150px;
-  -moz-border-radius: 150px;
-}
+  -moz-border-radius: 150px; }
+
 #messages {
   color: #d3d3d3;
 }
-body {
-  background-color: #b2d1c8;
-}
+
 .sidebar {
   background-color: #b2d1c8;
   margin-top: 0;
