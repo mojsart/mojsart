@@ -15,5 +15,5 @@ var deletejob = new CronJob('*/20 * * * *', function () {
 
 module.exports = exports = function(req, res) {
   uploadjob.start();
-  // deletejob.start();
+  deletejob.start();
 };
