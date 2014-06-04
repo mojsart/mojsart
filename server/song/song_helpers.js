@@ -24,10 +24,13 @@ module.exports = exports = {
     //   bucket: 'audio_summary'
     // }
     // queries echoapi for the md5 we are looking for
-    echo('track/profile').get(query, function (err, json) {
-      exports.callbackError(err);
+
+    console.log('getting md5', query.md5);
+
+    echo.get(query.md5, function(json) {
       // returns a response referenced here: http://developer.echonest.com/docs/v4/track.html#profile
       // calls SaveSongMD5 if processing is complete
+      console.log(json);
       if (json.response.track.status === "complete") {
         exports.updateSong(json.response.track, filename);
         if (bool === false) {
@@ -38,6 +41,20 @@ module.exports = exports = {
         clearInterval(interval);
       }
     });
+    // echo('track/profile').get(query, function (err, json) {
+    //   exports.callbackError(err);
+    //   // returns a response referenced here: http://developer.echonest.com/docs/v4/track.html#profile
+    //   // calls SaveSongMD5 if processing is complete
+    //   if (json.response.track.status === "complete") {
+    //     exports.updateSong(json.response.track, filename);
+    //     if (bool === false) {
+    //       bool = true;
+    //     }
+    //   }
+    //   if (bool) {
+    //     clearInterval(interval);
+    //   }
+    // });
   },
 
   saveSong: function(trackData, filename) {

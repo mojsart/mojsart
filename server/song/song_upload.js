@@ -33,13 +33,11 @@ module.exports = exports = {
       helpers.callbackError(err);
       console.log(buffer);
       console.log(filetype);
-      echo('track/upload').post({
+      echo.oldEcho('track/upload').post({
         filetype: filetype             
       }, 'application/octet-stream', buffer, function(err, json) {
         if (err) console.log(err);
         console.log('echo response', json);
-        console.log(err);
-        console.log(json);
         exports.handleEchoResponse(err, json, filename);
       });
     });   
