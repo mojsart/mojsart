@@ -46,9 +46,9 @@ module.exports = exports = {
     .end();
   },
 
-  oldEcho: echojs({
-    key: process.env.ECHO_API || api_keys.echo_api_key
-  })
+  // oldEcho: echojs({
+  //   key: process.env.ECHO_API || api_keys.echo_api_key
+  // })
 
   // post: ,
 
