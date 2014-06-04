@@ -25,7 +25,6 @@ module.exports = exports = {
       hostname: 'developer.echonest.com',
       path: queryURL
     };
-
     http.request(options, function(response) {
       var str = '';
       response.on('data', function(chunk){
