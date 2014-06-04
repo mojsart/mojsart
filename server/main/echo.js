@@ -1,7 +1,6 @@
 "use strict";
 
-var echojs      = require('echojs'),
-    api_keys    = require('./api_config.js'),
+var api_keys    = require('./api_config.js'),
     http        = require('http');
 
 module.exports = exports = {
@@ -9,7 +8,6 @@ module.exports = exports = {
   key: process.env.ECHO_API || api_keys.echo_api_key,
 
   get: function(md5, cb) {
-    console.log('getting md5', md5);
     var queryURL = [];
     var url = '/api/v4/track/profile';
     var query = {
@@ -17,19 +15,16 @@ module.exports = exports = {
       format: 'json',
       md5: md5,
       bucket: 'audio_summary'
-    }
-
+    };
     for (var key in query) {
       queryURL.push(key + '=' + query[key]);
     }
     queryURL = url + '?' + queryURL.join('&');
-    console.log(queryURL);
 
     var options = {
       hostname: 'developer.echonest.com',
       path: queryURL
     };
-
     http.request(options, function(response) {
       var str = '';
       response.on('data', function(chunk){
@@ -46,16 +41,33 @@ module.exports = exports = {
     .end();
   },
 
-  // oldEcho: echojs({
-  //   key: process.env.ECHO_API || api_keys.echo_api_key
-  // })
+  postBuffer: function(buffer, callback) {
+    // Build the post string from an object
+    var post_data = buffer;
 
-  // post: ,
+    // An object of options to indicate where to post to
+    var post_options = {
+        host: 'developer.echonest.com',
+        port: '80',
+        path: '/api/v4/track/upload?api_key=' + exports.key + '&filetype=mp3',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Content-Length': post_data.length
+        }
+    };
 
-};
+    // Set up the request
+    var post_req = http.request(post_options, function(res) {
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+            console.log('Response:' + chunk);
+            callback(null, chunk);
+        });
+    });
 
-
-    // var options = {
-    //   hostname: 'developer.echonest.com',
-    //   path: '/api/v4/track/profile?api_key=OTEBZ6M2CJSZTKH6Q&format=json&md5=23f455935fafa3107ae7f4a9298f893b&bucket=audio_summary',
-    // };
+    // post the data
+    post_req.write(post_data);
+    post_req.end();
+  }
+ };

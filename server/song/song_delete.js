@@ -3,7 +3,8 @@
 var Song = require('./song_model.js'),
     fs = require('fs'),
     helpers = require('./song_helpers.js'),
-    nodepath = require('path');
+    nodepath = require('path'),
+    Q = require('q');
 
 module.exports = exports = {
   deleteSongs: function() {
@@ -15,25 +16,29 @@ module.exports = exports = {
     var bool = helpers.filenameRegEx(file);
     if (bool) {
       var path = nodepath.join(helpers.dirName, file);
-      fs.stat(path, function(err, stats) {
-        helpers.callbackError(err);
-        var now = new Date; 
-        var elapsed = (now-stats.ctime)/60000;
-        var timelimit = 15;
-        if(elapsed > timelimit) {
-          exports.uncacheSong(file, path);
-        }
-      });
+      Q.nfcall(fs.stat, path)
+        .then(function(stats) {
+          // find songs older than 15 min
+          var now = new Date; 
+          var elapsed = (now-stats.ctime)/60000;
+          var timelimit = 15;
+          if(elapsed > timelimit) {
+            exports.uncacheSong(file, path);          
+          }
+        })
+        .fail(helpers.callbackError);
     }
   },
 
   uncacheSong: function(file, path) {
-    Song.update({filename: file, cached: true}, {cached: false}, function(err, stuff) {
-      helpers.callbackError(err);
-      fs.unlink(path, function(err) {
-        helpers.callbackError(err);
-        console.log('file deleted');
-      });
-    });    
+    // delete songss
+    Q(Song.update({filename: file, cached: true}, {cached: false}).exec())
+      .then(function() {
+        return Q.nfcall(fs.unlink, path)
+      })
+      .then(function(){
+        console.log('file deleted')
+      })
+      .fail(helpers.callbackError); 
   }
 };
