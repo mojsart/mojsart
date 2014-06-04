@@ -5,7 +5,7 @@ var Song = require('./song_model.js'),
     echo = require('../main/echo.js'),
     fs   = require('fs'),
     helpers = require('./song_helpers.js'),
-    path = require('path');
+    nodePath = require('path');
 
 module.exports = exports = {
   get: function (req, res, next) {
@@ -56,15 +56,17 @@ module.exports = exports = {
   getSong: function(req, res, next) {
     // grab md5 from request URL
     var md5 = req.params[0];
-
-    Q(Song.findOne({'echoData.md5': md5}).exec())
+    console.log('trying to play', md5)
+    Q(Song.findOne({'echoData.md5': md5, 'cached': true}).exec())
       .then(function(song) {
+        console.log(song);
         if (song) {
           // build path to song
           var filename = song.filename;
           // build path based on server folder structure
-          var dirName = path.join(__dirname, 'lib');
-          var path = path.join(dirName, filename);
+          var dirName = nodePath.join(__dirname, 'lib');
+          var path = nodePath.join(dirName, filename);
+          console.log(path);
           // serve static audio file
           res.sendfile(path);   
         } else {
