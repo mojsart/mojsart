@@ -1,7 +1,6 @@
 "use strict";
 
-var api_keys    = require('./api_config.js'),
-    http        = require('http');
+var http        = require('http');
 
 module.exports = exports = {
   // NEED API KEY in api_config.js
