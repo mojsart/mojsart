@@ -3,39 +3,39 @@
 
   angular.module('mojsart.main', [
     'ui.router',
-    'mojsart.main.sidebar',
-    'mojsart.main.graph',
-    'mojsart.main.infopanel',
     'fx.animations',
     'ngAnimate',
+    'mm.foundation',
+    'mojsart.main.home'
   ])
   
   .config(function ($stateProvider) {
     $stateProvider
-    .state('mojsart.main', {
-      url: '/main',
+    .state('mojsart.about', {
+      url: '/',
       views:{
-        'sidebar': {templateUrl: '/sidebar/sidebar.tpl.html', controller:'SideBarController'},
-        'infopanel': {templateUrl: '/infopanel/infopanel.tpl.html', controller:'InfoController'},
-        'graph':{templateUrl: '/graph/graph.tpl.html', controller:'GraphController'}
+        'upload': {templateUrl: 'about/about.tpl.html', controller: "MainController"}
+      }
+    })
+    .state('mojsart.home', {
+      url: '/home',
+      views:{
+        'home': {templateUrl: 'home/home.tpl.html', controller: "MainController"},
+          'sidebar@mojsart.home': {templateUrl: '/sidebar/sidebar.tpl.html', controller:'SideBarController'},
+          'infopanel@mojsart.home': {templateUrl: '/infopanel/infopanel.tpl.html', controller:'InfoController'},
+          'graph@mojsart.home':{templateUrl: '/graph/graph.tpl.html', controller:'GraphController'}
       }
     })
     .state('mojsart.upload', {
           url: '/upload',
           views:{
-        'upload': {templateUrl: '/upload/upload.tpl.html', controller: "MainController"}
-      }
-    })
-    .state('mojsart.about', {
-          url: '/',
-          views:{
-        'upload': {templateUrl: '/about/about.tpl.html', controller: "MainController"}
+        'upload': {templateUrl: 'upload/upload.tpl.html', controller: "MainController"}
       }
     })
     .state('mojsart.blog', {
           url: '/blog',
           views:{
-        'upload': {templateUrl: '/blog/blog.tpl.html', controller: "MainController"}
+        'upload': {templateUrl: 'blog/blog.tpl.html', controller: "MainController"}
       }
     });
   })
