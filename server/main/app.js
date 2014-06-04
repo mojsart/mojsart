@@ -4,12 +4,15 @@ var express = require('express');
 var app = express();
 var routers = {};
 var SongRouter = express.Router();
+var TestRouter = express.Router();
 
 routers.SongRouter = SongRouter;
+routers.TestRouter = TestRouter;
 
 require('./config.js')(app, express, routers);
 
 require('../song/song_routes.js')(SongRouter);
+require('./test_routes.js')(TestRouter);
 
 require('./demoInit.js')();
 require('./cronjob.js')();
