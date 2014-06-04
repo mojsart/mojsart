@@ -11,73 +11,17 @@ module.exports = exports = {
   dirName: __dirname + '/lib', 
 
   // starting point for upload songs, read all songs in library
-  uploadSongs: function() {
-    fs.readdir(exports.dirName, function(err, files) {
-      async.each(files, exports.validateFileType, exports.callbackError);
-    });
-  },
-
-  // validate songtype using regex filter and check if filename is found in db
-  validateFileType: function(file, callback) {
-    if(exports.filenameRegEx(file)) {
-      exports.checkSongNotInDB('filename', file, exports.echoUpload)
-    }
-  },
-
-  // send song to echo nest
-  echoUpload: function(filename) {
-    var location = exports.dirName + '/' + filename;
-    var filetype = path.extname(location).substr(1).toLowerCase();
-    fs.readFile(location, function(err, buffer) {
-      exports.callbackError(err);
-      echo('track/upload').post({
-        filetype: filetype             
-      }, 'application/octet-stream', buffer, function(err, json) {
-        exports.handleEchoResponse(err, json, filename);
-      });
-    });   
-  },
-
-  // handle echo nest response
-  // 1. check if song filename in db
-  // 2. save pending processing song in db
-  // 3. check to make sure the song hasn't already been processed in the async
-  // 4. start echo nest interval 
-  handleEchoResponse: function(err, json, filename) {
-    exports.callbackError(err);
-    exports.checkSongNotInDB('filename', filename, function(filename) { 
-      exports.saveSong(json.response.track, filename);
-      exports.checkSongNotInDB('echoData.md5', json.response.track.md5, function(md5) {
-        exports.setEchoInterval(md5, filename);
-      });
-    });
-  },
-
-  // ping echo nest for status update
-  setEchoInterval: function(md5, filename) {
-    var waittime = 5000;
-    var interval = setInterval(function(md5){
-      var query = {bucket: 'audio_summary', md5: md5};
-      // arguments : query with the desired md5, boolean to state whether there is a boolean
-      // filename to save, and the interval object which is needed to clearInterval
-      exports.echoFetchMD5(query, false, filename, interval);                    
-    }, waittime, md5);
-  },
-
-  callbackError: function(err) {
-    if (err) console.log(err);
+  readDirEach: function(func) {
+    Q.nfcall(fs.readdir, exports.dirName)
+      .then(function(files) {
+        async.each(files, func, exports.callbackError);
+      })
+      .fail(exports.callbackError);
   },
 
   // TODO: handle pending in db
-
-  echoFetchMD5: function(query, bool, filename, interval) {
-    // query should be something like {
-    //   md5: 'cfa55a902533b32e87473c2218b39da9',
-    //   bucket: 'audio_summary'
-    // }
-    // queries echoapi for the md5 we are looking for
-    echo('track/profile').get(query, function (err, json) {
-      exports.callbackError(err);
+  echoFetchMD5: function(md5, bool, filename, interval) {
+    echo.get(md5, function(json) {
       // returns a response referenced here: http://developer.echonest.com/docs/v4/track.html#profile
       // calls SaveSongMD5 if processing is complete
       if (json.response.track.status === "complete") {
@@ -100,14 +44,15 @@ module.exports = exports = {
       echoData: {
         status: trackData.status
       },
-      filename: filename
+      filename: filename,
     });       
     // saves to our mongoose database if it doesn't exist
-    var $promise = Q.nbind(song.save, song);
-    $promise()
+    var $songSave = Q.nbind(song.save,song);
+    $songSave()
       .then(function(saved) {
         console.log('song saved');
-      });
+      })
+      .fail(exports.callbackError);
   }, 
 
   updateSong: function(trackData, filename) {
@@ -133,7 +78,8 @@ module.exports = exports = {
         speechiness: null,
         acousticness: null        
       },
-      filename: filename
+      filename: filename,
+      cached: true
     };
 
     Q(Song.update({'filename' : filename}, update).exec())
@@ -142,7 +88,7 @@ module.exports = exports = {
       });
   },
 
-  checkSongNotInDB: function(searchField, input, cb) {
+  checkSongNotInDB: function(searchField, input, cb, cb2) {
     // for MD5: searchField = 'echoData.md5'
     // for filename: searchField = 'filename'
     var query = {};
@@ -151,6 +97,10 @@ module.exports = exports = {
       .then(function(song) {
         if (!song) {
           cb(input);
+        } else { 
+          if (cb2) {
+            cb2(input);
+          }
         }
       })
       .fail(function(reason) {
@@ -158,9 +108,33 @@ module.exports = exports = {
       });
   },
 
+  callbackError: function(err) {
+    if (err) console.log(err);
+  },
+
   filenameRegEx: function(filename) {
     // var match = /^(.*\.(?!(mp3|mp4|wav|au|ogg|m4a|mp4)$))?[^.]*$/i;
     var match = /^(.*\.(?!(mp3)$))?[^.]*$/i;
     return(!match.test(filename));
-  }
+  },
+
+  // verifies filesize for uploads
+  filesizeCheck: function(bytes) {
+    var limit = 10;
+    return (bytes/1000000 <= limit);
+  }, 
+
+  postSongSave: function(fromPath, toPath, cb) {
+    Q.nfcall(fs.readFile, fromPath)
+      .then(function(buffer) {
+        return Q.nfcall(fs.writeFile, toPath, buffer);
+      })
+      .then(function() {
+        return Q.nfcall(fs.unlink, fromPath);
+      })
+      .then(function(){
+        cb(toPath);
+      })
+      .fail(exports.callbackError);    
+  }  
 };

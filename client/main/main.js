@@ -3,39 +3,39 @@
 
   angular.module('mojsart.main', [
     'ui.router',
-    'mojsart.main.sidebar',
-    'mojsart.main.graph',
-    'mojsart.main.infopanel',
     'fx.animations',
     'ngAnimate',
+    'mm.foundation',
+    'mojsart.main.home'
   ])
   
   .config(function ($stateProvider) {
     $stateProvider
-    .state('mojsart.main', {
-      url: '/main',
+    .state('mojsart.about', {
+      url: '/',
       views:{
-        'sidebar': {templateUrl: '/sidebar/sidebar.tpl.html', controller:'SideBarController'},
-        'infopanel': {templateUrl: '/infopanel/infopanel.tpl.html', controller:'InfoController'},
-        'graph':{templateUrl: '/graph/graph.tpl.html', controller:'GraphController'}
+        'upload': {templateUrl: 'about/about.tpl.html', controller: "MainController"}
+      }
+    })
+    .state('mojsart.home', {
+      url: '/home',
+      views:{
+        'home': {templateUrl: 'home/home.tpl.html', controller: "MainController"},
+          'sidebar@mojsart.home': {templateUrl: '/sidebar/sidebar.tpl.html', controller:'SideBarController'},
+          'infopanel@mojsart.home': {templateUrl: '/infopanel/infopanel.tpl.html', controller:'InfoController'},
+          'graph@mojsart.home':{templateUrl: '/graph/graph.tpl.html', controller:'GraphController'}
       }
     })
     .state('mojsart.upload', {
           url: '/upload',
           views:{
-        'upload': {templateUrl: '/upload/upload.tpl.html', controller: "MainController"}
-      }
-    })
-    .state('mojsart.about', {
-          url: '/',
-          views:{
-        'upload': {templateUrl: '/about/about.tpl.html', controller: "MainController"}
+        'upload': {templateUrl: 'upload/upload.tpl.html', controller: "MainController"}
       }
     })
     .state('mojsart.blog', {
           url: '/blog',
           views:{
-        'upload': {templateUrl: '/blog/blog.tpl.html', controller: "MainController"}
+        'upload': {templateUrl: 'blog/blog.tpl.html', controller: "MainController"}
       }
     });
   })
@@ -43,7 +43,9 @@
   .controller('MainController', function ($state, $scope, $http) {
     $scope.title = 'Mojsart';
 
-    //Fetches all song names, adds them to SharedState.
+    //Fetches all songs from server, adds them to SharedState.
+    //Note that this function is called without a callback when app bootstraps.
+    //It takes a callback (fill Songs List)
      $scope.getSongs = function (func) {
       $http.get('/song')
       .success(function(json) {
@@ -53,9 +55,20 @@
         }
       });
     };
+
+    //Gets all songs, Populates sharedScope songs array with all songs in shared state.
+    //Note that this function
+      $scope.fillSongsList = function(data){
+        angular.forEach(data, function(song){
+          $scope.sharedState.songs.push({'track': song.echoData.artist, 'title': song.echoData.title, 'echoId': song.echoData.md5});
+        });
+    };
+
     // TODO: make it so that we don't need to "initialize" like this
     $scope.sharedState = {};
-    $scope.getSongs();
+    $scope.sharedState.comparing = false;
+    $scope.sharedState.songs = [];
+    $scope.getSongs($scope.fillSongsList);
     $scope.files = {};
     $scope.sent = false;
 
@@ -65,6 +78,7 @@
       $scope.$apply();
       console.log($scope.files);
     };
+
     //Loops over $scope.files object, formats each file as FormData
     $scope.upload = function () {
       console.log($scope.files);
@@ -72,8 +86,7 @@
       angular.forEach($scope.files, function (file) {
           fd.append('file', file);
       });
-
-      //This is the Post request to add a new song, which sends FormData
+    //This is the Post request to add a new song. Note that it sends FormData (fd)
       $http({
           method: 'POST',
           url: '/song/send',
@@ -87,7 +100,6 @@
           console.log("Sent:", data);
           //toggles in order to show hidden button, using ng-show in upload.tpl.html
           $scope.sent = true;
-
           $scope.getSongs();
       });
   };

@@ -8,7 +8,7 @@
  *
 */
 
-var app   = require('./main/app.js'),
+var app   = require('./server/main/app.js'),
     http = require('http').Server(app),
     io = require('socket.io')(http),
     port  = app.get('port'),

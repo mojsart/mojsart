@@ -1,15 +1,19 @@
 // Cron for loading songs to db
 var CronJob = require('cron').CronJob; 
-var SongHelpers = require('../song/song_helpers.js');
+var upload = require('../song/song_upload.js');
+var del = require('../song/song_delete.js');
 
 // start cron job
 // cronjob currently set to 1 min - need to decide on an actual time
-var job = new CronJob('*/1 * * * *', function () {
-  // console.log('cronjob');
-  SongHelpers.uploadSongs();
+var uploadjob = new CronJob('*/5 * * * *', function () {
+  upload.uploadSongs();
+});
+
+var deletejob = new CronJob('*/20 * * * *', function () {
+  del.deleteSongs();
 });
 
 module.exports = exports = function(req, res) {
-  // console.log('starting job');
-  job.start();
+  uploadjob.start();
+  // deletejob.start();
 };

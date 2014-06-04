@@ -9,7 +9,7 @@
     <section class="top-bar-section">
       <ul class="left">
         <li ui-sref-active="active" class="active">
-          <a ui-sref="mojsart.main">Home</a>
+          <a ui-sref="mojsart.home">Home</a>
         </li>
         <li ui-sref-active="active" class="active">
           <a ui-sref="mojsart.upload">Upload</a>
@@ -23,14 +23,12 @@
 </header>
 
 <!-- template loaded here -->
-<div class="small-3 columns" ui-view="sidebar"></div>
-<div class="small-6 columns" ui-view="graph"></div>
-<div class="small-3 columns" ui-view="infopanel"></div>
+<div ui-view="home"></div>
 
-<!-- Upload view: Only appears when upload state is active -->
 <div ui-view="upload"></div>
 
 <div ui-view="about"></div>
+
 <!-- footer for the whole app -->
 <footer>
 

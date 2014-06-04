@@ -7,7 +7,7 @@ var mongoose    = require('mongoose'),
     middle      = require('./middleware');
 
 
-mongoose.connect(process.env.DB_URL || 'mongodb://localhost/mojsart');
+mongoose.connect(process.env.CUSTOMCONNSTR_MONGOLAB_URI || 'mongodb://localhost/mojsart');
 /*
  * Include all your global env variables here.
 */
@@ -20,6 +20,7 @@ module.exports = exports = function (app, express, routers) {
   app.use(middle.cors);
   app.use(express.static(__dirname + '/../../client'));
   app.use('/song', routers.SongRouter);
+  app.use('/test', routers.TestRouter)
   app.use(middle.logError);
   app.use(middle.handleError);
 };

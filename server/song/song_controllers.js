@@ -5,7 +5,7 @@ var Song = require('./song_model.js'),
     echo = require('../main/echo.js'),
     fs   = require('fs'),
     helpers = require('./song_helpers.js'),
-    path = require('path');
+    nodePath = require('path');
 
 module.exports = exports = {
   get: function (req, res, next) {
@@ -51,24 +51,20 @@ module.exports = exports = {
     }
   },
 
-  // consider breaking the below function into two requests to get an actual url with a file name
-  // TODO: refactor 
   getSong: function(req, res, next) {
     // grab md5 from request URL
     var md5 = req.params[0];
-
-    Q(Song.findOne({'echoData.md5': md5}).exec())
+    Q(Song.findOne({'echoData.md5': md5, 'cached': true}).exec())
       .then(function(song) {
         if (song) {
           // build path to song
           var filename = song.filename;
           // build path based on server folder structure
-          var dirName = __dirname+'/lib';
-          var path = dirName + '/' + filename;
+          var path = nodePath.join(__dirname, 'lib', filename);
           // serve static audio file
           res.sendfile(path);   
         } else {
-          res.send(404);
+          res.send(404, 'Song is not available to be played');
         }
       })
       .fail(function(err) {
@@ -77,26 +73,20 @@ module.exports = exports = {
   },
 
   postSong: function(req, res, next) {
+    console.log('receiving song', req.files);
     var song = req.files.file;
+    var size = req.files.file.ws.bytesWritten;
     var type = song.type;
     var filename = song.originalFilename;
 
-    // TODO: increment filenames if they're found
     var regex = /^(audio\/[a-z0-9]+)$/i;
-    var bool = helpers.filenameRegEx(filename) && regex.test(type);
+    var bool = helpers.filesizeCheck(size) && helpers.filenameRegEx(filename) && regex.test(type);
 
     if (bool) {
-      var serverPath = __dirname + '/lib/' + filename; 
-      var $fsRename = Q.nbind(fs.rename, fs);
-      $fsRename(song.path, serverPath)
-        .then(function() {
-          res.send(serverPath);
-        })
-        .fail(function(err) {
-          throw(err)
-        });
+      var serverPath = nodePath.join(__dirname, 'lib', filename); 
+      helpers.postSongSave(song.path, serverPath, function(path){ res.send(path); });
     } else {
-      res.send(404, 'Sorry, please upload a .mp3')
+      res.send(404, 'Sorry, please upload a .mp3 under 10 MB')
     }
   }
 };

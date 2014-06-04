@@ -5,11 +5,14 @@ var multiparty = require('connect-multiparty');
 var multipartMiddleware = multiparty();
 var bodyParser  = require('body-parser');
 
+// TODO: we don't need this (for test only - to manually fire uploadSongs)
+var upload = require('./song_upload.js');
+
 module.exports = exports = function (router) {
   router.route('/')
     .get(controller.get)
-    .post(controller.postUserData);
     // post handles submits with new user inputs
+    .post(controller.postUserData);
   
   // serving audio file route
   router.route('/get/md5/*')
