@@ -2,7 +2,8 @@
 
 var Song = require('./song_model.js'),
     fs = require('fs'),
-    helpers = require('./song_helpers.js');
+    helpers = require('./song_helpers.js'),
+    nodepath = require('path');
 
 module.exports = exports = {
   deleteSongs: function() {
@@ -13,7 +14,7 @@ module.exports = exports = {
     // only get files that are mp3s
     var bool = helpers.filenameRegEx(file);
     if (bool) {
-      var path = path.join(helpers.dirName, file);
+      var path = nodepath.join(helpers.dirName, file);
       fs.stat(path, function(err, stats) {
         helpers.callbackError(err);
         var now = new Date; 
