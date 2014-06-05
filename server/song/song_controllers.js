@@ -39,7 +39,6 @@ module.exports = exports = {
       .then(function(song) {  // call SongSchema.methods.adjust on the found song after the promise returns
         song.adjust(req.body.increment);
       });
-
       // do similar for the song that is being compared against. note the negation
       Q(Song.findOne({'echoData.md5': req.body.compare}).exec())
       .then(function(song) {
@@ -78,10 +77,8 @@ module.exports = exports = {
     var size = req.files.file.ws.bytesWritten;
     var type = song.type;
     var filename = song.originalFilename;
-
     var regex = /^(audio\/[a-z0-9]+)$/i;
     var bool = helpers.filesizeCheck(size) && helpers.filenameRegEx(filename) && regex.test(type);
-
     if (bool) {
       var serverPath = nodePath.join(__dirname, 'lib', filename); 
       helpers.postSongSave(song.path, serverPath, function(path){ res.send(path); });
