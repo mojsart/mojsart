@@ -110,7 +110,7 @@ module.exports = exports = {
 
   // nodestyle error handling
   callbackError: function(err) {
-    if (err) throw(err);
+    if (err) throw err;
   },
 
   // checks filenames for .mp3 extension

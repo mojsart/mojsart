@@ -58,7 +58,7 @@ module.exports = exports = {
         }
       })
       .fail(function(err) {
-        throw(err);
+        throw err;
       });
   },
 
