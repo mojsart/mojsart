@@ -4,26 +4,44 @@ var http        = require('http');
 
 module.exports = exports = {
   // NEED API KEY in api_config.js
-  key: process.env.ECHO_API || api_keys.echo_api_key,
+  key: process.env.ECHO_API,
 
-  get: function(md5, cb) {
-    var queryURL = [];
-    var url = '/api/v4/track/profile';
-    var query = {
-      api_key: exports.key,
-      format: 'json',
-      md5: md5,
-      bucket: 'audio_summary'
+  optionBuilder: function(type, data) {
+    // declare general option/query parameters
+    var query = { api_key: exports.key };
+    var options = {
+      port: '80',
+      hostname: 'developer.echonest.com',
+      method: type,
+      path: '/api/v4/track/'
     };
+    // assign specific parameters based on request type
+    if (type === 'GET') {
+      options.path  = options.path + 'profile';
+      query.format = 'json';
+      query.md5 = data;
+      query.bucket = 'audio_summary';
+    } else if (type === 'POST') {
+      options.path = options.path + 'upload';
+      query.filetype = 'mp3';
+      options.headers = {
+        'Content-Type': 'application/octet-stream',
+        'Content-Length': data.length
+      };
+    }
+    // merge query results into a string
+    var queryURL = [];    
     for (var key in query) {
       queryURL.push(key + '=' + query[key]);
     }
-    queryURL = url + '?' + queryURL.join('&');
+    options.path = options.path + '?' + queryURL.join('&');
+    return options;
+  },
 
-    var options = {
-      hostname: 'developer.echonest.com',
-      path: queryURL
-    };
+  get: function(md5, cb) {
+    // build echo nest requesst
+    var options = exports.optionBuilder('GET', md5);
+    // make the http request
     http.request(options, function(response) {
       var str = '';
       response.on('data', function(chunk){
@@ -41,32 +59,18 @@ module.exports = exports = {
   },
 
   postBuffer: function(buffer, callback) {
-    // Build the post string from an object
-    var post_data = buffer;
-
-    // An object of options to indicate where to post to
-    var post_options = {
-        host: 'developer.echonest.com',
-        port: '80',
-        path: '/api/v4/track/upload?api_key=' + exports.key + '&filetype=mp3',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/octet-stream',
-            'Content-Length': post_data.length
-        }
-    };
-
+    // build echo nest request
+    var options = exports.optionBuilder('POST', buffer);
     // Set up the request
-    var post_req = http.request(post_options, function(res) {
+    var post_req = http.request(options, function(res) {
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
             console.log('Response:' + chunk);
             callback(null, chunk);
         });
     });
-
     // post the data
-    post_req.write(post_data);
+    post_req.write(buffer);
     post_req.end();
   }
  };

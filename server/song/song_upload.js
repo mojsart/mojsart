@@ -28,9 +28,7 @@ module.exports = exports = {
 
   recacheExistingSong: function(filename) {
     Q(Song.update({filename: filename}, {cached: true}).exec())
-      .then(function() {
-        console.log('song recached');
-      });
+      .fail(helpers.callbackError);
   },
 
   // send song to echo nest
@@ -38,51 +36,19 @@ module.exports = exports = {
   echoUpload: function(filename, callback) {
     var location = nodePath.join(helpers.dirName , filename);
     var filetype = nodePath.extname(location).substr(1).toLowerCase();
-
-    console.log('sending the following file to The Echo Nest:', location);
-
+    console.log('Sending the following file to The Echo Nest:', location);
     Q.nfcall(fs.readFile, location)
     .then(function(buffer) {
-      console.log(location, '\'s buffer:\n', buffer);
-      console.log(location, '\'s filetype:', filetype);
+      // console.log(location, '\'s buffer:\n', buffer);
+      // console.log(location, '\'s filetype:', filetype);
       Q.nfcall(echo.postBuffer, buffer)
-      .then(function(echoNestResponse) {
-        console.log('echoNestResponse: ', echoNestResponse);
-        var p = JSON.parse(echoNestResponse);
-        exports.handleEchoResponse(null, p, filename);
-      });
+        .then(function(echoNestResponse) {
+          console.log('echoNestResponse: ', echoNestResponse);
+          var p = JSON.parse(echoNestResponse);
+          exports.handleEchoResponse(null, p, filename);
+        });
     });
   },
-
-// postBuffer: function(buffer, callback) {
-//   // Build the post string from an object
-//   var post_data = buffer;
-
-//   // An object of options to indicate where to post to
-//   var post_options = {
-//       host: 'developer.echonest.com',
-//       port: '80',
-//       path: '/api/v4/track/upload?api_key=' + 'OTEBZ6M2CJSZTKH6Q' + '&filetype=mp3',
-//       method: 'POST',
-//       headers: {
-//           'Content-Type': 'application/octet-stream',
-//           'Content-Length': post_data.length
-//       }
-//   };
-
-//   // Set up the request
-//   var post_req = http.request(post_options, function(res) {
-//       res.setEncoding('utf8');
-//       res.on('data', function (chunk) {
-//           console.log('Response:' + chunk);
-//           callback(null, chunk);
-//       });
-//   });
-
-//   // post the data
-//   post_req.write(post_data);
-//   post_req.end();
-// },
 
   // handle echo nest response
   // 1. check if song filename in db
