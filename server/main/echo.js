@@ -34,7 +34,6 @@ module.exports = exports = {
     for (var key in query) {
       queryURL.push(key + '=' + query[key]);
     }
-
     options.path = options.path + '?' + queryURL.join('&');
     return options;
   },
@@ -43,7 +42,6 @@ module.exports = exports = {
     // build echo nest requesst
     var options = exports.optionBuilder('GET', md5);
     // make the http request
-
     http.request(options, function(response) {
       var str = '';
       response.on('data', function(chunk){
