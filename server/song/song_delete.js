@@ -7,10 +7,12 @@ var Song = require('./song_model.js'),
     Q = require('q');
 
 module.exports = exports = {
+  // starting point for delete song function
   deleteSongs: function() {
     helpers.readDirEach(exports.findOldSongs);
   },
 
+  // locates old songs and passes to uncache song
   findOldSongs: function(file, callback) {
     // only get files that are mp3s
     var bool = helpers.filenameRegEx(file);
@@ -30,6 +32,7 @@ module.exports = exports = {
     }
   },
 
+  // deletes the song and marks the server as being not cached
   uncacheSong: function(file, path) {
     // delete songss
     Q(Song.update({filename: file, cached: true}, {cached: false}).exec())

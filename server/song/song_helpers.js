@@ -19,6 +19,7 @@ module.exports = exports = {
   },
 
   // TODO: handle pending in db
+  // fetches song from echo nest, starts a set interval to ping echo nest for updated data
   echoFetchMD5: function(md5, bool, filename, interval) {
     echo.get(md5, function(json) {
       // returns a response referenced here: http://developer.echonest.com/docs/v4/track.html#profile
@@ -35,10 +36,9 @@ module.exports = exports = {
     });
   },
 
+  // create a song model populated with prelim echo nest data
+  // initializes a new instance of song with the received trackData
   saveSong: function(trackData, filename) {
-    // create a song model
-    // populate with echo nest data
-    // initializes a new instance of song with the received trackData
     var song = new Song({
       echoData: {
         status: trackData.status
@@ -54,6 +54,7 @@ module.exports = exports = {
       .fail(exports.callbackError);
   }, 
 
+  // updates song information with retrieved echo nest data
   updateSong: function(trackData, filename) {
     var update = {
       echoData: {
@@ -86,7 +87,8 @@ module.exports = exports = {
       });
   },
 
-  checkSongNotInDB: function(searchField, input, cb, cb2) {
+  // checks if a song is found in the database. calls callback based on result.
+  checkSongNotInDB: function(searchField, input, notfoundcb, foundcb) {
     // for MD5: searchField = 'echoData.md5'
     // for filename: searchField = 'filename'
     var query = {};
@@ -94,10 +96,10 @@ module.exports = exports = {
     Q(Song.findOne(query).exec())
       .then(function(song) {
         if (!song) {
-          cb(input);
+          notfoundcb(input);
         } else { 
-          if (cb2) {
-            cb2(input);
+          if (foundcb) {
+            foundcb(input);
           }
         }
       })
@@ -106,10 +108,12 @@ module.exports = exports = {
       });
   },
 
+  // nodestyle error handling
   callbackError: function(err) {
-    if (err) console.log(err);
+    if (err) throw(err);
   },
 
+  // checks filenames for .mp3 extension
   filenameRegEx: function(filename) {
     // var match = /^(.*\.(?!(mp3|mp4|wav|au|ogg|m4a|mp4)$))?[^.]*$/i;
     var match = /^(.*\.(?!(mp3)$))?[^.]*$/i;
@@ -122,6 +126,7 @@ module.exports = exports = {
     return (bytes/1000000 <= limit);
   }, 
 
+  // reads files from one location, writes to a new location, and deletes from old location
   postSongSave: function(fromPath, toPath, cb) {
     Q.nfcall(fs.readFile, fromPath)
       .then(function(buffer) {
