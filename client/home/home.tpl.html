@@ -1,19 +1,16 @@
 <div class="off-canvas-wrap" data-offcanvas>
   <div class="inner-wrap">
-
-    <a class="left-off-canvas-toggle" href="#">Menu</a>
-
     <!-- Off Canvas Menu -->
     <aside class="left-off-canvas-menu">
         <!-- whatever you want goes here -->
         <div ui-view="sidebar"></div>
     </aside>
-
     <!-- main content goes here -->
     <div ui-view="graph"></div>
-
   <!-- close the off-canvas menu -->
   <!-- <a class="exit-off-canvas"></a> -->
-
+    <a class="button small left-off-canvas-toggle" href="">Menu</a>
+    <audio src={{sharedState.songPath}} controls auto-play></audio>
+    {{sharedState.title}} - {{sharedState.artist}}
   </div>
 </div>
