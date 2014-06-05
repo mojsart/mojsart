@@ -64,6 +64,9 @@
     };
 
     // TODO: make it so that we don't need to "initialize" like this
+
+    $scope.date = Date.now();
+
     $scope.sharedState = {};
     $scope.sharedState.comparing = false;
     $scope.sharedState.songs = [];

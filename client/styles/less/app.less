@@ -34,6 +34,22 @@
   // font-style: italic;
 }
 
+#blog-header {
+  background-color: @c3;
+  color: white;
+  padding: 120px 0 120px;
+  h1 {
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Quicksand', sans-serif;
+  }
+  h1, h3 {
+    color: white; }}
+
+.blog {
+  padding: 15px 0 15px;
+}
+
 // link colors
 a {
   color: @c2;
@@ -127,8 +143,16 @@ td {
   filter: alpha(opacity=50);
   opacity: .5;
 }
-footer{
+footer, .footer{
+  padding: 20px 0 0;
+  background-color: #333;
+  color: white;
+  p, a {
+    font-size: 0.8125rem;
+    color: white;
+  }
+  .row {
     height:auto;
-    background-color:@c4
-    width:100%
+    width:100%;
+  }
 }
