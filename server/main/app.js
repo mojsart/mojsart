@@ -10,6 +10,8 @@ routers.SongRouter = SongRouter;
 routers.TestRouter = TestRouter;
 
 require('./config.js')(app, express, routers);
+
+// routes
 require('../song/song_routes.js')(SongRouter);
 require('./test_routes.js')(TestRouter);
 

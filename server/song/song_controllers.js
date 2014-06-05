@@ -8,6 +8,7 @@ var Song = require('./song_model.js'),
     nodePath = require('path');
 
 module.exports = exports = {
+  // returns song data for songs that have a completed status
   get: function (req, res, next) {
     Q(Song.find({'echoData.status' : 'complete'}).exec())
       .then(function (songs) {
@@ -18,18 +19,7 @@ module.exports = exports = {
       });
   },
 
-  post: function (req, res, next) {
-    // TODO: need to check if req.body is the entire song db entry    
-    var song = req.body;
-    Q(Song.create(song).exec())
-      .then(function (id) {
-        res.send(id);
-      })
-      .fail(function (reason) {
-        next(reason);
-      });
-  },
-
+  // posts user feedback into song object
   postUserData: function(req, res, next) {
     /* Find a song using the client provided md5
      * .exec() promisifies the result
@@ -50,6 +40,7 @@ module.exports = exports = {
     }
   },
 
+  // serves songs when requested by client
   getSong: function(req, res, next) {
     // grab md5 from request URL
     var md5 = req.params[0];
@@ -71,6 +62,7 @@ module.exports = exports = {
       });
   },
 
+  // serves post requests to the server when sent mp3 files
   postSong: function(req, res, next) {
     console.log('receiving song', req.files);
     var song = req.files.file;

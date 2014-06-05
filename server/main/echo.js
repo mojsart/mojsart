@@ -3,9 +3,9 @@
 var http        = require('http');
 
 module.exports = exports = {
-  // NEED API KEY in api_config.js
-  key: process.env.ECHO_API,
+  key: process.env.ECHO_API || 'MILUX5DWHLED7C7HF',
 
+  // builds request parameters for echo nest based on api requirements
   optionBuilder: function(type, data) {
     // declare general option/query parameters
     var query = { api_key: exports.key };
@@ -38,6 +38,7 @@ module.exports = exports = {
     return options;
   },
 
+  // gets song information from echo nest when passed a md5
   get: function(md5, cb) {
     // build echo nest requesst
     var options = exports.optionBuilder('GET', md5);
@@ -58,6 +59,7 @@ module.exports = exports = {
     .end();
   },
 
+  // sends song to echo nest when passed a file buffer
   postBuffer: function(buffer, callback) {
     // build echo nest request
     var options = exports.optionBuilder('POST', buffer);
