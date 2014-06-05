@@ -3,7 +3,6 @@ angular.module('mojsart.main.home', [
   'fx.animations',
   'mojsart.main.sidebar',
   'mojsart.main.graph',
-  'mojsart.main.infopanel',
   'ngAnimate'
 ])
 
