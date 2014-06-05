@@ -100,8 +100,6 @@ selectNodeVersion () {
 
 echo Handling node.js deployment.
 
-<<<<<<< HEAD
-
 echo 1. Select node version
 selectNodeVersion
 
