@@ -77,7 +77,7 @@ selectNodeVersion () {
       NODE_EXE=`cat "$DEPLOYMENT_TEMP/__nodeVersion.tmp"`
       exitWithMessageOnError "getting node version failed"
     fi
-    
+
     if [[ -e "$DEPLOYMENT_TEMP/.tmp" ]]; then
       NPM_JS_PATH=`cat "$DEPLOYMENT_TEMP/__npmVersion.tmp"`
       exitWithMessageOnError "getting npm version failed"
@@ -99,7 +99,6 @@ selectNodeVersion () {
 # ----------
 
 echo Handling node.js deployment.
-
 
 echo 1. Select node version
 selectNodeVersion
@@ -139,7 +138,6 @@ if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
   "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
   exitWithMessageOnError "Kudu Sync failed"
 fi
-
 ##################################################################################################################################
 
 # Post deployment stub
@@ -151,3 +149,4 @@ if [[ -n "$POST_DEPLOYMENT_ACTION" ]]; then
 fi
 
 echo "Finished successfully."
+
