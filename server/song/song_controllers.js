@@ -8,6 +8,7 @@ var Song = require('./song_model.js'),
     nodePath = require('path');
 
 module.exports = exports = {
+  // returns song data for songs that have a completed status
   get: function (req, res, next) {
     Q(Song.find({'echoData.status' : 'complete'}).exec())
       .then(function (songs) {
@@ -18,18 +19,7 @@ module.exports = exports = {
       });
   },
 
-  post: function (req, res, next) {
-    // TODO: need to check if req.body is the entire song db entry    
-    var song = req.body;
-    Q(Song.create(song).exec())
-      .then(function (id) {
-        res.send(id);
-      })
-      .fail(function (reason) {
-        next(reason);
-      });
-  },
-
+  // posts user feedback into song object
   postUserData: function(req, res, next) {
     /* Find a song using the client provided md5
      * .exec() promisifies the result
@@ -39,7 +29,6 @@ module.exports = exports = {
       .then(function(song) {  // call SongSchema.methods.adjust on the found song after the promise returns
         song.adjust(req.body.increment);
       });
-
       // do similar for the song that is being compared against. note the negation
       Q(Song.findOne({'echoData.md5': req.body.compare}).exec())
       .then(function(song) {
@@ -51,6 +40,7 @@ module.exports = exports = {
     }
   },
 
+  // serves songs when requested by client
   getSong: function(req, res, next) {
     // grab md5 from request URL
     var md5 = req.params[0];
@@ -72,16 +62,15 @@ module.exports = exports = {
       });
   },
 
+  // serves post requests to the server when sent mp3 files
   postSong: function(req, res, next) {
     console.log('receiving song', req.files);
     var song = req.files.file;
     var size = req.files.file.ws.bytesWritten;
     var type = song.type;
     var filename = song.originalFilename;
-
     var regex = /^(audio\/[a-z0-9]+)$/i;
     var bool = helpers.filesizeCheck(size) && helpers.filenameRegEx(filename) && regex.test(type);
-
     if (bool) {
       var serverPath = nodePath.join(__dirname, 'lib', filename); 
       helpers.postSongSave(song.path, serverPath, function(path){ res.send(path); });
