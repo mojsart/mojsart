@@ -10,7 +10,7 @@
 </div>
 <hr>
 
-<div class='row' ng-repeat="song in sharedState.songs | limitTo: quantity | filter: filterSongsList">
+<div class='row' ng-show='sharedState.comparing' ng-repeat="song in sharedState.songs | limitTo: quantity | filter: filterSongsList">
   <div class='small-6 column'> {{song.title}} - {{song.track}}</div>
   <div class='small-6 column'>
     <span class="tiny button" ng-click="postVote(song, 'up')">More</span>
