@@ -27,6 +27,23 @@
 #color {
   color: #60a859;
 }
+#blog-header {
+  background-color: #9bda6a;
+  color: white;
+  padding: 120px 0 120px;
+}
+#blog-header h1 {
+  text-align: center;
+  font-weight: bold;
+  font-family: 'Quicksand', sans-serif;
+}
+#blog-header h1,
+#blog-header h3 {
+  color: white;
+}
+.blog {
+  padding: 15px 0 15px;
+}
 a {
   color: #60a859;
 }
@@ -112,4 +129,23 @@ td {
 .reveal-modal-bg.in {
   filter: alpha(opacity=50);
   opacity: .5;
+}
+
+footer,
+.footer {
+  padding: 20px 0 0;
+  background-color: #333;
+  color: white;
+}
+footer p,
+.footer p,
+footer a,
+.footer a {
+  font-size: 0.8125rem;
+  color: white;
+}
+footer .row,
+.footer .row {
+  height: auto;
+  width: 100%;
 }
