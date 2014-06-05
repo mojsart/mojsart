@@ -9,16 +9,10 @@
     <div ui-view="graph"></div>
   <!-- close the off-canvas menu -->
   <!-- <a class="exit-off-canvas"></a> -->
-    <a class="button small left-off-canvas-toggle" href="">Menu</a>
+    <a class="button small left-off-canvas-toggle">Menu</a>
     <span ng-controller="ModalDemoCtrl">
       <script type="text/ng-template" id="myModalContent.html">
-        <h1>Upload Songs</h1>
-        File must be have format mp3 and must be under 10 MB <br><br>
-        <form>
-          <input type="file" onchange="angular.element(this).scope().filesChanged(this)" multiple/>
-          <button ng-click="upload()">Upload</button>
-          <a class="button success" ng-show="sent" href="/#/mojsart/main">See updates</a>
-        </form>
+
       </script>
 
       <button class="button small" ng-click="open()">Upload a song</button>
