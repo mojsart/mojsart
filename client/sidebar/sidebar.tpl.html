@@ -5,7 +5,7 @@
 <ul>
   <li ng-repeat="(key, value) in sharedState.audio_summary">{{key}}: {{value}}</li>
 </ul>
-
+<div ng-show="sharedState.comparing">
 <div class='row'>
   <div class='small-6 column'> Songs from the library</div>
   <div class='small-6 column'> Your Comparison</div>
@@ -19,6 +19,7 @@
     <span class="tiny button" ng-click="postVote(song, 'down')">Less</span>
   </div>
   <hr>
+</div>
 
 
 
