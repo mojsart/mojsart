@@ -31,6 +31,6 @@
     "gulp-less": "*"
   },
   "devDependencies": {
-
+    "gulp-strip-debug": "^0.3.0"
   }
 }

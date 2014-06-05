@@ -9,7 +9,8 @@ var gulp    = require('gulp'),
     list    = require('gulp-task-listing'),
     nodemon = require('gulp-nodemon'),
     lr_port = 35729,
-    less   = require('gulp-less');
+    less   = require('gulp-less'),
+    stripDebug = require('gulp-strip-debug');
 
 
 var paths = {
@@ -21,7 +22,7 @@ var paths = {
     dest: 'client/styles/css'
   }
 };
-var build = ['less', 'css', 'lint'];
+var build = ['less', 'css', 'lint', 'strip'];
 
 
 gulp.task('less', function () {
@@ -83,6 +84,12 @@ gulp.task('watch', function () {
   gulp.watch(paths.styles.less, ['less']);
   gulp.watch(paths.views, ['html']);
   gulp.watch(paths.scripts, ['lint']);
+});
+
+gulp.task('strip', function() {
+  return gulp.src(paths.scripts)
+    .pipe(stripDebug())
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('build', build);
