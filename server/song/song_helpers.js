@@ -4,11 +4,11 @@ var Song = require('./song_model.js'),
     Q    = require('q'),
     echo = require('../main/echo.js'),
     fs = require('fs'),
-    path = require('path'),
+    nodePath = require('path'),
     async = require('async');
 
 module.exports = exports = {
-  dirName: __dirname + '/lib', 
+  dirName: nodePath.join(__dirname, 'lib'), 
   // starting point for upload songs, read all songs in library
   readDirEach: function(func) {
     Q.nfcall(fs.readdir, exports.dirName)
