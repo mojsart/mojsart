@@ -66,14 +66,12 @@ button:focus,
   margin-right: 0;
   z-index: 10000;
 }
-.infopanel {
-  background-color: #b2d1c8;
-  left: 50px;
+.left-off-canvas-menu {
+  -webkit-backface-visibility: hidden;
+  background-color: aliceblue;
 }
 .graph {
-  background-color: #857d87;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  background-color: #d4f79f;
 }
 table {
   table-layout: fixed;
@@ -83,4 +81,34 @@ th,
 td {
   overflow: hidden;
   width: 100px;
+}
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity .15s linear;
+  transition: opacity .15s linear;
+}
+.fade.in {
+  opacity: 1;
+}
+.reveal-modal.fade {
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  -moz-transition: -moz-transform 0.3s ease-out;
+  -o-transition: -o-transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+  -webkit-transform: translate(0, -25%);
+  -ms-transform: translate(0, -25%);
+  transform: translate(0, -25%);
+}
+.reveal-modal.in {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+.reveal-modal-bg.fade {
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+.reveal-modal-bg.in {
+  filter: alpha(opacity=50);
+  opacity: .5;
 }

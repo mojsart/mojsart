@@ -22,7 +22,6 @@
       views:{
         'home': {templateUrl: 'home/home.tpl.html', controller: "MainController"},
           'sidebar@mojsart.home': {templateUrl: '/sidebar/sidebar.tpl.html', controller:'SideBarController'},
-          'infopanel@mojsart.home': {templateUrl: '/infopanel/infopanel.tpl.html', controller:'InfoController'},
           'graph@mojsart.home':{templateUrl: '/graph/graph.tpl.html', controller:'GraphController'}
       }
     })
