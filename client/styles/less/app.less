@@ -79,10 +79,9 @@ background-color: aliceblue;
 }
 
 .graph {
-  background-color: #857d87;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  background-color: @c5;
 }
+
 table {
   table-layout: fixed;
   width: 250px;
@@ -91,4 +90,39 @@ th,
 td {
   overflow: hidden;
   width: 100px;
+}
+
+
+// modal stuff
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity .15s linear;
+          transition: opacity .15s linear;
+}
+.fade.in {
+  opacity: 1;
+}
+
+.reveal-modal.fade {
+  -webkit-transition: -webkit-transform .3s ease-out;
+     -moz-transition:    -moz-transform .3s ease-out;
+       -o-transition:      -o-transform .3s ease-out;
+          transition:         transform .3s ease-out;
+  -webkit-transform: translate(0, -25%);
+      -ms-transform: translate(0, -25%);
+          transform: translate(0, -25%);
+}
+.reveal-modal.in {
+  -webkit-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
+          transform: translate(0, 0);
+}
+
+.reveal-modal-bg.fade {
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+.reveal-modal-bg.in {
+  filter: alpha(opacity=50);
+  opacity: .5;
 }
