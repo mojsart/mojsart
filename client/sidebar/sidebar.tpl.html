@@ -4,21 +4,16 @@
 </div>
 <table>
   <tr>
-    <th>Song 1</th>
-    <th>VS</th>
-    <th>Song 2</th>
+    <th>Songs from the library</th>
+    <th>Your Comparison</th>
   </tr>
   <tr ng-repeat="song in sharedState.songs | limitTo: quantity| filter: filterSongsList">
     <td>{{song.title}}, by {{song.track}} </td>
       <td>
         <ul class='btn-group [radius round]'></ul>
-          <li class="tiny button" ng-click="postVote(song, 'up')">Left</li>
-          <li class="tiny button" ng-click="postVote(song, 'down')">Right</li>
+          <li class="tiny button" ng-click="postVote(song, 'up')">More</li>
+          <li class="tiny button" ng-click="postVote(song, 'down')">Less</li>
         </ul>
     </td>
-    <td 
-     <span ng-show="sharedState.comparing">{{sharedState.title}}, by {{sharedState.artist}}</span>
-    </td>
-
   </tr>
 </table>

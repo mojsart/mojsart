@@ -4,7 +4,7 @@ var http        = require('http');
 
 module.exports = exports = {
   // NEED API KEY in api_config.js
-  key: process.env.ECHO_API || api_keys.echo_api_key,
+  key: 'OTEBZ6M2CJSZTKH6Q' || api_keys.echo_api_key,
 
   get: function(md5, cb) {
     var queryURL = [];
