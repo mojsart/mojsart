@@ -3,7 +3,7 @@
 var http        = require('http');
 
 module.exports = exports = {
-  key: process.env.ECHO_API || 'MILUX5DWHLED7C7HF',
+  key: process.env.ECHO_API,
 
   // builds request parameters for echo nest based on api requirements
   optionBuilder: function(type, data) {
