@@ -66,7 +66,7 @@ button:focus,
   margin-right: 0;
   z-index: 10000;
 }
-.left-off-canvas-menu * {
+.left-off-canvas-menu {
   -webkit-backface-visibility: hidden;
   background-color: aliceblue;
 }

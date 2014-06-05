@@ -5,18 +5,22 @@
 <ul>
   <li ng-repeat="(key, value) in sharedState.audio_summary">{{key}}: {{value}}</li>
 </ul>
-<table>
-  <tr>
-    <th>Songs from the library</th>
-    <th>Your Comparison</th>
-  </tr>
-  <tr ng-repeat="song in sharedState.songs | limitTo: quantity| filter: filterSongsList">
-    <td>{{song.title}}, by {{song.track}} </td>
-      <td>
-        <ul class='btn-group [radius round]'></ul>
-          <li class="tiny button" ng-click="postVote(song, 'up')">More</li>
-          <li class="tiny button" ng-click="postVote(song, 'down')">Less</li>
-        </ul>
-    </td>
-  </tr>
-</table>
+
+<div class='row'>
+  <div class='small-6 column'> Songs from the library</div>
+  <div class='small-6 column'> Your Comparison</div>
+</div>
+<hr>
+
+<div class='row' ng-repeat="song in sharedState.songs | limitTo: quantity | filter: filterSongsList">
+  <div class='small-6 column'> {{song.title}}, by {{song.track}}</div>
+  <div class='small-6 column'>
+    <span class="tiny button" ng-click="postVote(song, 'up')">More</span>
+    <span class="tiny button" ng-click="postVote(song, 'down')">Less</span>
+  </div>
+  <hr>
+
+
+
+
+
