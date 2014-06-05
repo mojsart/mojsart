@@ -25,7 +25,7 @@ angular.module('mojsart.main.home', [
   $scope.open = function () {
 
     var modalInstance = $modal.open({
-      templateUrl: 'myModalContent.html',
+      templateUrl: 'home/upload.tpl.html',
       controller: ModalInstanceCtrl,
       resolve: {
         items: function () {
@@ -52,8 +52,9 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
     item: $scope.items[0]
   };
 
-  $scope.ok = function () {
-    $modalInstance.close($scope.selected.item);
+  $scope.upload = function () {
+    $scope.upload();
+    $modalInstance.close();
   };
 
   $scope.cancel = function () {

@@ -1,7 +1,8 @@
 #splash-header {
   background-color: #007148;
   color: white;
-  padding: 120px;
+  padding-top: 120px;
+  padding-bottom: 120px;
 }
 #splash-header h1 {
   font-weight: bold;
