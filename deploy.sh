@@ -106,15 +106,15 @@ selectNodeVersion
 
 ##### commented out this block so deploys don't take forever
 
-# cd "$DEPLOYMENT_TARGET"
-# echo 2. Install npm packages
-# if [ -e "package.json" ]; then
-#   eval $NPM_CMD install --production
-#   exitWithMessageOnError "npm failed"
-#   echo "Execute gulp tasks"
-#   eval /node_modules/.bin/gulp build
-#   cd - > /dev/null
-# fi
+cd "$DEPLOYMENT_TARGET"
+echo 2. Install npm packages
+if [ -e "package.json" ]; then
+  eval $NPM_CMD install --production
+  exitWithMessageOnError "npm failed"
+  echo "Execute gulp tasks"
+  eval /node_modules/.bin/gulp build
+  cd - > /dev/null
+fi
 
 if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
   cd "$DEPLOYMENT_TARGET"
