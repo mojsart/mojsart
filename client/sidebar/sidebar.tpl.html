@@ -1,11 +1,9 @@
-<div class='panel callout radius' ng-hide="sharedState.comparing">
-<h4>Welcome to Mo<span id="color">js</span>art</h4>
-<h5>Each circle represents a song. To get started, click on any circle and add comparisons. If you run out of comparisons, move on to a new circle or upload more songs.</h5>
+<div class='panel callout radius'>
+<!-- ng-hide="sharedState.comparing" -->
+  <h4>Welcome to mo<span id="color">js</span>art</h4>
+  <h5>Each circle represents a song. To get started, click on any circle and add comparisons. If you run out of comparisons, move on to a new circle or upload more songs.</h5>
 </div>
-<ul>
-  <li ng-repeat="(key, value) in sharedState.audio_summary">{{key}}: {{value}}</li>
-</ul>
-<div ng-show="sharedState.comparing">
+
 <div class='row'>
   <div class='small-6 column'> Songs from the library</div>
   <div class='small-6 column'> Your Comparison</div>
@@ -13,14 +11,18 @@
 <hr>
 
 <div class='row' ng-repeat="song in sharedState.songs | limitTo: quantity | filter: filterSongsList">
-  <div class='small-6 column'> {{song.title}}, by {{song.track}}</div>
+  <div class='small-6 column'> {{song.title}} - {{song.track}}</div>
   <div class='small-6 column'>
     <span class="tiny button" ng-click="postVote(song, 'up')">More</span>
     <span class="tiny button" ng-click="postVote(song, 'down')">Less</span>
   </div>
-  <hr>
 </div>
 
+<hr />
+
+<ul>
+  <li ng-repeat="(key, value) in sharedState.audio_summary">{{key}}: {{value}}</li>
+</ul>
 
 
 
