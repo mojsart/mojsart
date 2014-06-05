@@ -14,7 +14,6 @@ angular.module('mojsart.main.home', [
       url: '/main',
       views: {
         'sidebar': {templateUrl: '/sidebar/sidebar.tpl.html', controller:'SideBarController'},
-        'infopanel': {templateUrl: '/infopanel/infopanel.tpl.html', controller:'InfoController'},
         'graph':{templateUrl: '/graph/graph.tpl.html', controller:'GraphController'}
       }
     });
