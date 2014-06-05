@@ -13,15 +13,15 @@ var Song = require('./song_model.js'),
 module.exports = exports = {
   // starting point for upload songs, read all songs in library
   uploadSongs: function() {
-    // console.log('starting upload');
+    console.log('starting upload');
     helpers.readDirEach(exports.validateFileType);
   },
 
   // validate songtype using regex filter and check if filename is found in db
   validateFileType: function(file, callback) {
-    // console.log('validating filetype');
+    console.log('validating filetype');
     if(helpers.filenameRegEx(file)) {
-      // console.log('processing file', file);
+      console.log('processing file', file);
       helpers.checkSongNotInDB('filename', file, exports.echoUpload, exports.recacheExistingSong);
     }
   },

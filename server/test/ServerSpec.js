@@ -47,7 +47,7 @@ describe('', function() {
           Song.findOne({'filename' : 'testmp3.mp3'})
             .exec(function(err,track){
               if(err) console.log(err);
-              console.log(track)
+              console.log(track);
               expect(track.filename).to.equal('testmp3.mp3');
               expect(track.echoData.status).to.equal('pending');
               expect(track.echoData.md5).to.equal(undefined);
@@ -205,7 +205,7 @@ describe('', function() {
           Song.findOne({'echoData.md5':'23f455935fafa3107ae7f4a9298f893b'}, function(err, song) {
             expect(song.userData.speechiness).to.not.equal(null);
             done();
-          })
+          });
         });
       });
 
