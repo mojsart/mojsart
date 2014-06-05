@@ -50,7 +50,7 @@ module.exports = exports = {
           // build path to song
           var filename = song.filename;
           // build path based on server folder structure
-          var path = nodePath.join(__dirname, 'lib', filename);
+          var path = nodePath.join(helpers.dirName , filename);
           // serve static audio file
           res.sendfile(path);   
         } else {
@@ -72,7 +72,7 @@ module.exports = exports = {
     var regex = /^(audio\/[a-z0-9]+)$/i;
     var bool = helpers.filesizeCheck(size) && helpers.filenameRegEx(filename) && regex.test(type);
     if (bool) {
-      var serverPath = nodePath.join(__dirname, 'lib', filename); 
+      var serverPath = nodePath.join(helpers.dirName, filename); 
       helpers.postSongSave(song.path, serverPath, function(path){ res.send(path); });
     } else {
       res.send(404, 'Sorry, please upload a .mp3 under 10 MB')
