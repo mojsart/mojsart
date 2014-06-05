@@ -1,1 +1,7 @@
-<div class="graph" d3-visualizer data="sharedState.data" on-click-thingy="populateNodeData"></div>
+<span>
+	<audio src={{sharedState.songPath}} controls auto-play></audio>
+	<h5>{{sharedState.title}} {{sharedState.artist}}</h5>
+</span>
+
+<div class="graph" d3-visualizer data="sharedState.data" on-click-thingy="populateNodeData">
+</div>
