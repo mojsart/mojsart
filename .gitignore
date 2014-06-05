@@ -7,3 +7,4 @@ _.DS_Store
 server/main/api_config.js
 client/styles/css/app.css
 azure.err
+ngscripts.min.js

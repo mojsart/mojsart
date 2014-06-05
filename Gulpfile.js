@@ -10,11 +10,17 @@ var gulp    = require('gulp'),
     nodemon = require('gulp-nodemon'),
     lr_port = 35729,
     less   = require('gulp-less'),
-    stripDebug = require('gulp-strip-debug');
+    stripDebug = require('gulp-strip-debug'),
+    uglify = require('gulp-uglify'),
+    ngmin = require('gulp-ngmin'),
+    concat = require('gulp-concat')
+    clean = require('gulp-clean')
+    nodePath = require('path');
 
 
 var paths = {
-  scripts: ['!client/lib/**/*.js', 'client/**/*.js'],
+  scripts: ['!client/lib/**/*.js', 'client/**/*.js', '!client/*.min.js'],
+  appjsminify: { src: ['!client/lib/**/*.js', 'client/**/*.js'], dest: 'client', filename: 'ngscripts.min.js' },
   views: ['!client/lib/*.html', 'client/**/*.html', 'client/index.html'],
   styles: {
     css: ['!client/lib/**/*.css', 'client/styles/css/*.css', 'client/**/*.css'],
@@ -22,7 +28,7 @@ var paths = {
     dest: 'client/styles/css'
   }
 };
-var build = ['less', 'css', 'lint', 'strip'];
+var build = ['less', 'css', 'lint', 'distCode'];
 
 
 gulp.task('less', function () {
@@ -86,12 +92,31 @@ gulp.task('watch', function () {
   gulp.watch(paths.scripts, ['lint']);
 });
 
-gulp.task('strip', function() {
-  return gulp.src(paths.scripts)
-    .pipe(stripDebug())
-    .pipe(gulp.dest('dist'));
+gulp.task('copy', function(){
+  gulp.src('./client/**/*', {base: './client'})
+    .pipe(gulp.dest(paths.appjsminify.dest));
 });
 
-gulp.task('build', build);
+gulp.task('distCode', ['deleteOldMin'], function() {
+  return gulp.src(paths.appjsminify.src)
+    .pipe(plumber())
+    .pipe(stripDebug())
+    .pipe(ngmin({dynamic: false}))
+    .pipe(uglify({mangle: false}))
+    .pipe(concat(paths.appjsminify.filename))
+    .pipe(gulp.dest(paths.appjsminify.dest))
+    .pipe(notify({message: 'Distribution code compiled'}));
+});
 
+gulp.task('deleteOldMin', function() {
+  return gulp.src(nodePath.join(paths.appjsminify.dest, paths.appjsminify.filename), {read: false})
+    .pipe(plumber())
+    .pipe(clean())
+    .pipe(notify({message: 'Old file deleted'}));
+});
+
+// delete
+// minify css
+
+gulp.task('build', build);
 gulp.task('default', ['build', 'live', 'serve', 'watch']);
