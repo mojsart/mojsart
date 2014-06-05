@@ -9,7 +9,6 @@ var Song = require('./song_model.js'),
 
 module.exports = exports = {
   dirName: __dirname + '/lib', 
-
   // starting point for upload songs, read all songs in library
   readDirEach: function(func) {
     Q.nfcall(fs.readdir, exports.dirName)
@@ -81,7 +80,6 @@ module.exports = exports = {
       filename: filename,
       cached: true
     };
-
     Q(Song.update({'filename' : filename}, update).exec())
       .then(function(saved) {
         console.log('song updated');
