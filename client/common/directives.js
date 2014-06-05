@@ -42,7 +42,7 @@
         d3Service.d3().then(function(d3) {
           var svg = d3.select(iElement[0])
           .append("svg")
-          .attr("height", "85%"); //TODO do not hardcode
+          .attr("height", "80%"); //TODO do not hardcode
 
           // on window resize, re-render d3 canvas
           window.onresize = function() {
@@ -103,14 +103,14 @@
                 .on("mouseover", function() {
                   d3.select(this)
                     .transition()
-                    .attr("fill", "lightblue")
+                    .attr("fill", "#9BDA6A")
                     // .attr("stroke", "lightblue")
                     .attr("r", d3.select(this).attr("r")*1.2);
                 })
                 .on("mouseout", function() {
                   d3.select(this)
                     .transition()
-                    .attr("fill", function(d) { return (d.cached) ? "yellow" : "white"; })
+                    .attr("fill", function(d) { return (d.cached) ? "#60A859" : "white"; })
                     .attr("stroke", "black")
                     .attr("r", function(d) { return 20*Math.pow(10, (d.echoData.audio_summary.loudness/20)); });
                 })
@@ -124,7 +124,7 @@
                 .attr("r", function(d) { return 20*Math.pow(10, (d.echoData.audio_summary.loudness/20)); })
                 .attr("cx",function(d) { return width*(d.echoData.audio_summary.speechiness + d.userData.speechiness + d.echoData.audio_summary.acousticness/3); })
                 .attr("cy", function(d) { return height*(d.echoData.audio_summary.energy + d.echoData.audio_summary.danceability)/2; })
-                .attr("fill", function(d) { return (d.cached) ? "yellow" : "white"; });
+                .attr("fill", function(d) { return (d.cached) ? "#60A859" : "white"; });
           };
         });
       }
