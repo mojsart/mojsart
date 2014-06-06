@@ -3,7 +3,8 @@ angular.module('mojsart.main.home', [
   'fx.animations',
   'mojsart.main.sidebar',
   'mojsart.main.graph',
-  'ngAnimate'
+  'ngAnimate',
+  'mm.foundation'
 ])
 
 .config(function ($stateProvider) {
