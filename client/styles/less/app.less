@@ -103,14 +103,26 @@ background-color: aliceblue;
   line-height: 0; // this is to make the graph same size as the svg it contains
 }
 
-table {
-  table-layout: fixed;
-  width: 250px;
-}
-th,
-td {
-  overflow: hidden;
-  width: 100px;
+.menu {
+  height: 45px;
+  .button.tiny {
+    // position: absolute;
+    // padding: 6px 15px 6px 15px;
+    margin-left: 8px;
+    // position:relative;
+    top: calc(50% - 65px);
+  }
+  audio {
+    height:33px;
+    margin-left: 8px;
+    position:relative;
+    top: calc(50% - 42px);    //33px is the height of the audio element.
+  }
+  span.song-info {
+    color: white;
+    position:relative;
+    top: calc(50% - 60px);    //33px is the height of the audio element.
+  }
 }
 
 
@@ -160,3 +172,6 @@ footer, .footer{
     width:100%;
   }
 }
+  .songinfo {
+  color: @c6;
+  }
