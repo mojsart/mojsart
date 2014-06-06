@@ -29,7 +29,7 @@ var paths = {
     dest: 'client/styles/css'
   }
 };
-var build = ['less', 'css', 'lint', 'distCode', 'minify-css'];
+var build = ['distCode', 'minify-css'];
 
 gulp.task('less' , ['deleteOldMin'], function () {
   return gulp.src(paths.styles.less)
@@ -47,14 +47,14 @@ gulp.task('bowerInstall', function  () {
   .pipe();
 });
 
-gulp.task('html', ['deleteOldMin'], function () {
+gulp.task('html', function () {
   return gulp.src(paths.views)
     .pipe(plumber())
     .pipe(refresh(client))
     .pipe(notify({message: 'Views refreshed'}));
 });
 
-gulp.task('css', ['deleteOldMin'],function () {
+gulp.task('css', ['less', 'deleteOldMin'],function () {
   return gulp.src(paths.styles.css)
     .pipe(plumber())
     .pipe(refresh(client))
@@ -70,14 +70,14 @@ gulp.task('lint', ['deleteOldMin'], function () {
     .pipe(notify({message: 'Lint done'}));
 });
 
-gulp.task('serve', ['deleteOldMin', 'build'], function () {
+gulp.task('serve', ['build'], function () {
   nodemon({script: 'server.js', ignore: ['node_modules/**/*.js']})
     .on('restart', function () {
       refresh(client);
     });
 });
 
-gulp.task('live', ['deleteOldMin', 'build'], function () {
+gulp.task('live', ['build'], function () {
   client.listen(lr_port, function (err) {
     if (err) {
       return console.error(err);
@@ -85,13 +85,13 @@ gulp.task('live', ['deleteOldMin', 'build'], function () {
   });
 });
 
-gulp.task('watch', ['deleteOldMin'], function () {
-  gulp.watch(paths.styles.less, ['less', 'distCode', 'minify-css']);
-  gulp.watch(paths.views, ['html', 'distCode', 'minify-css']);
-  gulp.watch(paths.scripts, ['lint', 'distCode', 'minify-css']);
+gulp.task('watch', function () {
+  gulp.watch(paths.styles.less, ['build']);
+  gulp.watch(paths.views, ['html']);
+  gulp.watch(paths.scripts, ['build']);
 });
 
-gulp.task('distCode', ['lint', 'deleteOldMin'], function() {
+gulp.task('distCode', ['deleteOldMin', 'lint'], function() {
   return gulp.src(paths.appjsminify.src)
     .pipe(plumber())
     .pipe(stripDebug())
@@ -109,7 +109,7 @@ gulp.task('deleteOldMin', function() {
     .pipe(notify({message: 'Old file deleted'}));
 });
 
-gulp.task('minify-css', ['deleteOldMin' , 'less'], function () {
+gulp.task('minify-css', ['deleteOldMin' , 'css'], function () {
   return gulp.src(paths.styles.css)
     .pipe(plumber())
     .pipe(minifycss({keepBreaks:true}))
