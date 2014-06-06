@@ -19,8 +19,9 @@ angular.module('mojsart.main.home', [
     });
 })
 
-.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
+.controller('ModalDemoCtrl', function ($scope, $modal, $log, $tour) {
   $scope.items = ['item1', 'item2', 'item3'];
+  $scope.startTour = $tour.start;
   $scope.open = function () {
 
     var modalInstance = $modal.open({
