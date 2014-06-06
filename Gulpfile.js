@@ -85,13 +85,13 @@ gulp.task('live', ['build'], function () {
   });
 });
 
-gulp.task('watch', ['deleteOldMin'], function () {
-  gulp.watch(paths.styles.less, ['less', 'distCode', 'minify-css']);
+gulp.task('watch', function () {
+  gulp.watch(paths.styles.less, ['build']);
   gulp.watch(paths.views, ['html']);
-  gulp.watch(paths.scripts, ['lint', 'distCode', 'minify-css']);
+  gulp.watch(paths.scripts, ['build']);
 });
 
-gulp.task('distCode', ['lint', 'deleteOldMin'], function() {
+gulp.task('distCode', ['deleteOldMin', 'lint'], function() {
   return gulp.src(paths.appjsminify.src)
     .pipe(plumber())
     .pipe(stripDebug())
