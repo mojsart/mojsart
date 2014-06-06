@@ -31,7 +31,7 @@ var paths = {
 };
 var build = ['minify-css'];
 
-gulp.task('less' , ['deleteOldMin'], function () {
+gulp.task('less' , ['lint'], function () {
   return gulp.src(paths.styles.less)
     .pipe(plumber())
     .pipe(less({
@@ -54,7 +54,7 @@ gulp.task('html', function () {
     .pipe(notify({message: 'Views refreshed'}));
 });
 
-gulp.task('css', ['less'],function () {
+gulp.task('css', ['less'] ,function () {
   return gulp.src(paths.styles.css)
     .pipe(plumber())
     .pipe(refresh(client))
@@ -91,7 +91,7 @@ gulp.task('watch', ['build'], function () {
   gulp.watch(paths.scripts, ['build']);
 });
 
-gulp.task('distCode', ['lint'], function() {
+gulp.task('distCode', ['css'], function() {
   return gulp.src(paths.appjsminify.src)
     .pipe(plumber())
     .pipe(stripDebug())
