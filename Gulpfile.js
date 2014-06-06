@@ -18,7 +18,6 @@ var gulp    = require('gulp'),
     nodePath = require('path')
     minifycss = require('gulp-minify-css');
 
-
 var paths = {
   scripts: ['!client/lib/**/*.js', 'client/**/*.js', '!client/*.min.js'],
   appjsminify: { src: ['!client/lib/**/*.js', 'client/**/*.js'], dest: 'client', filename: 'ngscripts.min.js' },
@@ -32,7 +31,6 @@ var paths = {
 };
 var build = ['less', 'css', 'lint', 'distCode', 'minify-css'];
 
-
 gulp.task('less' ,function () {
   return gulp.src(paths.styles.less)
     .pipe(plumber())
@@ -43,7 +41,6 @@ gulp.task('less' ,function () {
     .pipe(refresh(client))
     .pipe(notify({message: 'Less done'}));
 });
-
 
 gulp.task('bowerInstall', function  () {
   bower()
@@ -99,7 +96,7 @@ gulp.task('copy', function(){
     .pipe(gulp.dest(paths.appjsminify.dest));
 });
 
-gulp.task('distCode', ['deleteOldMin'], function() {
+gulp.task('distCode', ['lint', 'deleteOldMin'], function() {
   return gulp.src(paths.appjsminify.src)
     .pipe(plumber())
     .pipe(stripDebug())
