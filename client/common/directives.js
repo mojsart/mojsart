@@ -27,20 +27,6 @@
     };
   }])
 
-  .directive('resizable', function($window) {
-    return function($scope) {
-      $scope.initializeWindowSize = function() {
-        $scope.windowHeight = $window.innerHeight/2;
-        return $scope.windowWidth = $window.innerWidth/2;
-      };
-      $scope.initializeWindowSize();
-      return angular.element($window).bind('resize', function() {
-        $scope.initializeWindowSize();
-        return $scope.$apply();
-      });
-    };
-  })
-
   // use this directive as a template for other directives
   .directive('d3Visualizer', ['d3Service', function(d3Service) {
     return {
@@ -82,9 +68,9 @@
 
             // setup variables
             var width, height, max;
-            console.log(iElement[0])
+            console.log(iElement[0]);
             console.log(d3.select(iElement[0])[0][0]);
-            console.log(width = d3.select(iElement[0])[0][0].offsetWidth, d3.select(iElement[0])[0][0].offsetHeight)
+            console.log(width = d3.select(iElement[0])[0][0].offsetWidth, d3.select(iElement[0])[0][0].offsetHeight);
             width = d3.select(iElement[0])[0][0].offsetWidth;
             height = d3.select(iElement[0])[0][0].offsetHeight - (45 + 45); // header and footer
 
