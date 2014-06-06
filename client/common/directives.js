@@ -82,9 +82,9 @@
 
             // setup variables
             var width, height, max;
-            console.log(iElement[0])
+            console.log(iElement[0]);
             console.log(d3.select(iElement[0])[0][0]);
-            console.log(width = d3.select(iElement[0])[0][0].offsetWidth, d3.select(iElement[0])[0][0].offsetHeight)
+            console.log(width = d3.select(iElement[0])[0][0].offsetWidth, d3.select(iElement[0])[0][0].offsetHeight);
             width = d3.select(iElement[0])[0][0].offsetWidth;
             height = d3.select(iElement[0])[0][0].offsetHeight - (45 + 45); // header and footer
 
