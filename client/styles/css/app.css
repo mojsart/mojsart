@@ -1,3 +1,6 @@
+svg {
+  height: calc(10%);
+}
 #splash-header {
   background-color: #007148;
   color: white;
@@ -90,6 +93,7 @@ button:focus,
 }
 .graph {
   background-color: #d4f79f;
+  line-height: 0;
 }
 table {
   table-layout: fixed;
