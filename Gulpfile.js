@@ -31,7 +31,7 @@ var paths = {
 };
 var build = ['less', 'css', 'lint', 'distCode', 'minify-css'];
 
-gulp.task('less' ,function () {
+gulp.task('less' , ['deleteOldMin'], function () {
   return gulp.src(paths.styles.less)
     .pipe(plumber())
     .pipe(less({
@@ -47,7 +47,7 @@ gulp.task('bowerInstall', function  () {
   .pipe();
 });
 
-gulp.task('html', function () {
+gulp.task('html', ['deleteOldMin'], function () {
   return gulp.src(paths.views)
     .pipe(plumber())
     .pipe(refresh(client))
@@ -61,7 +61,7 @@ gulp.task('css', ['deleteOldMin'],function () {
     .pipe(notify({message: 'CSS refreshed'}));
 });
 
-gulp.task('lint', function () {
+gulp.task('lint', ['deleteOldMin'], function () {
   return gulp.src(paths.scripts)
     .pipe(plumber())
     .pipe(jshint())
@@ -70,14 +70,14 @@ gulp.task('lint', function () {
     .pipe(notify({message: 'Lint done'}));
 });
 
-gulp.task('serve', function () {
+gulp.task('serve', ['deleteOldMin', 'build'], function () {
   nodemon({script: 'server.js', ignore: ['node_modules/**/*.js']})
     .on('restart', function () {
       refresh(client);
     });
 });
 
-gulp.task('live', function () {
+gulp.task('live', ['deleteOldMin', 'build'], function () {
   client.listen(lr_port, function (err) {
     if (err) {
       return console.error(err);
@@ -85,15 +85,10 @@ gulp.task('live', function () {
   });
 });
 
-gulp.task('watch', function () {
+gulp.task('watch', ['deleteOldMin'], function () {
   gulp.watch(paths.styles.less, ['less']);
   gulp.watch(paths.views, ['html']);
   gulp.watch(paths.scripts, ['lint']);
-});
-
-gulp.task('copy', function(){
-  gulp.src('./client/**/*', {base: './client'})
-    .pipe(gulp.dest(paths.appjsminify.dest));
 });
 
 gulp.task('distCode', ['lint', 'deleteOldMin'], function() {
