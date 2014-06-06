@@ -19,7 +19,7 @@ var gulp    = require('gulp'),
     minifycss = require('gulp-minify-css');
 
 var paths = {
-  scripts: ['!client/lib/**/*.js', 'client/**/*.js', '!client/*.min.js'],
+  scripts: ['!client/lib/**/*.js', '!client/*.min.js', 'client/**/*.js'],
   appjsminify: { src: ['!client/lib/**/*.js', 'client/**/*.js'], dest: 'client', filename: 'ngscripts.min.js' },
   mincss: {dest: 'client/styles/css.min'},
   views: ['!client/lib/*.html', 'client/**/*.html', 'client/index.html'],
