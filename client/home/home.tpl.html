@@ -1,4 +1,4 @@
- <div class="off-canvas-wrap" data-offcanvas>
+  <div class="off-canvas-wrap" data-offcanvas>
   <div class="inner-wrap">
     <!-- Off Canvas Menu -->
     <aside class="left-off-canvas-menu">
@@ -8,14 +8,29 @@
     <!-- main content goes here -->
     <div ui-view="graph"></div>
 
-    <div class="menu">
-      <a class="button tiny left-off-canvas-toggle">Toggle menu</a>
+
+    <div class="menu" 
+      step-text="After selecting a song, click here to access the comparison interface."
+      step-index="2"
+      step-placement="top">
+    <a class="button tiny left-off-canvas-toggle">Toggle menu</a>
       <span ng-controller="ModalDemoCtrl">
-        <button class="button tiny" ng-click="open()">Upload a song</button>
+        <button class="button tiny" 
+        step-text="You can upload your own MP3s to the library and compare them as well! Note that Mojsart takes a few minutes to process new songs."
+        step-index="3"
+        step-placement="top"
+        ng-click="open()">Upload a song</button>
       </span>
-      <audio src={{sharedState.songPath}} controls auto-play></audio>
+      <audio 
+        step-text="Click any circle in the visualization space. If the circle is green, you can play it here. "
+        step-index="1"
+        step-placement="top"src={{sharedState.songPath}} controls auto-play></audio>
       <span class="song-info" ng-show='sharedState.comparing'>
         {{sharedState.title}} - {{sharedState.artist}}</span>
+        <section ng-controller="ModalDemoCtrl" class="right">
+        <button class="button tiny" ng-click="startTour()" >New to Mojsart? Take a tour</button>
+      </section>
     </div>
   </div>
 </div>
+
