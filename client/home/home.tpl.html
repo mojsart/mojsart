@@ -8,14 +8,14 @@
     <!-- main content goes here -->
     <div ui-view="graph"></div>
 
-    <div class="menu top-bar">
-      <a class="button tiny left-off-canvas-toggle menu-icon">Menu</a>
+    <div class="menu">
+      <a class="button tiny left-off-canvas-toggle">Toggle menu</a>
       <span ng-controller="ModalDemoCtrl">
         <button class="button tiny" ng-click="open()">Upload a song</button>
       </span>
       <audio src={{sharedState.songPath}} controls auto-play></audio>
-      <span ng-show='sharedState.comparing'>
-        {{sharedState.title}}, by {{sharedState.artist}}</span>
+      <span class="song-info" ng-show='sharedState.comparing'>
+        {{sharedState.title}} - {{sharedState.artist}}</span>
     </div>
   </div>
 </div>
