@@ -19,9 +19,7 @@ angular.module('mojsart.main.home', [
 })
 
 .controller('ModalDemoCtrl', function ($scope, $modal, $log) {
-
   $scope.items = ['item1', 'item2', 'item3'];
-
   $scope.open = function () {
 
     var modalInstance = $modal.open({
