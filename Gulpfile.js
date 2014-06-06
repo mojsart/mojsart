@@ -22,9 +22,9 @@ var paths = {
   scripts: ['!client/lib/**/*.js', 'client/**/*.js', '!client/*.min.js'],
   appjsminify: { src: ['!client/lib/**/*.js', 'client/**/*.js'], dest: 'client', filename: 'ngscripts.min.js' },
   mincss: {dest: 'client/styles/css.min'},
-  views: ['!client/lib/*.html', '!client/styles/css.min/*.css', 'client/**/*.html', 'client/index.html'],
+  views: ['!client/lib/*.html', 'client/**/*.html', 'client/index.html'],
   styles: {
-    css: ['!client/lib/**/*.css', 'client/styles/css/*.css', 'client/**/*.css'],
+    css: ['!client/lib/**/*.css', '!client/styles/css.min/*.css',  'client/styles/css/*.css', 'client/**/*.css'],
     less: ['client/styles/less/*.less', 'client/**/*.less'],
     dest: 'client/styles/css'
   }
