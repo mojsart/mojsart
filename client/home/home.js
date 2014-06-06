@@ -19,8 +19,6 @@ angular.module('mojsart.main.home', [
 })
 
 .controller('ModalDemoCtrl', function ($scope, $modal, $log) {
-  $scope.sharedState.onHome = true;
-  console.log($scope.sharedState.onHome);
   $scope.items = ['item1', 'item2', 'item3'];
   $scope.open = function () {
 
