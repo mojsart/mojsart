@@ -64,6 +64,8 @@
     };
 
     // TODO: make it so that we don't need to "initialize" like this
+
+    $scope.date = Date.now();
     $scope.sharedState = {};
     $scope.sharedState.comparing = false;
     $scope.sharedState.songs = [];
@@ -77,35 +79,6 @@
       $scope.$apply();
       console.log($scope.files);
     };
-
-    //Loops over $scope.files object, formats each file as FormData
-    $scope.upload = function () {
-      console.log($scope.files);
-      var fd = new FormData();
-      angular.forEach($scope.files, function (file) {
-          fd.append('file', file);
-      });
-    //This is the Post request to add a new song. Note that it sends FormData (fd)
-      $http({
-          method: 'POST',
-          url: '/song/send',
-          data: fd,
-          headers: {
-              'Content-Type': undefined
-          },
-          transformRequest: angular.identity
-      })
-          .success(function (data, status, headers, config) {
-          console.log("Sent:", data);
-          //toggles in order to show hidden button, using ng-show in upload.tpl.html
-          $scope.sent = true;
-          $scope.getSongs();
-      });
-  };
 });
 
 })(angular);
-
-
-
-

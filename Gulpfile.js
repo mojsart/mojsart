@@ -9,22 +9,31 @@ var gulp    = require('gulp'),
     list    = require('gulp-task-listing'),
     nodemon = require('gulp-nodemon'),
     lr_port = 35729,
-    less   = require('gulp-less');
+    less   = require('gulp-less'),
+    stripDebug = require('gulp-strip-debug'),
+    uglify = require('gulp-uglify'),
+    ngmin = require('gulp-ngmin'),
+    concat = require('gulp-concat')
+    clean = require('gulp-clean')
+    nodePath = require('path')
+    minifycss = require('gulp-minify-css');
 
 
 var paths = {
-  scripts: ['!client/lib/**/*.js', 'client/**/*.js'],
-  views: ['!client/lib/*.html', 'client/**/*.html', 'client/index.html'],
+  scripts: ['!client/lib/**/*.js', 'client/**/*.js', '!client/*.min.js'],
+  appjsminify: { src: ['!client/lib/**/*.js', 'client/**/*.js'], dest: 'client', filename: 'ngscripts.min.js' },
+  mincss: {dest: 'client/styles/css.min'},
+  views: ['!client/lib/*.html', '!client/styles/css.min/*.css', 'client/**/*.html', 'client/index.html'],
   styles: {
     css: ['!client/lib/**/*.css', 'client/styles/css/*.css', 'client/**/*.css'],
     less: ['client/styles/less/*.less', 'client/**/*.less'],
     dest: 'client/styles/css'
   }
 };
-var build = ['less', 'css', 'lint'];
+var build = ['less', 'css', 'lint', 'distCode', 'minify-css'];
 
 
-gulp.task('less', function () {
+gulp.task('less' ,function () {
   return gulp.src(paths.styles.less)
     .pipe(plumber())
     .pipe(less({
@@ -48,7 +57,7 @@ gulp.task('html', function () {
     .pipe(notify({message: 'Views refreshed'}));
 });
 
-gulp.task('css', function () {
+gulp.task('css', ['deleteOldMin'],function () {
   return gulp.src(paths.styles.css)
     .pipe(plumber())
     .pipe(refresh(client))
@@ -85,6 +94,36 @@ gulp.task('watch', function () {
   gulp.watch(paths.scripts, ['lint']);
 });
 
-gulp.task('build', build);
+gulp.task('copy', function(){
+  gulp.src('./client/**/*', {base: './client'})
+    .pipe(gulp.dest(paths.appjsminify.dest));
+});
 
+gulp.task('distCode', ['deleteOldMin'], function() {
+  return gulp.src(paths.appjsminify.src)
+    .pipe(plumber())
+    .pipe(stripDebug())
+    .pipe(ngmin({dynamic: false}))
+    .pipe(uglify({mangle: false}))
+    .pipe(concat(paths.appjsminify.filename))
+    .pipe(gulp.dest(paths.appjsminify.dest))
+    .pipe(notify({message: 'Distribution code compiled'}));
+});
+
+gulp.task('deleteOldMin', function() {
+  return gulp.src([nodePath.join(paths.appjsminify.dest, paths.appjsminify.filename), paths.mincss.dest], {read: false})
+    .pipe(plumber())
+    .pipe(clean())
+    .pipe(notify({message: 'Old file deleted'}));
+});
+
+gulp.task('minify-css', ['deleteOldMin' , 'less'], function () {
+  return gulp.src(paths.styles.css)
+    .pipe(plumber())
+    .pipe(minifycss({keepBreaks:true}))
+    .pipe(gulp.dest(paths.mincss.dest))
+    .pipe(notify({message: 'CSS minified'}));
+});
+
+gulp.task('build', build);
 gulp.task('default', ['build', 'live', 'serve', 'watch']);

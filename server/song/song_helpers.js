@@ -92,7 +92,7 @@ module.exports = exports = {
     // for MD5: searchField = 'echoData.md5'
     // for filename: searchField = 'filename'
     var query = {};
-    query[searchField] = input
+    query[searchField] = input;
     Q(Song.findOne(query).exec())
       .then(function(song) {
         if (!song) {
@@ -110,7 +110,7 @@ module.exports = exports = {
 
   // nodestyle error handling
   callbackError: function(err) {
-    if (err) throw(err);
+    if (err) throw err;
   },
 
   // checks filenames for .mp3 extension

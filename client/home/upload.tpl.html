@@ -1,0 +1,8 @@
+<h1>Upload Songs</h1>
+File must be in '.mp3' format, and must be under 10 MB <br><br>
+<form>
+  <input type="file" onchange="angular.element(this).scope().filesChanged(this)" multiple/>
+  <button ng-click="upload()">Upload</button>
+  <a class="button success" ng-show="sent" ng-click='cancel()' href="/#/mojsart/home">Back to visualizer</a>
+</form>
+

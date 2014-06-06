@@ -37,10 +37,10 @@ module.exports = exports = {
     // delete songss
     Q(Song.update({filename: file, cached: true}, {cached: false}).exec())
       .then(function() {
-        return Q.nfcall(fs.unlink, path)
+        return Q.nfcall(fs.unlink, path);
       })
       .then(function(){
-        console.log('file deleted')
+        console.log('file deleted');
       })
       .fail(helpers.callbackError); 
   }
