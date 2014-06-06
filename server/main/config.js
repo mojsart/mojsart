@@ -20,7 +20,7 @@ module.exports = exports = function (app, express, routers) {
   app.use(middle.cors);
   app.use(express.static(__dirname + '/../../client'));
   app.use('/song', routers.SongRouter);
-  app.use('/test', routers.TestRouter)
+  app.use('/test', routers.TestRouter);
   app.use(middle.logError);
   app.use(middle.handleError);
 };

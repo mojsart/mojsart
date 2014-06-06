@@ -58,7 +58,7 @@ module.exports = exports = {
         }
       })
       .fail(function(err) {
-        throw(err);
+        throw err;
       });
   },
 
@@ -75,7 +75,7 @@ module.exports = exports = {
       var serverPath = nodePath.join(helpers.dirName, filename); 
       helpers.postSongSave(song.path, serverPath, function(path){ res.send(path); });
     } else {
-      res.send(404, 'Sorry, please upload a .mp3 under 10 MB')
+      res.send(404, 'Sorry, please upload a .mp3 under 10 MB');
     }
   }
 };
