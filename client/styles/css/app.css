@@ -95,6 +95,25 @@ button:focus,
   background-color: #d4f79f;
   line-height: 0;
 }
+.menu {
+  height: 45px;
+  background-color: #333333;
+}
+.menu .button.tiny {
+  margin-left: 8px;
+  top: calc(-15%);
+}
+.menu audio {
+  height: 33px;
+  margin-left: 8px;
+  position: relative;
+  top: calc(8%);
+}
+.menu span.song-info {
+  color: white;
+  position: relative;
+  top: calc(-10%);
+}
 table {
   table-layout: fixed;
   width: 250px;

@@ -3,6 +3,7 @@
 @c3: #9BDA6A; // light green
 @c4: #C7F774; // yellowish
 @c5: #D4F79F; // tan
+@gray: #333;
 
 svg {
   height: calc(100% - 90px);
@@ -103,6 +104,28 @@ background-color: aliceblue;
   line-height: 0; // this is to make the graph same size as the svg it contains
 }
 
+.menu {
+  height: 45px;
+  background-color: @gray;
+  .button.tiny {
+    // position: absolute;
+    // padding: 6px 15px 6px 15px;
+    margin-left: 8px;
+    // position:relative;
+    top: calc(50% - 65px);
+  }
+  audio {
+    height:33px;
+    margin-left: 8px;
+    position:relative;
+    top: calc(50% - 42px);    //33px is the height of the audio element.
+  }
+  span.song-info {
+    color: white;
+    position:relative;
+    top: calc(50% - 60px);    //33px is the height of the audio element.
+  }
+}
 table {
   table-layout: fixed;
   width: 250px;
