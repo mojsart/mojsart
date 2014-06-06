@@ -22,7 +22,7 @@
         ng-click="open()">Upload a song</button>
       </span>
       <audio 
-        step-text="Click any circle in the visualization space. If the circle is green, you can play it here. "
+        step-text="Each circle in the visualization space represents a song. Click any circle to select a song for comparison. If the circle is green, you can also play it in this audio player. "
         step-index="1"
         step-placement="top"src={{sharedState.songPath}} controls auto-play></audio>
       <span class="song-info" ng-show='sharedState.comparing'>
