@@ -15,23 +15,25 @@ var gulp    = require('gulp'),
     ngmin = require('gulp-ngmin'),
     concat = require('gulp-concat')
     clean = require('gulp-clean')
-    nodePath = require('path');
+    nodePath = require('path')
+    minifycss = require('gulp-minify-css');
 
 
 var paths = {
   scripts: ['!client/lib/**/*.js', 'client/**/*.js', '!client/*.min.js'],
   appjsminify: { src: ['!client/lib/**/*.js', 'client/**/*.js'], dest: 'client', filename: 'ngscripts.min.js' },
-  views: ['!client/lib/*.html', 'client/**/*.html', 'client/index.html'],
+  mincss: {dest: 'client/styles/css.min'},
+  views: ['!client/lib/*.html', '!client/styles/css.min/*.css', 'client/**/*.html', 'client/index.html'],
   styles: {
     css: ['!client/lib/**/*.css', 'client/styles/css/*.css', 'client/**/*.css'],
     less: ['client/styles/less/*.less', 'client/**/*.less'],
     dest: 'client/styles/css'
   }
 };
-var build = ['less', 'css', 'lint', 'distCode'];
+var build = ['less', 'css', 'lint', 'distCode', 'minify-css'];
 
 
-gulp.task('less', function () {
+gulp.task('less' ,function () {
   return gulp.src(paths.styles.less)
     .pipe(plumber())
     .pipe(less({
@@ -55,7 +57,7 @@ gulp.task('html', function () {
     .pipe(notify({message: 'Views refreshed'}));
 });
 
-gulp.task('css', function () {
+gulp.task('css', ['deleteOldMin'],function () {
   return gulp.src(paths.styles.css)
     .pipe(plumber())
     .pipe(refresh(client))
@@ -109,14 +111,19 @@ gulp.task('distCode', ['deleteOldMin'], function() {
 });
 
 gulp.task('deleteOldMin', function() {
-  return gulp.src(nodePath.join(paths.appjsminify.dest, paths.appjsminify.filename), {read: false})
+  return gulp.src([nodePath.join(paths.appjsminify.dest, paths.appjsminify.filename), paths.mincss.dest], {read: false})
     .pipe(plumber())
     .pipe(clean())
     .pipe(notify({message: 'Old file deleted'}));
 });
 
-// delete
-// minify css
+gulp.task('minify-css', ['deleteOldMin' , 'less'], function () {
+  return gulp.src(paths.styles.css)
+    .pipe(plumber())
+    .pipe(minifycss({keepBreaks:true}))
+    .pipe(gulp.dest(paths.mincss.dest))
+    .pipe(notify({message: 'CSS minified'}));
+});
 
 gulp.task('build', build);
 gulp.task('default', ['build', 'live', 'serve', 'watch']);

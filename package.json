@@ -35,5 +35,7 @@
     "gulp-ngmin": "^0.3.0",
     "gulp-clean": "^0.3.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "gulp-minify-css": "^0.3.4"
+  }
 }
