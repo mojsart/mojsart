@@ -27,20 +27,6 @@
     };
   }])
 
-  .directive('resizable', function($window) {
-    return function($scope) {
-      $scope.initializeWindowSize = function() {
-        $scope.windowHeight = $window.innerHeight/2;
-        return $scope.windowWidth = $window.innerWidth/2;
-      };
-      $scope.initializeWindowSize();
-      return angular.element($window).bind('resize', function() {
-        $scope.initializeWindowSize();
-        return $scope.$apply();
-      });
-    };
-  })
-
   // use this directive as a template for other directives
   .directive('d3Visualizer', ['d3Service', function(d3Service) {
     return {
