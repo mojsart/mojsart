@@ -14,7 +14,8 @@
         <button class="button tiny" ng-click="open()">Upload a song</button>
       </span>
       <audio src={{sharedState.songPath}} controls auto-play></audio>
-      <span>{{sharedState.title}} - {{sharedState.artist}}</span>
+      <span ng-show='sharedState.comparing'>
+        {{sharedState.title}}, by {{sharedState.artist}}</span>
     </div>
   </div>
 </div>
