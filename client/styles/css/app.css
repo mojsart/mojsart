@@ -114,15 +114,6 @@ button:focus,
   position: relative;
   top: calc(-10%);
 }
-table {
-  table-layout: fixed;
-  width: 250px;
-}
-th,
-td {
-  overflow: hidden;
-  width: 100px;
-}
 .fade {
   opacity: 0;
   -webkit-transition: opacity .15s linear;
@@ -170,4 +161,12 @@ footer .row,
 .footer .row {
   height: auto;
   width: 100%;
+}
+.tutorial {
+  margin-top: 6px;
+  padding-right: 150px;
+  float: right;
+}
+.tutorial .button {
+  float: right;
 }
