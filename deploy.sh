@@ -105,8 +105,8 @@ selectNodeVersion
 
 ##### commented out this block so deploys don't take forever
 
+cd "$DEPLOYMENT_TARGET"
 # echo 3. Install npm packages
-# cd "$DEPLOYMENT_TARGET"
 # if [ -e "package.json" ]; then
 #   eval $NPM_CMD install --production
 #   exitWithMessageOnError "npm failed"
