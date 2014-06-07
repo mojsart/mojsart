@@ -118,13 +118,15 @@
               d3.select(this)
                 .transition()
                 .attr("fill", function (d) { return (d.cached) ? "#60A859" : "white"; })
-                .attr("r", function (d) { return 40*Math.pow(10, (d.echoData.audio_summary.loudness/20)); });
+                .attr("r", function (d) { return 50*Math.pow(10, (d.echoData.audio_summary.loudness/20)); });
             });
 
             // grow circles to appropriate size
             circles.transition()
-              .duration(1000) // time of duration
-            .attr("r", function (d) { return 40*Math.pow(10, (d.echoData.audio_summary.loudness/20)); })
+              .delay(function(d, i) { return 80*i; } )
+              .duration(1500) // time of duration
+              .ease("elastic")
+            .attr("r", function (d) { return 50*Math.pow(10, (d.echoData.audio_summary.loudness/20)); })
             .attr("cx",function (d) { return width*(d.echoData.audio_summary.speechiness + d.userData.speechiness + d.echoData.audio_summary.acousticness/3); })
             .attr("cy", function (d) { return height*(d.echoData.audio_summary.energy + d.echoData.audio_summary.danceability)/2; })
             .attr("fill", function (d) { return (d.cached) ? "#60A859" : "white"; });
