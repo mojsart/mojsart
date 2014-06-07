@@ -1,10 +1,10 @@
 "use strict";
 
-var express = require('express');
-var app = express();
-var routers = {};
-var SongRouter = express.Router();
-var TestRouter = express.Router();
+var express     = require('express'),
+    app         = express(),
+    routers     = {},
+    SongRouter  = express.Router(),
+    TestRouter  = express.Router();
 
 routers.SongRouter = SongRouter;
 routers.TestRouter = TestRouter;

@@ -1,7 +1,7 @@
 // Cron for loading songs to db
-var CronJob = require('cron').CronJob; 
-var upload = require('../song/song_upload.js');
-var del = require('../song/song_delete.js');
+var CronJob   = require('cron').CronJob,
+    upload    = require('../song/song_upload.js'),
+    del       = require('../song/song_delete.js');
 
 // start cron job
 // cronjob currently set to 1 min - need to decide on an actual time

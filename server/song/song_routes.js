@@ -1,9 +1,9 @@
 "use strict";
 
-var controller = require('./song_controllers.js');
-var multiparty = require('connect-multiparty');
-var multipartMiddleware = multiparty();
-var bodyParser  = require('body-parser');
+var controller = require('./song_controllers.js'),
+    multiparty = require('connect-multiparty'),
+    multipartMiddleware = multiparty(),
+    bodyParser  = require('body-parser');
 
 // TODO: we don't need this (for test only - to manually fire uploadSongs)
 var upload = require('./song_upload.js');
