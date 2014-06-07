@@ -4,11 +4,15 @@
 @c4: #C7F774; // yellowish
 @c5: #D4F79F; // tan
 
+svg {
+  height: calc(100% - 90px);
+}
 // about page's 1st bar
 #splash-header {
   background-color: @c1;
   color: white;
-  padding: 120px;
+  padding-top: 120px;
+  padding-bottom: 120px;
   h1 { 
     font-weight: bold;
     font-family: 'Quicksand', sans-serif; }
@@ -31,6 +35,22 @@
 #color {
   color: @c2;
   // font-style: italic;
+}
+
+#blog-header {
+  background-color: @c3;
+  color: white;
+  padding: 120px 0 120px;
+  h1 {
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Quicksand', sans-serif;
+  }
+  h1, h3 {
+    color: white; }}
+
+.blog {
+  padding: 15px 0 15px;
 }
 
 // link colors
@@ -80,16 +100,30 @@ background-color: aliceblue;
 
 .graph {
   background-color: @c5;
+  line-height: 0; // this is to make the graph same size as the svg it contains
 }
 
-table {
-  table-layout: fixed;
-  width: 250px;
-}
-th,
-td {
-  overflow: hidden;
-  width: 100px;
+.menu {
+  height: 45px;
+  background-color: #333333;
+  .button.tiny {
+    // position: absolute;
+    // padding: 6px 15px 6px 15px;
+    margin-left: 8px;
+    // position:relative;
+    top: calc(50% - 65px);
+  }
+  audio {
+    height:33px;
+    margin-left: 8px;
+    position:relative;
+    top: calc(50% - 42px);    //33px is the height of the audio element.
+  }
+  span.song-info {
+    color: white;
+    position:relative;
+    top: calc(50% - 60px);    //33px is the height of the audio element.
+  }
 }
 
 
@@ -125,4 +159,25 @@ td {
 .reveal-modal-bg.in {
   filter: alpha(opacity=50);
   opacity: .5;
+}
+footer, .footer{
+  padding: 20px 0 0;
+  background-color: #333;
+  color: white;
+  p, a {
+    font-size: 0.8125rem;
+    color: white;
+  }
+  .row {
+    height:auto;
+    width:100%;
+  }
+}
+.tutorial {
+  margin-top:6px;
+  padding-right:150px;
+  float:right;
+  .button {
+  float:right;
+  }
 }

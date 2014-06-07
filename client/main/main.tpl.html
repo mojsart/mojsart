@@ -3,7 +3,7 @@
   <nav class="top-bar" role="navigation">
     <ul class="title-area">
       <li class="name">
-        <h1><a ui-sref="mojsart.about" >mo<span id="color">js</span>art</a></h1>
+        <h1><a ui-sref="mojsart.about">mo<span id="color">js</span>art</a></h1>
       </li>
     </ul>
     <section class="top-bar-section">
@@ -11,9 +11,9 @@
         <li ui-sref-active="active" class="active">
           <a ui-sref="mojsart.home">Home</a>
         </li>
-        <li ui-sref-active="active" class="active">
+<!--         <li ui-sref-active="active" class="active">
           <a ui-sref="mojsart.upload">Upload</a>
-        </li>
+        </li> -->
         <li ui-sref-active="active" class="active">
           <a ui-sref="mojsart.blog">Blog</a>
         </li>
@@ -23,14 +23,6 @@
 </header>
 
 <!-- template loaded here -->
-<div class="fx-fade-down fx-speed-800" ui-view="home"></div>
-
 <div ui-view="upload"></div>
-
 <div ui-view="about"></div>
-
-<!-- footer for the whole app -->
-<footer>
-
-</footer>
-
+<div class="fx-fade-down fx-speed-1200 fx-easing-strong" ui-view="home"></div>

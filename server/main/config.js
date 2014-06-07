@@ -1,10 +1,10 @@
 "use strict";
 
-var mongoose    = require('mongoose'),
-    morgan      = require('morgan'),
-    bodyParser  = require('body-parser'),
-    methodOverride = require('method-override'),
-    middle      = require('./middleware');
+var mongoose        = require('mongoose'),
+    morgan          = require('morgan'),
+    bodyParser      = require('body-parser'),
+    methodOverride  = require('method-override'),
+    middle          = require('./middleware');
 
 
 mongoose.connect(process.env.CUSTOMCONNSTR_MONGOLAB_URI || 'mongodb://localhost/mojsart');
@@ -20,7 +20,7 @@ module.exports = exports = function (app, express, routers) {
   app.use(middle.cors);
   app.use(express.static(__dirname + '/../../client'));
   app.use('/song', routers.SongRouter);
-  app.use('/test', routers.TestRouter)
+  app.use('/test', routers.TestRouter);
   app.use(middle.logError);
   app.use(middle.handleError);
 };

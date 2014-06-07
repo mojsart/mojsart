@@ -1,63 +1,76 @@
- <div class="row">
-    <div class="large-12 columns">
-      <h1>The Mo<span id="color">js</span>art Blog </h1>
-      <hr/>
-    </div>
-  </div>
+<div id="blog-header">
+  <h1>mo<span id="color">js</span>art blog</h1>
+</div>
+ 
+<div class="row blog">
+  <div class="large-9 columns" role="content">
+    <article>
+      <h2><a href="#">...And we're live!</a></h2>
+      <h6>Written by <a href="#">The Mojsart Team</a> on June 1, 2014.</h6>
 
- 
-  <div class="row">
-    <div class="large-9 columns" role="content">
-      <article>
-        <h3><a href="#">Beta Launch</a></h3>
-        <h6>Written by <a href="#">The Mojsart Team</a> on May 2, 2014.</h6>
- 
-        <div class="row">
-          <div class="large-6 columns">
-            <p>
-              We're thrilled to announce the beta launch of our genre visulization engine. Our three-person team created this over a week at Hack Reactor. Please try out the visualizer, add to the database, and provide  song sentiment ratings in order to improve our model.
-            </p>
-            <p>
-              Since we're just getting started, we'd love it if you could provide feedback about the product. You can reach us through the email below, and you can check out the source for our project on GitHub.
-            </p>
-            <p>
-              <a href="https://github.com/mojsart/mojsart"><img src="blog/github.png" width="42" height="42"></a>
-            </p>
-
-          </div>
-          <div class="large-6 columns">
-            <img src="/blog/HR_logo.png"/>
-          </div>
-        </div>
-      </article>
-      <hr/>
-    </div>
- 
-    <aside class="large-3 columns">
- 
-      <div class="panel">
-         <h5>Tech Stack</h5>
-        <ul>
-          <li><b>Front-end</b>:  AngularJS</li>
-          <li><b>Back-end</b>:  Express </li>
-          <li><b>Database</b>:  MongoDB </li>
-          <li><b>Song data</b>:  Echonest API</li>
-          <li><b>Visualization</b>: D3.js</li>
-        </ul>
-      </div>
- 
-    </aside> 
-  </div>
-
-  <footer class="row">
-    <div class="large-12 columns">
-      <hr/>
       <div class="row">
         <div class="large-6 columns">
-         
+          <p>
+            We're thrilled to announce the beta launch of our genre visulization engine. Our three-person team created this over a week at Hack Reactor. Please try out the visualizer, add to the database, and provide  song sentiment ratings in order to improve our model.
+          </p>
+          <p>
+            Since we're just getting started, we'd love it if you could provide feedback about the product. You can reach us through the email below, and you can check out the source for our project on GitHub.
+          </p>
+          <p>
+            <a href="https://github.com/mojsart/mojsart"><img src="blog/github.png" width="42" height="42"></a>
+          </p>
+
         </div>
         <div class="large-6 columns">
+          <img src="/blog/HR_logo.png"/>
+          <div class="panel">
+            <h5>Tech Stack</h5>
+              <ul>
+                <li><b>Front-end</b>: AngularJS</li>
+                <li><b>Back-end</b>: Express </li>
+                <li><b>Database</b>: MongoDB </li>
+                <li><b>Song data</b>: Echonest API</li>
+                <li><b>Visualization</b>: D3.js</li>
+              </ul>
+          </div>
         </div>
       </div>
+    </article>
+
+    <hr />
+
+    <article>
+      <h2><a href="#">The Mojsart project</a></h2>
+      <h6>Written by <a href="#">The Mojsart Team</a> on May 28, 2014.</h6>
+
+      <div class="row">
+        <div class="large-12 columns">
+          <p>
+            Popular music webapps such as Pandora allow you to find music you like using complex algorithms to analyze many different properties of songs you like. It presents you with new songs, and gives you a basic reason as to why it thinks you may like this other song. Mojsart aims to do a similar thing, but to present such suggestions visually.
+          </p>
+          <p>
+            Feel free to follow our progress on GitHub!
+            <a href="https://github.com/mojsart/mojsart"><img src="blog/github.png" width="42" height="42"></a>
+          </p>
+        </div>
+      </div>
+    </article>
+</div>
+ 
+    
+  </div>
+
+  <footer class="footer">
+  <div class="row">
+    <div class="large-8 columns">
+      <p>Brought to you by the mo<span id="color">js</span>art folks &copy;{{ date | date : 'yyyy'}}</p>
     </div>
-  </footer>
+    <div class="large-4 columns">
+      <ul class="inline-list right">
+        <li><a ui-sref="mojsart.home">Home</a></li>
+        <li><a ui-sref="mojsart.about">About</a></li>
+        <li><a ui-sref="mojsart.blog">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

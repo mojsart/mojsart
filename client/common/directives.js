@@ -41,8 +41,8 @@
       link: function(scope, iElement, iAttrs) {
         d3Service.d3().then(function(d3) {
           var svg = d3.select(iElement[0])
-          .append("svg")
-          .attr("height", "80%"); //TODO do not hardcode
+          .append("svg");
+          // .attr("height", "calc(100% - 90px)"); //TODO do not hardcode
 
           // on window resize, re-render d3 canvas
           window.onresize = function() {
@@ -50,8 +50,11 @@
           };
 
           scope.$watch(function(){
-              return angular.element(window)[0].innerWidth;
+              return angular.element(window)[0].innerHeight;
             }, function(){
+              svg.attr("height", function() {
+                return angular.element(window)[0].innerHeight-90; // make room for header/footer
+              });
               return scope.render(scope.data);
             }
           );
@@ -68,8 +71,13 @@
 
             // setup variables
             var width, height, max;
+            // console.log(iElement[0]);
+            // console.log(d3.select(iElement[0])[0][0]);
+            console.log('offsetHeight:', d3.select(iElement[0])[0][0].offsetHeight);
+            console.log('windowHeight:', angular.element(window)[0].innerHeight);
             width = d3.select(iElement[0])[0][0].offsetWidth;
             height = d3.select(iElement[0])[0][0].offsetHeight;
+            // height = angular.element(window)[0].innerHeight;
 
             // sort data so smaller circles appear on top
             data = data.sort(function (a, b) {
