@@ -31,7 +31,6 @@ var paths = {
     dest: 'client/styles/css'
   }
 };
-var build = ['minify-css'];
 
 gulp.task('less', ['deleteOldCSS'], function () {
   return gulp.src(paths.styles.less)
@@ -98,7 +97,7 @@ gulp.task('scripts', ['lint'] , function() {
     .pipe(plumber())
     .pipe(stripDebug())
     .pipe(ngmin({dynamic: false}))
-    .pipe(uglify({mangle: false}))
+    .pipe(uglify())
     .pipe(gulpconcat(paths.appjsminify.filename))
     .pipe(gulp.dest(paths.appjsminify.dest))
     .pipe(notify({message: 'Distribution code compiled'}));
@@ -126,5 +125,5 @@ gulp.task('minify-css', ['scripts', 'css'], function () {
     .pipe(notify({message: 'CSS minified'}));
 });
 
-gulp.task('build', build);
+gulp.task('build', ['deleteOldMin', 'deleteOldCSS', 'less', 'lint','css', 'scripts', 'minify-css']);
 gulp.task('default', ['build', 'live', 'serve', 'watch']);
