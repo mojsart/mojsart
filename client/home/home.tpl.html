@@ -27,9 +27,9 @@
         step-placement="top"src={{sharedState.songPath}} controls auto-play></audio>
       <span class="song-info" ng-show='sharedState.comparing'>
         {{sharedState.title}} - {{sharedState.artist}}</span>
-        <section ng-controller="ModalDemoCtrl" class="right">
-        <button class="button tiny" ng-click="startTour()" >New to Mojsart? Take a tour</button>
-      </section>
+        <span style="float:right" ng-controller="ModalDemoCtrl">
+        <button class="button tiny tutorial" ng-click="startTour()" >New to Mojsart? Take a tour</button>
+      </span>
     </div>
   </div>
 </div>
