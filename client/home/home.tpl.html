@@ -10,25 +10,28 @@
 
 
     <div class="menu" 
-      step-text="After selecting a song, click here to access the comparison interface."
-      step-index="2"
+      step-text="After selecting a song, click here to access the comparison interface. Compare your selected song to every other song in the Mojsart database."
+      step-index="3"
       step-placement="top">
     <a class="button tiny left-off-canvas-toggle">Toggle menu</a>
       <span ng-controller="ModalDemoCtrl">
         <button class="button tiny" 
         step-text="You can upload your own MP3s to the library and compare them as well! Note that Mojsart takes a few minutes to process new songs."
-        step-index="3"
+        step-index="4"
         step-placement="top"
         ng-click="open()">Upload a song</button>
       </span>
       <audio 
-        step-text="Each circle in the visualization space represents a song. Click any circle to select a song for comparison. If the circle is green, you can also play it in this audio player. "
-        step-index="1"
+        step-text="Each circle in the visualization space represents a song. Click any circle to select that song for comparison. If the circle is green, you can also play it in this audio player. "
+        step-index="2"
         step-placement="top"src={{sharedState.songPath}} controls auto-play></audio>
       <span class="song-info" ng-show='sharedState.comparing'>
         {{sharedState.title}} - {{sharedState.artist}}</span>
-        <span style="float:right" ng-controller="ModalDemoCtrl">
-        <button class="button tiny tutorial" ng-click="startTour()" >New to Mojsart? Take a tour</button>
+        <span class='tutorial' ng-controller="ModalDemoCtrl">
+        <button
+        step-text="Mojsart provides a tool for comparing any two songs based on harmonic complexity. Your job is to decide which song has a more complex sound structure. We factor your judgment into our visualizer. "
+        step-index="1"
+        step-placement="top" class="button tiny" ng-click="startTour()" >New to Mojsart? Take a tour</button>
       </span>
     </div>
   </div>
