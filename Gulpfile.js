@@ -95,9 +95,9 @@ gulp.task('watch', ['build'], function () {
 gulp.task('scripts', ['lint'] , function() {
   return gulp.src(paths.appjsminify.src)
     .pipe(plumber())
-    .pipe(stripDebug())
-    .pipe(ngmin({dynamic: false}))
-    .pipe(uglify())
+    // .pipe(stripDebug())
+    // .pipe(ngmin({dynamic: false}))
+    // .pipe(uglify())
     .pipe(gulpconcat(paths.appjsminify.filename))
     .pipe(gulp.dest(paths.appjsminify.dest))
     .pipe(notify({message: 'Distribution code compiled'}));
@@ -124,6 +124,7 @@ gulp.task('minify-css', ['scripts', 'css'], function () {
     .pipe(gulp.dest(paths.mincss.dest))
     .pipe(notify({message: 'CSS minified'}));
 });
+
 
 gulp.task('build', ['deleteOldMin', 'deleteOldCSS', 'less', 'lint','css', 'scripts', 'minify-css']);
 gulp.task('default', ['build', 'live', 'serve', 'watch']);
