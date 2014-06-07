@@ -24,9 +24,9 @@ angular.module('mojsart.main.home.upload', [
       $log.info('Modal dismissed at: ' + new Date());
     });
   };
-})
+});
 
-.controller('ModalInstanceCtrl', function ($scope, $http, $modalInstance, items) {
+var ModalInstanceCtrl = function ($scope, $http, $modalInstance, items) {
   $scope.items = items;
   $scope.selected = {
     item: $scope.items[0]
@@ -67,4 +67,4 @@ angular.module('mojsart.main.home.upload', [
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
-});
+};
