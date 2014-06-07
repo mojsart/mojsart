@@ -13,7 +13,7 @@ var gulp        = require('gulp'),
     stripDebug  = require('gulp-strip-debug'),
     uglify      = require('gulp-uglify'),
     ngmin       = require('gulp-ngmin'),
-    concat      = require('gulp-concat'),
+    gulpconcat  = require('gulp-concat'),
     clean       = require('gulp-clean'),
     nodePath    = require('path'),
     minifycss   = require('gulp-minify-css');
@@ -31,7 +31,7 @@ var paths = {
     dest: 'client/styles/css'
   }
 };
-var build = ['minify-css', 'distCode'];
+var build = ['minify-css'];
 
 gulp.task('less', ['deleteOldCSS'], function () {
   return gulp.src(paths.styles.less)
@@ -72,14 +72,14 @@ gulp.task('lint', ['deleteOldMin'], function () {
     .pipe(notify({message: 'Lint done'}));
 });
 
-gulp.task('serve', ['distCode'], function () {
+gulp.task('serve', ['scripts'], function () {
   nodemon({script: 'server.js', ignore: ['node_modules/**/*.js']})
     .on('restart', function () {
       refresh(client);
     });
 });
 
-gulp.task('live', ['distCode'], function () {
+gulp.task('live', ['scripts'], function () {
   client.listen(lr_port, function (err) {
     if (err) {
       return console.error(err);
@@ -90,16 +90,16 @@ gulp.task('live', ['distCode'], function () {
 gulp.task('watch', ['build'], function () {
   gulp.watch(paths.styles.less, ['minify-css']);
   gulp.watch(paths.views, ['html']);
-  gulp.watch(paths.scripts, ['distCode']);
+  gulp.watch(paths.scripts, ['scripts']);
 });
 
-gulp.task('distCode', ['lint'] , function() {
+gulp.task('scripts', ['lint'] , function() {
   return gulp.src(paths.appjsminify.src)
     .pipe(plumber())
     .pipe(stripDebug())
     .pipe(ngmin({dynamic: false}))
     .pipe(uglify({mangle: false}))
-    .pipe(concat(paths.appjsminify.filename))
+    .pipe(gulpconcat(paths.appjsminify.filename))
     .pipe(gulp.dest(paths.appjsminify.dest))
     .pipe(notify({message: 'Distribution code compiled'}));
 });
@@ -118,7 +118,7 @@ gulp.task('deleteOldCSS', function() {
     .pipe(notify({message: 'Old css deleted'}));
 });
 
-gulp.task('minify-css', ['css'], function () {
+gulp.task('minify-css', ['scripts', 'css'], function () {
   return gulp.src(paths.styles.css)
     .pipe(plumber())
     .pipe(minifycss({keepBreaks:true}))
