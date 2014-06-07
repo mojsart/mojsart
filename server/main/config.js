@@ -1,10 +1,10 @@
 "use strict";
 
-var mongoose    = require('mongoose'),
-    morgan      = require('morgan'),
-    bodyParser  = require('body-parser'),
-    methodOverride = require('method-override'),
-    middle      = require('./middleware');
+var mongoose        = require('mongoose'),
+    morgan          = require('morgan'),
+    bodyParser      = require('body-parser'),
+    methodOverride  = require('method-override'),
+    middle          = require('./middleware');
 
 
 mongoose.connect(process.env.CUSTOMCONNSTR_MONGOLAB_URI || 'mongodb://localhost/mojsart');

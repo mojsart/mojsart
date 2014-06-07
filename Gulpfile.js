@@ -1,22 +1,22 @@
 "user strict";
-var gulp    = require('gulp'),
-    bower   = require('gulp-bower'),
-    jshint  = require('gulp-jshint'),
-    refresh = require('gulp-livereload'),
-    notify  = require('gulp-notify'),
-    plumber = require('gulp-plumber'),
-    client  = require('tiny-lr')(),
-    list    = require('gulp-task-listing'),
-    nodemon = require('gulp-nodemon'),
-    lr_port = 35729,
-    less   = require('gulp-less'),
-    stripDebug = require('gulp-strip-debug'),
-    uglify = require('gulp-uglify'),
-    ngmin = require('gulp-ngmin'),
-    concat = require('gulp-concat'),
-    clean = require('gulp-clean'),
-    nodePath = require('path'),
-    minifycss = require('gulp-minify-css');
+var gulp        = require('gulp'),
+    bower       = require('gulp-bower'),
+    jshint      = require('gulp-jshint'),
+    refresh     = require('gulp-livereload'),
+    notify      = require('gulp-notify'),
+    plumber     = require('gulp-plumber'),
+    client      = require('tiny-lr')(),
+    list        = require('gulp-task-listing'),
+    nodemon     = require('gulp-nodemon'),
+    lr_port     = 35729,
+    less        = require('gulp-less'),
+    stripDebug  = require('gulp-strip-debug'),
+    uglify      = require('gulp-uglify'),
+    ngmin       = require('gulp-ngmin'),
+    concat      = require('gulp-concat'),
+    clean       = require('gulp-clean'),
+    nodePath    = require('path'),
+    minifycss   = require('gulp-minify-css');
 
 var paths = {
   scripts: ['client/about/**/*.js', 'client/blog/**/*.js', 'client/common/**/*.js', 'client/graph/**/*.js', 'client/home/**/*.js', 
@@ -72,14 +72,14 @@ gulp.task('lint', ['deleteOldMin'], function () {
     .pipe(notify({message: 'Lint done'}));
 });
 
-gulp.task('serve', ['build'], function () {
+gulp.task('serve', ['distCode'], function () {
   nodemon({script: 'server.js', ignore: ['node_modules/**/*.js']})
     .on('restart', function () {
       refresh(client);
     });
 });
 
-gulp.task('live', ['build'], function () {
+gulp.task('live', ['distCode'], function () {
   client.listen(lr_port, function (err) {
     if (err) {
       return console.error(err);
