@@ -9,12 +9,12 @@ angular.module('mojsart.main.graph', ['ui.router'])
   });
 })
 
-.controller('GraphController', function($scope) {
+.controller('GraphController', function ($scope) {
   $scope.pathToSong = '/song/get/md5/';
 
   // this function extends $scope.sharedState with the song data from a clicked node. 
   // See graph.tpl.html for use.
-  $scope.populateNodeData = function(d) {
+  $scope.populateNodeData = function (d) {
     $scope.sharedState.songPath = $scope.pathToSong + d.echoData.md5;
 
     // TODO: find some nice way to deep-copy the song in question

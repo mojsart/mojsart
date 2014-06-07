@@ -14,7 +14,7 @@
       step-index="3"
       step-placement="top">
     <a class="button tiny left-off-canvas-toggle">Toggle menu</a>
-      <span ng-controller="ModalDemoCtrl">
+      <span ng-controller="UploadModalCtrl">
         <button class="button tiny" 
         step-text="You can upload your own MP3s to the library and compare them as well! Note that Mojsart takes a few minutes to process new songs."
         step-index="4"
@@ -27,7 +27,7 @@
         step-placement="top"src={{sharedState.songPath}} controls auto-play></audio>
       <span class="song-info" ng-show='sharedState.comparing'>
         {{sharedState.title}} - {{sharedState.artist}}</span>
-        <span class='tutorial' ng-controller="ModalDemoCtrl">
+        <span class='tutorial' ng-controller="UploadModalCtrl">
         <button
         step-text="Mojsart provides a tool for comparing any two songs based on harmonic complexity. Your job is to decide which song has a more complex sound structure. We factor your judgment into our visualizer. "
         step-index="1"
