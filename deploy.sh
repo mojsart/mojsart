@@ -100,14 +100,20 @@ selectNodeVersion () {
 
 echo Handling node.js deployment.
 
-echo 1. Select node version
+# echo 1. KuduSync
+if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
+  "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
+  exitWithMessageOnError "Kudu Sync failed"
+fi
+
+# echo 2. Select node version
 selectNodeVersion
 
 ##### commented out this block so deploys don't take forever
 
-cd "$DEPLOYMENT_TARGET"
-echo 2. Install npm packages
+# echo 3. Install npm packages
 if [ -e "package.json" ]; then
+  cd "$DEPLOYMENT_TARGET"
   eval $NPM_CMD install --production
   exitWithMessageOnError "npm failed"
   cd - > /dev/null
@@ -115,7 +121,7 @@ fi
 
 if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
   cd "$DEPLOYMENT_TARGET"
-  eval $NPM_CMD install -g bower
+  eval $NPM_CMD install bower
   exitWithMessageOnError "installing bower failed"
   ./node_modules/.bin/bower install
   exitWithMessageOnError "bower failed"
@@ -124,18 +130,13 @@ fi
 
 if [ -e "$DEPLOYMENT_TARGET/Gulpfile.js" ]; then
   cd "$DEPLOYMENT_TARGET"
-  eval $NPM_CMD install -g gulp
+  eval $NPM_CMD install gulp
   exitWithMessageOnError "installing gulp failed"
   ./node_modules/.bin/gulp build
   exitWithMessageOnError "gulp failed"
   cd - > /dev/null
 fi
 
-echo 3. KuduSync
-if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
-  "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
-  exitWithMessageOnError "Kudu Sync failed"
-fi
 ##################################################################################################################################
 
 # Post deployment stub
