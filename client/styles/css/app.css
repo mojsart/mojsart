@@ -164,6 +164,7 @@ footer .row,
 }
 .tutorial {
   margin-top: 6px;
+  padding-right: 150px;
   float: right;
 }
 .tutorial .button {
