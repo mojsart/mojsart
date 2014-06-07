@@ -110,8 +110,6 @@ echo 2. Install npm packages
 if [ -e "package.json" ]; then
   eval $NPM_CMD install --production
   exitWithMessageOnError "npm failed"
-  echo "Execute gulp tasks"
-  eval /node_modules/.bin/gulp build
   cd - > /dev/null
 fi
 
@@ -126,7 +124,7 @@ fi
 
 if [ -e "$DEPLOYMENT_TARGET/Gulpfile.js" ]; then
   cd "$DEPLOYMENT_TARGET"
-  eval $NPM_CMD install gulp
+  eval $NPM_CMD install -g gulp
   exitWithMessageOnError "installing gulp failed"
   ./node_modules/.bin/gulp build
   exitWithMessageOnError "gulp failed"
