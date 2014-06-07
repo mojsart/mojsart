@@ -18,15 +18,16 @@
               step-placement="top"
               ng-click="open()">Upload a song</button>
     </span>
-    <audio step-text="Each circle in the visualization space represents a song. Click any circle to select that song for comparison. If the circle is green, you can also play it in this audio player. "
+    <audio step-text="Each circle in the visualization space represents a song. Click any circle to select that song for comparison. If the circle is green, you can also play it in this audio player."
            step-index="2"
            step-placement="top"
            src={{sharedState.songPath}}
            controls auto-play>
-    <span class="song-info" ng-show='sharedState.comparing'>
+   </audio>
+    <span class="song-info" ng-show="sharedState.comparing">
       {{sharedState.title}} - {{sharedState.artist}}</span>
-      <span class='tutorial' ng-controller="UploadModalCtrl">
-        <button step-text="Mojsart provides a tool for comparing any two songs based on harmonic complexity. Your job is to decide which song has a more complex sound structure. We factor your judgment into our visualizer. "
+      <span class="tutorial" ng-controller="UploadModalCtrl">
+        <button step-text="Mojsart provides a tool for comparing any two songs based on harmonic complexity. Your job is to decide which song has a more complex sound structure. We factor your judgment into our visualizer."
                 step-index="1"
                 step-placement="top"
                 class="button tiny"

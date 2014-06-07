@@ -101,9 +101,6 @@ footer .row,
 .top-bar-section li.active:not(.has-form) a:not(.button):hover {
   background: #4d8747;
 }
-svg {
-  height: calc(10%);
-}
 .left-off-canvas-menu {
   -webkit-backface-visibility: hidden;
   background-color: aliceblue;
@@ -126,7 +123,10 @@ svg {
   position: relative;
   top: calc(8%);
 }
-.menu span.song-info {
+.menu span button {
+  margin-bottom: 0;
+}
+.menu span .song-info {
   color: white;
   position: relative;
   top: calc(-10%);

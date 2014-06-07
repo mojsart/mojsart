@@ -47,6 +47,7 @@
             return angular.element(window)[0].innerHeight;
           }, function () {
             svg.attr("height", function () {
+              console.log('window.innerHeight', angular.element(window)[0].innerHeight)
               return angular.element(window)[0].innerHeight - 90; // re-set graph to window height - menubar space
             });
             if(scope.data) {

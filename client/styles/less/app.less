@@ -126,10 +126,6 @@
 
 // VISUALIZER PAGE ===============
 
-  svg {
-    height: calc(100% - 90px);
-  }
-
   .left-off-canvas-menu {
   -webkit-backface-visibility: hidden;
   background-color: aliceblue;
@@ -157,10 +153,15 @@
         position:relative;
         top: calc(50% - 42px);
       }
-      span.song-info {
-        color: white;
-        position:relative;
-        top: calc(50% - 60px);
+      span {
+        button {
+          margin-bottom: 0;
+        }
+        .song-info { 
+          color: white;
+          position:relative;
+          top: calc(50% - 60px);
+        }
       }
     }
 
