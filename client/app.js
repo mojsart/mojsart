@@ -1,14 +1,15 @@
 (function (angular) {
-  "use strict";
+
+  'use strict';
+
   angular.module('mojsart', [
     'fx.animations',
     'ngAnimate',
-    // 'ngTouch',
-    // 'ngCookies',
     'ui.router',
     'd3',
     'mojsart.main'
     ])
+
   .config(function ($stateProvider) {
     $stateProvider
       .state('mojsart', {
@@ -18,6 +19,7 @@
         controller: 'MainController',
       });
   })
+  
   .run(function ($state) {
     $state.transitionTo('mojsart.about');
   });
