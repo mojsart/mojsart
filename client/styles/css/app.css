@@ -101,6 +101,7 @@ button:focus,
 }
 .menu .button.tiny {
   margin-left: 8px;
+  margin-bottom: 0;
   top: calc(-15%);
 }
 .menu audio {
