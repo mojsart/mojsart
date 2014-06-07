@@ -4,7 +4,7 @@
 
   angular.module('mojsart')
   // tweet button directive for about page
-  .directive('twitter',['$timeout',function($timeout) {
+  .directive('twitter', ['$timeout', function($timeout) {
     return {
       link: function(scope, element, attr) {
         $timeout(function() {
