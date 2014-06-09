@@ -125,7 +125,7 @@ fi
 
 if [ -e "$DEPLOYMENT_TARGET/Gulpfile.js" ]; then
   cd "$DEPLOYMENT_TARGET"
-  echo 4. Install gulp (again)
+  echo 4. Install gulp
   eval $NPM_CMD install gulp
   exitWithMessageOnError "installing gulp failed"
   echo 5. Run gulp build
