@@ -7,7 +7,8 @@
     'fx.animations',
     'ngAnimate',
     'mm.foundation',
-    'mojsart.main.home'
+    'mojsart.main.home',
+    'slick'
   ])
   
   .config(function ($stateProvider) {

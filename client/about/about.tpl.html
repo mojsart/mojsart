@@ -1,24 +1,49 @@
 <a href="http://hackreactor.com">
-  <img style="position: absolute; top: 0; right: 0; border: 0;"
+  <img style="position: absolute; top: 0; right: 0; border: 0; z-index:1000"
        src="http://i.imgur.com/x86kKmF.png"
        alt="Built at Hack Reactor">
 </a>
 
-<section class="splash-header">
-  <div class="row">
-    <div class="medium-7 large-6 columns">
-      <h1>mo<span id="color">js</span>art</h1><br>
-      <h3>The world's first crowd-sourced genre visualization engine</h3>
-      <br>
+<slick autoplay="false" autoplaySpeed="5000" dots="true" speed="1000" class="splash-header">
+  <!-- slide 1 -->
+    <div id="slide-1">
+      <div class="row">
+        <div class="medium-7 large-6 columns">
+          <h1>mo<span id="color">js</span>art</h1><br>
+          <h3>The world's first crowd-sourced genre visualization engine</h3>
+          <br>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-4 medium-6 columns">
+          <a ui-sref="mojsart.home" class="large button">Get started</a>
+          <a twitter data-lang="en" data-count="horizontal" data-url="http://mojsart.com/" data-size="large" data-text="Check out {{title}}!"></a>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="large-4 medium-6 columns">
-      <a ui-sref="mojsart.home" class="large button">Get started</a>
-      <a twitter data-lang="en" data-count="horizontal" data-url="http://mojsart.com/" data-size="large" data-text="Check out {{title}}!"></a>
+  <!-- slide 2 -->
+  <div>
+      <div class="row">
+        <div class="medium-7 large-6 columns">
+          <h1>See how it works</h1><br>
+          <h3>Stuff goes here</h3>
+          <br>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  <!-- slide 3 -->
+    <div>
+      <div class="row">
+        <div class="medium-7 large-6 columns">
+          <h1>See it in action</h1><br>
+          <h3>Stuff goes here</h3>
+        </div>
+      </div>
+    </div>
+</slick>
+
+
+
 
 <section class="splash-alt">
   <div class="row centered-text">
