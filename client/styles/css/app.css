@@ -39,8 +39,8 @@ footer .row,
 .splash-header {
   background-color: #007148;
   color: white;
-  padding-top: 120px;
-  padding-bottom: 120px;
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 .splash-header h1 {
   font-weight: bold;
@@ -49,6 +49,13 @@ footer .row,
 .splash-header h1,
 .splash-header h3 {
   color: white;
+}
+#slide-1 h1 {
+  font-weight: bold;
+  font-family: 'Quicksand', sans-serif;
+}
+.slick-dots {
+  padding-bottom: 50px;
 }
 .splash {
   padding: 50px;
@@ -126,7 +133,7 @@ footer .row,
 .menu span button {
   margin-bottom: 0;
 }
-.menu span .song-info {
+.menu span.song-info {
   color: white;
   position: relative;
   top: calc(-10%);
