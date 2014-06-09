@@ -75,10 +75,10 @@
             if(data && data.length > 1) {
               data = data.sort(function (a, b) {
                 if (a.echoData.audio_summary.loudness > b.echoData.audio_summary.loudness) {
-                  return 1;
+                  return -1;
                 }
                 if (a.echoData.audio_summary.loudness < b.echoData.audio_summary.loudness) {
-                  return -1;
+                  return 1;
                 }
                 return 0;
               });
@@ -118,7 +118,7 @@
               d3.select(this)
                 .transition()
                 .attr("fill", function (d) { return (d.cached) ? "#60A859" : "white"; })
-                .attr("r", function (d) { return 50*Math.pow(10, (d.echoData.audio_summary.loudness/20)); });
+                .attr("r", function (d) { return 45*Math.pow(10, (d.echoData.audio_summary.loudness/20)); });
             });
 
             // grow circles to appropriate size
@@ -126,7 +126,7 @@
               .delay(function(d, i) { return 80*i; } )
               .duration(1500) // time of duration
               .ease("elastic")
-            .attr("r", function (d) { return 50*Math.pow(10, (d.echoData.audio_summary.loudness/20)); })
+            .attr("r", function (d) { return 45*Math.pow(10, (d.echoData.audio_summary.loudness/20)); })
             .attr("cx",function (d) { return width*(d.echoData.audio_summary.speechiness + d.userData.speechiness + d.echoData.audio_summary.acousticness/3); })
             .attr("cy", function (d) { return height*(d.echoData.audio_summary.energy + d.echoData.audio_summary.danceability)/2; })
             .attr("fill", function (d) { return (d.cached) ? "#60A859" : "white"; });
