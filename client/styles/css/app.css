@@ -39,20 +39,27 @@ footer .row,
 .splash-header {
   background-color: #007148;
   color: white;
-  padding-top: 100px;
-  padding-bottom: 100px;
 }
 .splash-header h1 {
   font-weight: bold;
   font-family: 'Quicksand', sans-serif;
 }
 .splash-header h1,
+.splash-header h2,
 .splash-header h3 {
   color: white;
+}
+#slide-1 {
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 #slide-1 h1 {
   font-weight: bold;
   font-family: 'Quicksand', sans-serif;
+}
+#slide-2 {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .slick-dots {
   padding-bottom: 50px;
