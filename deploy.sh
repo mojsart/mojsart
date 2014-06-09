@@ -106,28 +106,28 @@ selectNodeVersion
 ##### commented out this block so deploys don't take forever
 
 cd "$DEPLOYMENT_TARGET"
-echo 2. Install npm packages
-if [ -e "package.json" ]; then
-  eval $NPM_CMD install --production
-  exitWithMessageOnError "npm failed"
-  cd - > /dev/null
-fi
+# echo 2. Install npm packages
+# if [ -e "package.json" ]; then
+#   eval $NPM_CMD install --production
+#   exitWithMessageOnError "npm failed"
+#   cd - > /dev/null
+# fi
 
-if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
-  cd "$DEPLOYMENT_TARGET"
-  echo 3. Install bower packages
-  eval $NPM_CMD install bower
-  exitWithMessageOnError "installing bower failed"
-  ./node_modules/.bin/bower install
-  exitWithMessageOnError "bower failed"
-  cd - > /dev/null
-fi
+# if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
+#   cd "$DEPLOYMENT_TARGET"
+#   echo 3. Install bower packages
+#   eval $NPM_CMD install bower
+#   exitWithMessageOnError "installing bower failed"
+#   ./node_modules/.bin/bower install
+#   exitWithMessageOnError "bower failed"
+#   cd - > /dev/null
+# fi
 
 if [ -e "$DEPLOYMENT_TARGET/Gulpfile.js" ]; then
   cd "$DEPLOYMENT_TARGET"
-  echo 4. Install gulp
-  eval $NPM_CMD install gulp
-  exitWithMessageOnError "installing gulp failed"
+  # echo 4. Install gulp
+  # eval $NPM_CMD install gulp
+  # exitWithMessageOnError "installing gulp failed"
   echo 5. Run gulp build
   ./node_modules/.bin/gulp build
   exitWithMessageOnError "gulp failed"
