@@ -9,6 +9,7 @@
     "angular-ui-router": "*",
     "foundation": "~5.2.2",
     "socket.io-client": "~1.0.2",
-    "angular-foundation": "~0.2.2"
+    "angular-foundation": "~0.2.2",
+    "angular-slick": "~0.1.9"
   }
 }

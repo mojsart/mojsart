@@ -1,28 +1,38 @@
-<div class='panel callout radius'>
-<!-- ng-hide="sharedState.comparing" -->
+<div class="panel callout radius">
   <h4>Welcome to mo<span id="color">js</span>art</h4>
-  <h5>Each circle represents a song. To get started, click on any circle and add comparisons. If you run out of comparisons, move on to a new circle or upload more songs.</h5>
+  <h5 class="strack">
+    Each circle represents a song. To get started, click on any circle and add comparisons. If you run out of comparisons, move on to a new circle or upload more songs.
+  </h5>
 </div>
 
-<div class='row'>
-  <div class='small-6 column'> Songs from the library</div>
-  <div class='small-6 column'> Your Comparison</div>
+<div class="row">
+  <div class="small-6 column stitle">Songs from the library</div>
+  <div class="small-6 column stitle">Your Comparison</div>
 </div>
 <hr>
 
-<div class='row' ng-show='sharedState.comparing' ng-repeat="song in sharedState.songs | limitTo: quantity | filter: filterSongsList">
-  <div class='small-6 column'> {{song.title}} - {{song.track}}</div>
-  <div class='small-6 column'>
-    <span class="tiny button" ng-click="postVote(song, 'up')">More</span>
-    <span class="tiny button" ng-click="postVote(song, 'down')">Less</span>
+<div class="row voting"
+     ng-show="sharedState.comparing"
+     ng-repeat="song in sharedState.songs | limitTo: quantity | filter: filterSongsList">
+  <div class="small-6 column">
+    <div class="stitle">{{song.title}}</div>
+    <div class="strack">{{song.track}}</div>
   </div>
+<div class="small-6 column">
+  <ul class="button-group round">
+    <li class="tiny vote button" ng-click="postVote(song, 'up')">+</li>
+    <li class="tiny vote button" ng-click="postVote(song, 'down')">-</li>
+  </ul>
 </div>
-
-<hr />
-
+<hr>
+</div>
+<div class="echodata">
+<h4 class="stitle"> Echo Nest Song Data </h4>
+<hr>
 <ul>
   <li ng-repeat="(key, value) in sharedState.audio_summary">{{key}}: {{value}}</li>
 </ul>
+</div>
 
 
 
