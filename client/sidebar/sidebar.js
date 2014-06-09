@@ -1,8 +1,10 @@
-angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
-    'ngAnimate'])
+angular.module('mojsart.main.sidebar', [
+  'ui.router',
+  'fx.animations',
+  'ngAnimate'
+])
 
 .config(function ($stateProvider) {
-
   $stateProvider
     .state('mojsart.main.sidebar', {
       url: '/main',
@@ -17,33 +19,20 @@ angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
   $scope.quantity = 3;
   $scope.comparing = false;
 
-//   //Populates sidebar with all songs in shared state
-//   $scope.fillSongsList = function(){
-//       $scope.getSongs(function(data){
-//       for (var i = 0; i < data.length; i++){
-//         $scope.sharedState.songs.push({'track': data[i].echoData.artist, 'title': data[i].echoData.title, 'echoId': data[i].echoData.md5});
-//       }
-//   });
-// };
-
-//Fetches all songs when app starts, loads Track and Title into Songs Array
+  // Fetches all songs when app starts, loads Track and Title into Songs Array
   // set up listener for re-get, and fires get songs. TODO: don't put this in the controller
   $scope.filterSongsList = function (song) {
-      if (song.title === $scope.sharedState.title){
-        return false;
-      } else {
-        return true;
-      }
-    };
+    return (song.title !== $scope.sharedState.title);
+  };
 
   socket.on('reget', function() {
-    console.log('regetting');
+    console.log('getting songs from server');
     $scope.getSongs();
   });
   
   //returns an object comparing clicked-node song to another song in DB.
   //Covers both positive and negative comparisons."
-  $scope.postVote = function(song, upOrDown){
+  $scope.postVote = function (song, upOrDown) {
     var package = {};
     package.base = $scope.sharedState.md5;
     package.compare = song.echoId;
@@ -61,9 +50,7 @@ angular.module('mojsart.main.sidebar', ['ui.router', 'fx.animations',
   };
   
   //Removes clicked song from songs array. This automatically refreshes sidebar.
-  $scope.cycleVote = function(song){
+  $scope.cycleVote = function (song){
     $scope.sharedState.songs.shift();
   };
-
-
 });
