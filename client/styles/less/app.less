@@ -49,14 +49,26 @@
   .splash-header {
     background-color: @c1;
     color: white;
-    padding-top: 120px;
-    padding-bottom: 120px;
+    padding-top: 100px;
+    padding-bottom: 100px;
     h1 { 
       font-weight: bold;
-      font-family: 'Quicksand', sans-serif; }
+      font-family: 'Quicksand', sans-serif;
+    }
     h1, h3 {
       color: white;
     }
+  }
+
+  #slide-1 {
+    h1 { 
+      font-weight: bold;
+      font-family: 'Quicksand', sans-serif;
+    }
+  }
+
+  .slick-dots {
+    padding-bottom: 50px;
   }
 
   // dark background splash bar
@@ -175,7 +187,7 @@
         button {
           margin-bottom: 0;
         }
-        .song-info { 
+        &.song-info { 
           color: white;
           position:relative;
           top: calc(50% - 60px);
