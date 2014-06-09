@@ -108,12 +108,11 @@ footer .row,
 .left-off-canvas-menu .stitle {
   font-size: 80%;
   font-weight: bold;
-  font-family: 'Quicksand', sans-serif;
   margin-bottom: 6px;
 }
 .left-off-canvas-menu .strack {
   font-size: 80%;
-  font-family: 'Quicksand', sans-serif;
+  margin-bottom: 10px;
 }
 .vote {
   margin-top: 10px;
@@ -122,7 +121,7 @@ footer .row,
   font-weight: bold;
 }
 .echodata {
-  margin-left: 10px;
+  margin-left: 15px;
 }
 .graph {
   background-color: #d4f79f;
